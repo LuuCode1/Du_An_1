@@ -21,8 +21,8 @@ CREATE TABLE thuong_hieu (
 );
 
 CREATE TABLE hinh_anh (
-  hinhAnh VARCHAR(255) NOT NULL,
-  linkAnh VARCHAR(255) NOT NULL,
+  hinhAnh VARCHAR(max) NOT NULL,
+  linkAnh VARCHAR(max) NOT NULL,
   PRIMARY KEY (hinhAnh)
 );
 
