@@ -60,3 +60,17 @@ CREATE TABLE trong_kinh (
   FOREIGN KEY (idThuongHieu) REFERENCES thuong_hieu (idThuongHieu),
   FOREIGN KEY (id_hinhAnh) REFERENCES hinh_anh (id_hinhAnh)
 )
+
+CREATE TABLE hoa_don_chi_tiet (
+  mahoadonchitiet  INT NOT NULL AUTO_INCREMENT,
+  idGongKinh INT NOT NULL,
+  idTrongKinh INT NOT NULL,
+  soluong  INT NOT NULL,
+  dongia   DOUBLE NOT NULL,
+  tonggia  DOUBLE NOT NULL,
+)
+
+CREATE TABLE nhan_vien (
+  mahoadon INT NOT NULL AUTO_INCREMENT,
+  
+)
