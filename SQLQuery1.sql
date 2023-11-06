@@ -43,7 +43,20 @@ CREATE TABLE gong_kinh (
   FOREIGN KEY (idThuongHieu) REFERENCES thuong_hieu (idThuongHieu),
   FOREIGN KEY (id_hinhAnh) REFERENCES hinh_anh (id_hinhAnh)
 );
---con tiep
---new
 
---00000000
+CREATE TABLE trong_kinh (
+  idTrongKinh INT NOT NULL AUTO_INCREMENT,
+  maTrongKinh VARCHAR(255) NOT NULL,
+  idMauSac INT NOT NULL,
+  idThuongHieu INT NOT NULL,
+  id_hinhAnh INT NOT NULL,
+  doCan INT NOT NULL,
+  soLuong INT NOT NULL,
+  moTa TEXT,
+  trangThai VARCHAR(255),
+  PRIMARY KEY (idTrongKinh),
+  FOREIGN KEY (idChatLieu) REFERENCES chat_lieu (idChatLieu),
+  FOREIGN KEY (idMauSac) REFERENCES mau_sac (idMauSac),
+  FOREIGN KEY (idThuongHieu) REFERENCES thuong_hieu (idThuongHieu),
+  FOREIGN KEY (id_hinhAnh) REFERENCES hinh_anh (id_hinhAnh)
+)
