@@ -72,5 +72,5 @@ CREATE TABLE hoa_don_chi_tiet (
 
 CREATE TABLE nhan_vien (
   mahoadon INT NOT NULL AUTO_INCREMENT,
-  
+  tennhanvien NVARCHAR(100) not null,
 )
