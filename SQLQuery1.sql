@@ -44,3 +44,4 @@ CREATE TABLE gong_kinh (
   FOREIGN KEY (id_hinhAnh) REFERENCES hinh_anh (id_hinhAnh)
 );
 --con tiep
+--new
