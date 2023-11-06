@@ -46,4 +46,4 @@ CREATE TABLE gong_kinh (
 --con tiep
 --new
 
---dm tk duc dat
+--00000000
