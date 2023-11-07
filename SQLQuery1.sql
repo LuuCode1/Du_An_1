@@ -1,4 +1,4 @@
-﻿--drop database Ung_Dung_Ban_Kinh
+﻿drop database Ung_Dung_Ban_Kinh
 create database Ung_Dung_Ban_Kinh
 go
 use Ung_Dung_Ban_Kinh
@@ -27,8 +27,6 @@ CREATE TABLE thuong_hieu (
   PRIMARY KEY (idThuongHieu)
 );
 
--- Thêm khóa chính cho hình ảnh
-
 
 -- Thêm tên gọng kính
 -- Sửa ảnh về Null
@@ -41,6 +39,7 @@ CREATE TABLE gong_kinh (
   idThuongHieu INT NOT NULL,
   giaThanh FLOAT NOT NULL,
   soLuong INT NOT NULL,
+  hinhanh NVARCHAR(255) NULL,
   moTa NVARCHAR(50) NOT NULL,
   trangThai NVARCHAR(50),
   PRIMARY KEY (idGongKinh),
@@ -63,6 +62,7 @@ CREATE TABLE trong_kinh (
   giaThanh FLOAT NOT NULL,
   doCan FLOAT NOT NULL,
   soLuong INT NOT NULL,
+  hinhanh NVARCHAR(255) NULL,
   moTa NVARCHAR(50) NOT NULL,
   trangThai NVARCHAR(50),
   PRIMARY KEY (idTrongKinh),
@@ -72,16 +72,7 @@ CREATE TABLE trong_kinh (
   
 );
 
-CREATE TABLE hinh_anh (
-  id_hinhAnh  INT NOT NULL IDENTITY(1,1),
-  mahinhAnh NVARCHAR(max)  NULL,
-  linkAnh VARCHAR(max)  NULL,
-  idGongKinh INT  NULL,
-  idTrongKinh INT  NULL,
-  PRIMARY KEY (id_hinhAnh),
-  FOREIGN KEY (idGongKinh) REFERENCES gong_kinh (idGongKinh),
-  FOREIGN KEY (id_hinhAnh) REFERENCES hinh_anh (id_hinhAnh)
-);
+
 -- Chuyển idGongKinh và idTrongKinh từ NOT NULL thành NULL
 CREATE TABLE hoa_don_chi_tiet (
   idHoaDonChiTiet  INT NOT NULL IDENTITY(1,1),
@@ -160,6 +151,7 @@ CREATE TABLE bao_hanh (
   PRIMARY KEY (idBaoHanh),
   FOREIGN KEY (idHoaDon) REFERENCES hoa_don (idHoaDon)
 );
+
 -- INSERT Dữ liệu:
 --Bảng chất liệu
 INSERT INTO chat_lieu (maChatLieu, tenChatLieu)
@@ -191,19 +183,6 @@ VALUES ('TH01', N'Gucci'),
        ('TH05', N'Prada');
 
 
-
---Bảng ảnh tạm thời chưa động vào
---Bảng ảnh
-INSERT INTO hinh_anh(mahinhAnh, linkAnh,idGongKinh,idTrongKinh)
-VALUES ('GK_CV', null,1,null),
-		(N'TK_CV', null,null,1),
-		(N'GK_CH', null,2,null),
-		(N'GK_CC', null,3,null),
-		(N'GK_CV', null,null,2)
-
-     
-
---Thêm bảng mà ko có ảnh trước
 --Bảng gọng kính 
 INSERT INTO gong_kinh(maGongKinh,tenGongKinh,idChatLieu,idMauSac,idThuongHieu,giaThanh,soLuong,moTa,trangThai)
 VALUES ('GK01', N'Gọng Kính V', 2 , 4 , 3 , 333000, 100,N'Sản phẩm thân thiện',N'Đang bán'),
@@ -213,9 +192,6 @@ VALUES ('GK01', N'Gọng Kính V', 2 , 4 , 3 , 333000, 100,N'Sản phẩm thân 
        ('GK05', N'GK – 380CK113', 4 , 3 , 5 , 89000, 298,N'Sản phẩm thân thiện',N'Đang bán');
 
 
-
-
---Thêm bảng mà ko có ảnh trước
 --Bảng tròng kính 
 INSERT INTO trong_kinh(maTrongKinh,tenTrongKinh,idChatLieu,idMauSac,idThuongHieu,giaThanh,doCan,soLuong,moTa,trangThai)
 VALUES ('TK01', N'Tròng Kính Chống Ánh Sáng Xanh', 2 , 4 , 3 , 333000, 0,100,N'Sản phẩm thân thiện',N'Đang bán'),
@@ -223,8 +199,6 @@ VALUES ('TK01', N'Tròng Kính Chống Ánh Sáng Xanh', 2 , 4 , 3 , 333000, 0,1
        ('TK03', N'TRÒNG KÍNH ĐỔI MẦU THÁI LAN TRÁNG', 2 , 4 , 5 , 883000,1.5,201, N'Sản phẩm thân thiện',N'Đang bán'),
        ('TK04', N'TRÒNG KÍNH PHÁP ESSILOR PREVENCIA', 3 , 5 , 4 , 55000,2,313, N'Sản phẩm thân thiện',N'Đang bán'),
        ('TK05', N'TRÒNG KÍNH HÀN QUỐC CHEMI U6 ', 4 , 3 , 5 , 89000,1.75, 298,N'Sản phẩm thân thiện',N'Đang bán');
-
-
 
 
 --Bảng Hóa Đơn Chi Tiết 
@@ -236,13 +210,6 @@ VALUES ('HDCT01', 1,null,2,666000,660000),
        ('HDCT05', 4,null,7,385000,380000);
 
 
-
-
--- Bảng bảo hành
-
-
-
-
 -- Bảng Nhân viên
 INSERT INTO nhan_vien(maNhanVien, tenNhanVien, ngaysinh, sdt, gioitinh, email,trangthai)
 VALUES ('NV01',N'Nguyễn Văn A', '4-15-2005', '0365796964', 1 ,'nguyena@gmail.com', N'Đang làm việc'),
@@ -252,8 +219,6 @@ VALUES ('NV01',N'Nguyễn Văn A', '4-15-2005', '0365796964', 1 ,'nguyena@gmail.
        ('NV05',N'Nguyễn Văn E', '7-19-2003', '0348358657', 0 ,'nguyene@gmail.com', N'Đang làm việc');
 
 
-
-
 -- Bảng Vouchers
 INSERT INTO vouchers(maVouchers, tenVouchers, soluong, ngaytao, ngaybatdau, ngayketthuc,trangthai)
 VALUES ('VC01',N'Voucher 7/7', 1000, '7-1-2023', '7-7-2023' ,'7-14-2023', N'Đang có hiệu lực'),
@@ -261,8 +226,6 @@ VALUES ('VC01',N'Voucher 7/7', 1000, '7-1-2023', '7-7-2023' ,'7-14-2023', N'Đan
        ('VC03',N'Voucher Quốc Khánh', 3000,  '8-30-2023', '9-2-2023' ,'7-7-2023', N'Hết hiệu lực'),
        ('VC04',N'Voucher Trung Thu', 1500,  '9-20-2023', '9-29-2023' ,'10-6-2023', N'Hết hiệu lực'),
        ('VC05',N'Voucher 10/10', 1700, '10-1-2023', '10-10-2023' ,'10-17-2023', N'Đang có hiệu lực');
-
-
 
 
 -- Bảng Khách hàng
@@ -275,7 +238,6 @@ VALUES ('KH01',N'Lê Đức A',N'Hà Nội',   '0348596964'),
 
 
 
-
 -- Bảng Hóa Đơn
 INSERT INTO hoa_don(maHoaDon, idVouchers, idKhachHang,idNhanVien,idHoaDonChiTiet,ngayban,tongtien,trangthai)
 VALUES ('HD01',null, 1 , 5 , 2 , GETDATE() , 10000000 , N'Đã bán'),
@@ -285,9 +247,10 @@ VALUES ('HD01',null, 1 , 5 , 2 , GETDATE() , 10000000 , N'Đã bán'),
        ('HD05',5, 5 , 3 , 1 , GETDATE() , 1004546460 , N'Chưa bán');
 
 
+-- Bảng bảo hành
 INSERT INTO bao_hanh(maBaoHanh,idHoaDon ,tenBaoHanh, ngaybaohanh, ngayketthuc, thoihan, trangthai)
-VALUES ('BH01',6,N'Bảo hành 1', '4-15-2023', '4-15-2024', 8760 , N'Còn hiệu lực'),
-       ('BH02',7,N'Bảo hành 22', '7-7-2022', '7-7-2023', 8760 , N'Hết hiệu lực'),
+VALUES ('BH01',1,N'Bảo hành 1', '4-15-2023', '4-15-2024', 8760 , N'Còn hiệu lực'),
+       ('BH02',2,N'Bảo hành 22', '7-7-2022', '7-7-2023', 8760 , N'Hết hiệu lực'),
        ('BH03',3,N'Bảo hành 4', '4-4-2022', '4-4-2023', 8760 , N'Hết hiệu lực'),
        ('BH04',4,N'Bảo hành 6', '8-4-2023', '8-4-2024', 8760 , N'Còn hiệu lực'),
        ('BH05',5,N'Bảo hành 9', '7-19-2023', '7-19-2024', 8760 , N'Còn hiệu lực');
@@ -302,6 +265,5 @@ SELECT * FROM bao_hanh
 SELECT * FROM hoa_don_chi_tiet
 SELECT * FROM trong_kinh
 SELECT * FROM gong_kinh
-SELECT * FROM hinh_anh
 SELECT * FROM thuong_hieu
 SELECT * FROM mau_sac
