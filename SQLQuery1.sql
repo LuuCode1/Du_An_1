@@ -184,21 +184,21 @@ VALUES ('TH01', N'Gucci'),
 
 
 --Bảng gọng kính 
-INSERT INTO gong_kinh(maGongKinh,tenGongKinh,idChatLieu,idMauSac,idThuongHieu,giaThanh,soLuong,moTa,trangThai)
-VALUES ('GK01', N'Gọng Kính V', 2 , 4 , 3 , 333000, 100,N'Sản phẩm thân thiện',N'Đang bán'),
-       ('GK02', N'GỌNG KÍNH CẬN CLUB MASTER', 5 , 1 , 2 , 733000,170, N'Sản phẩm thân thiện',N'Đang bán'),
-       ('GK03', N'GỌNG KÍNH GỖ NAM CAO CẤP', 2 , 4 , 5 , 883000,201, N'Sản phẩm thân thiện',N'Đang bán'),
-       ('GK04', N'GK – 550CN038', 3 , 5 , 4 , 55000,313, N'Sản phẩm thân thiện',N'Đang bán'),
-       ('GK05', N'GK – 380CK113', 4 , 3 , 5 , 89000, 298,N'Sản phẩm thân thiện',N'Đang bán');
+INSERT INTO gong_kinh(maGongKinh,tenGongKinh,idChatLieu,idMauSac,idThuongHieu,giaThanh,soLuong,hinhanh,moTa,trangThai)
+VALUES ('GK01', N'Gọng Kính V', 2 , 4 , 3 , 333000, 100,null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('GK02', N'GỌNG KÍNH CẬN CLUB MASTER', 5 , 1 , 2 , 733000,170, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('GK03', N'GỌNG KÍNH GỖ NAM CAO CẤP', 2 , 4 , 5 , 883000,201, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('GK04', N'GK – 550CN038', 3 , 5 , 4 , 55000,313, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('GK05', N'GK – 380CK113', 4 , 3 , 5 , 89000, 298,null,N'Sản phẩm thân thiện',N'Đang bán');
 
 
 --Bảng tròng kính 
-INSERT INTO trong_kinh(maTrongKinh,tenTrongKinh,idChatLieu,idMauSac,idThuongHieu,giaThanh,doCan,soLuong,moTa,trangThai)
-VALUES ('TK01', N'Tròng Kính Chống Ánh Sáng Xanh', 2 , 4 , 3 , 333000, 0,100,N'Sản phẩm thân thiện',N'Đang bán'),
-       ('TK02', N'Đa Tròng Essilor Smart-Lens', 5 , 1 , 2 , 733000,0,170, N'Sản phẩm thân thiện',N'Đang bán'),
-       ('TK03', N'TRÒNG KÍNH ĐỔI MẦU THÁI LAN TRÁNG', 2 , 4 , 5 , 883000,1.5,201, N'Sản phẩm thân thiện',N'Đang bán'),
-       ('TK04', N'TRÒNG KÍNH PHÁP ESSILOR PREVENCIA', 3 , 5 , 4 , 55000,2,313, N'Sản phẩm thân thiện',N'Đang bán'),
-       ('TK05', N'TRÒNG KÍNH HÀN QUỐC CHEMI U6 ', 4 , 3 , 5 , 89000,1.75, 298,N'Sản phẩm thân thiện',N'Đang bán');
+INSERT INTO trong_kinh(maTrongKinh,tenTrongKinh,idChatLieu,idMauSac,idThuongHieu,giaThanh,doCan,soLuong,hinhanh,moTa,trangThai)
+VALUES ('TK01', N'Tròng Kính Chống Ánh Sáng Xanh', 2 , 4 , 3 , 333000, 0,100,null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('TK02', N'Đa Tròng Essilor Smart-Lens', 5 , 1 , 2 , 733000,0,170, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('TK03', N'TRÒNG KÍNH ĐỔI MẦU THÁI LAN TRÁNG', 2 , 4 , 5 , 883000,1.5,201, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('TK04', N'TRÒNG KÍNH PHÁP ESSILOR PREVENCIA', 3 , 5 , 4 , 55000,2,313, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('TK05', N'TRÒNG KÍNH HÀN QUỐC CHEMI U6 ', 4 , 3 , 5 , 89000,1.75, 298,null,N'Sản phẩm thân thiện',N'Đang bán');
 
 
 --Bảng Hóa Đơn Chi Tiết 
