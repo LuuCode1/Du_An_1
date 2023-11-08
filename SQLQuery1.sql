@@ -267,3 +267,4 @@ SELECT * FROM trong_kinh
 SELECT * FROM gong_kinh
 SELECT * FROM thuong_hieu
 SELECT * FROM mau_sac
+DELETE FROM gong_kinh WHERE maGongKinh =?
