@@ -272,4 +272,5 @@ FROM         chat_lieu INNER JOIN
                       gong_kinh ON chat_lieu.idChatLieu = gong_kinh.idChatLieu INNER JOIN
                       mau_sac ON gong_kinh.idMauSac = mau_sac.idMauSac INNER JOIN
                       thuong_hieu ON gong_kinh.idThuongHieu = thuong_hieu.idThuongHieu
-					  where chat_lieu.tenChatLieu = ? or  mau_sac.tenMauSac = ? or thuong_hieu.tenThuongHieu = ?   
+					  where chat_lieu.tenChatLieu = ? or  mau_sac.tenMauSac = ? or thuong_hieu.tenThuongHieu = ?
+-- new   
