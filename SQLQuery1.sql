@@ -267,4 +267,9 @@ SELECT * FROM trong_kinh
 SELECT * FROM gong_kinh
 SELECT * FROM thuong_hieu
 SELECT * FROM mau_sac
-DELETE FROM gong_kinh WHERE maGongKinh =?
+SELECT    gong_kinh.maGongKinh, gong_kinh.tenGongKinh, chat_lieu.tenChatLieu, mau_sac.tenMauSac, thuong_hieu.tenThuongHieu, gong_kinh.giaThanh, gong_kinh.soLuong, gong_kinh.hinhanh, gong_kinh.moTa
+FROM         chat_lieu INNER JOIN
+                      gong_kinh ON chat_lieu.idChatLieu = gong_kinh.idChatLieu INNER JOIN
+                      mau_sac ON gong_kinh.idMauSac = mau_sac.idMauSac INNER JOIN
+                      thuong_hieu ON gong_kinh.idThuongHieu = thuong_hieu.idThuongHieu
+					  where chat_lieu.tenChatLieu = ? or  mau_sac.tenMauSac = ? or thuong_hieu.tenThuongHieu = ?   
