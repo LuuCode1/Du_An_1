@@ -54,6 +54,8 @@ public class QuanLyGongKinh extends javax.swing.JFrame {
         CBo_ThuongHieu();
         name();
         txt_seach.setText("Tìm Kiếm");
+        btn_update.setEnabled(false);
+        btn_delete.setEnabled(false);
     }
 
     void name() {
@@ -191,7 +193,7 @@ public class QuanLyGongKinh extends javax.swing.JFrame {
         } catch (NumberFormatException ex) {
             lblCheckGiaBan.setText("Giá bán phải là số thực");
             lblCheckGiaBan.setForeground(Color.RED);
-            
+
             return false;
         }
         return true;
@@ -237,7 +239,7 @@ public class QuanLyGongKinh extends javax.swing.JFrame {
         lblbang = new javax.swing.JTable();
         btn_reset = new javax.swing.JButton();
         btn_add = new javax.swing.JButton();
-        add_update = new javax.swing.JButton();
+        btn_update = new javax.swing.JButton();
         btn_delete = new javax.swing.JButton();
         txt_seach = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -333,7 +335,8 @@ public class QuanLyGongKinh extends javax.swing.JFrame {
         jPanel2.add(CBO_TH, new org.netbeans.lib.awtextra.AbsoluteConstraints(456, 151, 193, 26));
 
         txt_mota.setColumns(20);
-        txt_mota.setRows(5);
+        txt_mota.setRows(3);
+        txt_mota.setTabSize(1);
         jScrollPane1.setViewportView(txt_mota);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(444, 209, 210, 80));
@@ -410,13 +413,13 @@ public class QuanLyGongKinh extends javax.swing.JFrame {
         });
         getContentPane().add(btn_add, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 90, 30));
 
-        add_update.setText("Sửa");
-        add_update.addActionListener(new java.awt.event.ActionListener() {
+        btn_update.setText("Sửa");
+        btn_update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                add_updateActionPerformed(evt);
+                btn_updateActionPerformed(evt);
             }
         });
-        getContentPane().add(add_update, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 360, 90, 30));
+        getContentPane().add(btn_update, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 360, 90, 30));
 
         btn_delete.setText("Xóa");
         btn_delete.addActionListener(new java.awt.event.ActionListener() {
@@ -483,6 +486,10 @@ public class QuanLyGongKinh extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_maGKActionPerformed
 
     private void btn_resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resetActionPerformed
+        btn_update.setEnabled(false);
+        btn_delete.setEnabled(false);
+        btn_add.setEnabled(true);
+        txt_maGK.setEnabled(true);
         reset();
     }//GEN-LAST:event_btn_resetActionPerformed
 
@@ -507,29 +514,33 @@ public class QuanLyGongKinh extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_addActionPerformed
 
-    private void add_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_updateActionPerformed
+    private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
         if (check()) {
             Giongkinh gk = this.readmodel_gongKinh();
-        String ma = lblbang.getValueAt(index, 0).toString();
-        if (gksv.update(gk, ma) > 0) {
-            JOptionPane.showMessageDialog(this, "Thành Công");
-            fillTable(gksv.selectAll());
-            reset();
+            String ma = lblbang.getValueAt(index, 0).toString();
+            if (gksv.update(gk, ma) > 0) {
+                JOptionPane.showMessageDialog(this, "Thành Công");
+                fillTable(gksv.selectAll());
+                btn_add.setEnabled(true);
+                txt_maGK.setEnabled(true);
+                reset();
+            }
         }
-        }
-        
-    }//GEN-LAST:event_add_updateActionPerformed
+
+    }//GEN-LAST:event_btn_updateActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
         if (check()) {
-           Giongkinh gk = this.readmodel_gongKinh();
-        if (gksv.delete(gk.getMaGongKinh()) > 0) {
-            JOptionPane.showMessageDialog(this, "Thành Công");
-            fillTable(gksv.selectAll());
-            reset();
-        } 
+            Giongkinh gk = this.readmodel_gongKinh();
+            if (gksv.delete(gk.getMaGongKinh()) > 0) {
+                JOptionPane.showMessageDialog(this, "Thành Công");
+                fillTable(gksv.selectAll());
+                btn_add.setEnabled(true);
+                txt_maGK.setEnabled(true);
+                reset();
+            }
         }
-        
+
     }//GEN-LAST:event_btn_deleteActionPerformed
 
     private void btn_addAnhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addAnhActionPerformed
@@ -570,6 +581,10 @@ public class QuanLyGongKinh extends javax.swing.JFrame {
         if (gksv.selectByID(ma) != null) {
             Giongkinh gk = gksv.selectByID(ma);
             showmodel_gongKing(gk);
+            txt_maGK.setEnabled(false);
+            btn_add.setEnabled(false);
+            btn_update.setEnabled(true);
+            btn_delete.setEnabled(true);
         }
     }//GEN-LAST:event_lblbangMouseClicked
 
@@ -650,12 +665,12 @@ public class QuanLyGongKinh extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> CBo_MS;
     private javax.swing.JComboBox<String> Cbo_chatLieu;
     private javax.swing.JTextField TxtSoLuong;
-    private javax.swing.JButton add_update;
     private javax.swing.JButton btn_add;
     private javax.swing.JButton btn_addAnh;
     private javax.swing.JButton btn_delete;
     private javax.swing.JButton btn_deleteAnh;
     private javax.swing.JButton btn_reset;
+    private javax.swing.JButton btn_update;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
