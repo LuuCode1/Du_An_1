@@ -272,7 +272,11 @@ FROM         chat_lieu INNER JOIN
                       gong_kinh ON chat_lieu.idChatLieu = gong_kinh.idChatLieu INNER JOIN
                       mau_sac ON gong_kinh.idMauSac = mau_sac.idMauSac INNER JOIN
                       thuong_hieu ON gong_kinh.idThuongHieu = thuong_hieu.idThuongHieu
-					  where chat_lieu.tenChatLieu = ? or  mau_sac.tenMauSac = ? or thuong_hieu.tenThuongHieu = ?
--- new   
-
---old
+					  where gong_kinh.maGongKinh like '%GK%' 
+SELECT    trong_kinh.maTrongKinh, trong_kinh.tenTrongKinh, chat_lieu.tenChatLieu, mau_sac.tenMauSac, thuong_hieu.tenThuongHieu, trong_kinh.giaThanh, trong_kinh.doCan, trong_kinh.soLuong, trong_kinh.hinhanh, 
+trong_kinh.moTa
+FROM trong_kinh INNER JOIN
+mau_sac ON trong_kinh.idMauSac = mau_sac.idMauSac INNER JOIN
+chat_lieu ON trong_kinh.idChatLieu = chat_lieu.idChatLieu INNER JOIN
+thuong_hieu ON trong_kinh.idThuongHieu = thuong_hieu.idThuongHieu
+where thuong_hieu.tenThuongHieu =?
