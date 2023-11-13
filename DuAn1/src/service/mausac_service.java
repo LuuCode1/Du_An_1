@@ -50,4 +50,18 @@ public class mausac_service {
         }
         return null;
     }
+    
+    public int insert(mausac ms){
+         sql ="insert into mau_sac( maMauSac, tenMauSac) values (?,?) ";
+         try {
+             con = DBconnect.getConnection();
+            ps =  con.prepareStatement(sql);
+            ps.setObject(1, ms.getMaMauSac());
+            ps.setObject(2, ms.getTenMauSac());
+            return ps.executeUpdate();
+         } catch (Exception e) {
+             e.printStackTrace();
+             return 0;
+         }
+     }
 }

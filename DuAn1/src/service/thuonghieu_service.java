@@ -57,4 +57,18 @@ public class thuonghieu_service {
         }
         return null;
     }
+     
+     public int insert(thuonghieu th){
+         sql ="insert into thuong_hieu( maThuongHieu, tenThuongHieu) values (?,?) ";
+         try {
+             con = DBconnect.getConnection();
+            ps =  con.prepareStatement(sql);
+            ps.setObject(1, th.getMaThuongHieu());
+            ps.setObject(2, th.getTenThuongHieu());
+            return ps.executeUpdate();
+         } catch (Exception e) {
+             e.printStackTrace();
+             return 0;
+         }
+     }
 }

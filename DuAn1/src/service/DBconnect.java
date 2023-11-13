@@ -21,7 +21,7 @@ public class DBconnect {
     private static final String DATABASE_NAME = "Ung_Dung_Ban_Kinh";
     private static final boolean USING_SSL = false;
     private static String CONNECT_STRING;
-   //a
+   
     static {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -59,6 +59,5 @@ public class DBconnect {
         System.out.println(dbmt.getDriverName());
         System.out.println(dbmt.getDatabaseProductName());
         System.out.println(dbmt.getDatabaseProductVersion());
-        
     }
 }
