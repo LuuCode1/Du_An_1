@@ -50,5 +50,7 @@ public class chatLieu {
     public void setTenChatLieu(String tenChatLieu) {
         this.tenChatLieu = tenChatLieu;
     }
-    
+    public Object[] todata_ChatLieu(){
+        return new Object[]{this.maChatLieu,this.tenChatLieu};
+    }
 }

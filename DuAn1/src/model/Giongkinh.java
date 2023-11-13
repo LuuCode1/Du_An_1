@@ -104,10 +104,10 @@ public class Giongkinh {
 
     public void setMoTa(String moTa) {
         this.moTa = moTa;
-    }
+    }  
     public Object[] todata(){
         return new Object[]{this.maGongKinh,this.tenGongKinh,this.tenChatLieu.getTenChatLieu(),
             this.tenMauSac.getTenMauSac(),this.tenThuongHieu.getTenThuongHieu(),this.giaThanh,
             this.soLuong,this.hinhAnh,this.moTa};
-    }
+    }    
 }

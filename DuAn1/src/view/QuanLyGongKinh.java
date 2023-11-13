@@ -208,7 +208,16 @@ public class QuanLyGongKinh extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        lblbang = new javax.swing.JTable();
+        btn_reset = new javax.swing.JButton();
+        btn_add = new javax.swing.JButton();
+        btn_update = new javax.swing.JButton();
+        btn_delete = new javax.swing.JButton();
+        txt_seach = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        CBO_TH1_check = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txt_maGK = new javax.swing.JTextField();
@@ -234,129 +243,10 @@ public class QuanLyGongKinh extends javax.swing.JFrame {
         lblCheckTenGongKinh = new javax.swing.JLabel();
         lblCheckSoLuong = new javax.swing.JLabel();
         lblCheckGiaBan = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        lblbang = new javax.swing.JTable();
-        btn_reset = new javax.swing.JButton();
-        btn_add = new javax.swing.JButton();
-        btn_update = new javax.swing.JButton();
-        btn_delete = new javax.swing.JButton();
-        txt_seach = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        CBO_TH1_check = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Quản Lý Sản Phẩm"));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel4.setText("Mã Gọng Kính");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 40, -1, 26));
-
-        txt_maGK.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_maGKActionPerformed(evt);
-            }
-        });
-        jPanel2.add(txt_maGK, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 40, 193, 26));
-
-        jLabel5.setText("Tên Gọng Kính");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 96, -1, 26));
-
-        txt_tenGK.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_tenGKActionPerformed(evt);
-            }
-        });
-        jPanel2.add(txt_tenGK, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 96, 193, 26));
-
-        jLabel6.setText("Số Lượng");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 151, 56, 26));
-        jPanel2.add(TxtSoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 151, 193, 26));
-
-        jLabel7.setText("Giá Bán");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 207, 56, 26));
-        jPanel2.add(txt_GiaBan, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 207, 193, 26));
-
-        jLabel8.setText("Màu Sắc");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(382, 40, 56, 26));
-
-        jLabel9.setText("Chất Liệu");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(382, 96, 56, 26));
-
-        jLabel10.setText("Thương Hiệu");
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(382, 151, -1, 26));
-
-        jLabel11.setText("Mô Tả");
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(382, 207, 56, 26));
-
-        lbl_anh.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel2.add(lbl_anh, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 30, 202, 202));
-
-        btn_addAnh.setText("Thêm ảnh");
-        btn_addAnh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_addAnhActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btn_addAnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(708, 250, -1, -1));
-
-        btn_deleteAnh.setText("Xóa Ảnh");
-        btn_deleteAnh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_deleteAnhActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btn_deleteAnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(829, 250, -1, -1));
-
-        CBo_MS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        CBo_MS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CBo_MSActionPerformed(evt);
-            }
-        });
-        jPanel2.add(CBo_MS, new org.netbeans.lib.awtextra.AbsoluteConstraints(456, 40, 193, 26));
-
-        Cbo_chatLieu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        Cbo_chatLieu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Cbo_chatLieuActionPerformed(evt);
-            }
-        });
-        jPanel2.add(Cbo_chatLieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(456, 96, 193, 26));
-
-        CBO_TH.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        CBO_TH.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CBO_THActionPerformed(evt);
-            }
-        });
-        jPanel2.add(CBO_TH, new org.netbeans.lib.awtextra.AbsoluteConstraints(456, 151, 193, 26));
-
-        txt_mota.setColumns(20);
-        txt_mota.setRows(3);
-        txt_mota.setTabSize(1);
-        jScrollPane1.setViewportView(txt_mota);
-
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(444, 209, 210, 80));
-        jPanel2.add(lblCheckMaGongKinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 68, 193, 20));
-        jPanel2.add(lblCheckTenGongKinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 123, 193, 20));
-        jPanel2.add(lblCheckSoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 179, 193, 20));
-        jPanel2.add(lblCheckGiaBan, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 235, 193, 20));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 930, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 38, 930, 300));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Bảng Sản Phẩm"));
 
@@ -461,6 +351,114 @@ public class QuanLyGongKinh extends javax.swing.JFrame {
             }
         });
         getContentPane().add(CBO_TH1_check, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 360, 200, 30));
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Quản Lý Sản Phẩm"));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setText("Mã Gọng Kính");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 40, -1, 26));
+
+        txt_maGK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_maGKActionPerformed(evt);
+            }
+        });
+        jPanel2.add(txt_maGK, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 40, 193, 26));
+
+        jLabel5.setText("Tên Gọng Kính");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 96, -1, 26));
+
+        txt_tenGK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_tenGKActionPerformed(evt);
+            }
+        });
+        jPanel2.add(txt_tenGK, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 96, 193, 26));
+
+        jLabel6.setText("Số Lượng");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 151, 56, 26));
+        jPanel2.add(TxtSoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 151, 193, 26));
+
+        jLabel7.setText("Giá Bán");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 207, 56, 26));
+        jPanel2.add(txt_GiaBan, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 207, 193, 26));
+
+        jLabel8.setText("Màu Sắc");
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, 56, 26));
+
+        jLabel9.setText("Chất Liệu");
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, 56, 26));
+
+        jLabel10.setText("Thương Hiệu");
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 150, -1, 26));
+
+        jLabel11.setText("Mô Tả");
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, 56, 26));
+
+        lbl_anh.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.add(lbl_anh, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 30, 202, 202));
+
+        btn_addAnh.setText("Thêm ảnh");
+        btn_addAnh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_addAnhActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn_addAnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(708, 250, -1, -1));
+
+        btn_deleteAnh.setText("Xóa Ảnh");
+        btn_deleteAnh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteAnhActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn_deleteAnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(829, 250, -1, -1));
+
+        CBo_MS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CBo_MS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CBo_MSActionPerformed(evt);
+            }
+        });
+        jPanel2.add(CBo_MS, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 40, 193, 26));
+
+        Cbo_chatLieu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        Cbo_chatLieu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Cbo_chatLieuActionPerformed(evt);
+            }
+        });
+        jPanel2.add(Cbo_chatLieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 100, 193, 26));
+
+        CBO_TH.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CBO_TH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CBO_THActionPerformed(evt);
+            }
+        });
+        jPanel2.add(CBO_TH, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 150, 193, 26));
+
+        txt_mota.setColumns(20);
+        txt_mota.setRows(3);
+        txt_mota.setTabSize(1);
+        jScrollPane1.setViewportView(txt_mota);
+
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 210, 210, 80));
+        jPanel2.add(lblCheckMaGongKinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 68, 193, 20));
+        jPanel2.add(lblCheckTenGongKinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 123, 193, 20));
+        jPanel2.add(lblCheckSoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 179, 193, 20));
+        jPanel2.add(lblCheckGiaBan, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 235, 193, 20));
+
+        jLabel2.setText("jLabel2");
+        jLabel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 100, 30, 20));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 930, 320));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -624,6 +622,12 @@ public class QuanLyGongKinh extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_CBO_TH1_checkItemStateChanged
 
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        ChatLieuForm clf = new ChatLieuForm();
+        clf.setVisible(true);
+        CBo_ChatLieu();
+    }//GEN-LAST:event_jLabel2MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -674,13 +678,13 @@ public class QuanLyGongKinh extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;

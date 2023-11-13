@@ -51,6 +51,18 @@ public class chatLieu_service {
         }
         return null;
     }
-
+     public int insert(chatLieu cl){
+         sql ="insert into chat_lieu( maChatLieu, tenChatLieu) values (?,?) ";
+         try {
+             con = DBconnect.getConnection();
+            ps =  con.prepareStatement(sql);
+            ps.setObject(1, cl.getMaChatLieu());
+            ps.setObject(2, cl.getTenChatLieu());
+            return ps.executeUpdate();
+         } catch (Exception e) {
+             e.printStackTrace();
+             return 0;
+         }
+     }
     
 }

@@ -50,5 +50,8 @@ public class mausac {
     public void setTenMauSac(String tenMauSac) {
         this.tenMauSac = tenMauSac;
     }
-   
-}
+   public Object[] todata() {
+    return new Object[] {this.maMauSac, this.tenMauSac};
+  }
+
+   }
