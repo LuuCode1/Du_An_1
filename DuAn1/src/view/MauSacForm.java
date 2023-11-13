@@ -13,7 +13,7 @@ import service.mausac_service;
  * @author leduc
  */
 public class MauSacForm extends javax.swing.JFrame {
-
+//l
     mausac color;
     mausac_service colorService = new mausac_service();
 

@@ -12,7 +12,7 @@ public class mausac {
     private int idMauSac;
    private String maMauSac;
    private String tenMauSac;
-
+//c
     public mausac() {
     }
 

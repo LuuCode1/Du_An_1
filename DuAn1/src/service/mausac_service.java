@@ -11,6 +11,7 @@ import model.mausac;
  *
  * @author Asus
  */
+//k
 public class mausac_service {
     Connection con = null;
     PreparedStatement ps = null;

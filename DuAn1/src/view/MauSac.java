@@ -15,7 +15,7 @@ import service.mausac_service;
  * @author Lenovo
  */
 public class MauSac extends javax.swing.JFrame {
-
+//l
     DefaultTableModel model;
     mausac_service mssv = new mausac_service();
     mausac ms = new mausac();

@@ -12,6 +12,7 @@ import model.mausac;
  *
  * @author Asus
  */
+//s
 public class chatLieu_service {
     Connection con = null;
     PreparedStatement ps = null;

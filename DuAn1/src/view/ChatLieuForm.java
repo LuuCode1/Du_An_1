@@ -14,7 +14,7 @@ import service.chatLieu_service;
  * @author Lenovo
  */
 public class ChatLieuForm extends javax.swing.JFrame {
-
+//l
     chatLieu cl = new chatLieu();
     chatLieu_service clsv = new chatLieu_service();
 

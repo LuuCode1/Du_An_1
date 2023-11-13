@@ -15,6 +15,7 @@ import model.thuonghieu;
  *
  * @author Asus
  */
+//l
 public class thuonghieu_service {
 
     Connection con = null;

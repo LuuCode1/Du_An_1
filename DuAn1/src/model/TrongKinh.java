@@ -21,7 +21,7 @@ public class TrongKinh {
     private String hinhanh;
     private String mota;
     private String trangthai;
-
+//e
     public TrongKinh() {
     }
 
