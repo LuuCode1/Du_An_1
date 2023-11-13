@@ -5,9 +5,12 @@
         <group>
             <file>file:/D:/game/Thư%20mục%20mới/DuAn1/src/service/mausac_service.java</file>
             <file>file:/D:/game/Thư%20mục%20mới/DuAn1/src/model/mausac.java</file>
+            <file>file:/D:/game/Thư%20mục%20mới/DuAn1/src/service/GongKinh_Service.java</file>
             <file>file:/D:/game/Thư%20mục%20mới/DuAn1/src/model/Giongkinh.java</file>
             <file>file:/D:/game/Thư%20mục%20mới/DuAn1/src/view/MauSac.java</file>
+            <file>file:/D:/game/Thư%20mục%20mới/DuAn1/src/model/chatLieu.java</file>
             <file>file:/D:/game/Thư%20mục%20mới/DuAn1/src/view/QuanLyGongKinh.java</file>
+            <file>file:/D:/game/Thư%20mục%20mới/DuAn1/src/service/chatLieu_service.java</file>
             <file>file:/D:/game/Thư%20mục%20mới/DuAn1/src/view/ChatLieuForm.java</file>
             <file>file:/D:/game/Thư%20mục%20mới/DuAn1/src/view/ThuongHieu.java</file>
         </group>
