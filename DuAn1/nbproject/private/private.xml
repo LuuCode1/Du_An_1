@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/game/Thư%20mục%20mới/DuAn1/src/service/mausac_service.java</file>
             <file>file:/D:/game/Thư%20mục%20mới/DuAn1/src/model/mausac.java</file>
             <file>file:/D:/game/Thư%20mục%20mới/DuAn1/src/service/GongKinh_Service.java</file>
@@ -13,6 +14,10 @@
             <file>file:/D:/game/Thư%20mục%20mới/DuAn1/src/service/chatLieu_service.java</file>
             <file>file:/D:/game/Thư%20mục%20mới/DuAn1/src/view/ChatLieuForm.java</file>
             <file>file:/D:/game/Thư%20mục%20mới/DuAn1/src/view/ThuongHieu.java</file>
+=======
+            <file>file:/C:/Users/leduc/Documents/GitHub/Du_An_1/DuAn1/src/service/DBconnect.java</file>
+            <file>file:/C:/Users/leduc/Documents/GitHub/Du_An_1/DuAn1/src/view/QuanLyGongKinh.java</file>
+>>>>>>> b00573fb6852d23a60b282607fd31748da64e913
         </group>
     </open-files>
 </project-private>
