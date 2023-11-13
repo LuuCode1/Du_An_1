@@ -14,50 +14,35 @@ import java.util.logging.Logger;
  * @author Asus
  */
 public class DBconnect {
-    private static final String USERNAME = "sa";
-    private static final String PASSWORD = "nobita123z";
-    private static final String SERVER = "localhost";
-    private static final String PORT = "1433";
-    private static final String DATABASE_NAME = "Ung_Dung_Ban_Kinh";
-    private static final boolean USING_SSL = false;
-    private static String CONNECT_STRING;
-   
+    public static final String URL
+            = "jdbc:sqlserver://localhost;databaseName=Ung_Dung_Ban_Kinh;user=sa;password=1234;encrypt=true;trustServerCertificate=true";
+
     static {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-           
-            StringBuilder connectStringBuilder = new StringBuilder();
-            connectStringBuilder.append("jdbc:sqlserver://")
-                    .append(SERVER).append(":").append(PORT).append(";")
-                    .append("databaseName=").append(DATABASE_NAME).append(";")
-                    .append("user=").append(USERNAME).append(";")
-                    .append("password=").append(PASSWORD).append(";")
-                    ;
-            if (USING_SSL) {
-                connectStringBuilder.append("encrypt=true;trustServerCertificate=true;");
-            }
-            CONNECT_STRING = connectStringBuilder.toString();
-            System.out.println("Connect String có dạng: " + CONNECT_STRING);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            System.out.println("Chua co Driver !" + e.toString());
         }
     }
-   
-    public static Connection getConnection()  {
-         try {
-             return DriverManager.getConnection(CONNECT_STRING);
-         } catch (SQLException ex) {
-             ex.printStackTrace();
-             Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
-             return null;
-         }
+
+    public static Connection getConnection() {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(URL);
+        } catch (Exception e) {
+            //Loi sai ten database;
+            //Loi ten dang nhap va mat khau;
+            System.out.println("Loi connect" + e.toString());
+        }
+        return conn;
     }
-   
-    public static void main(String[] args) throws Exception {
-        Connection conn = getConnection();
-        DatabaseMetaData dbmt = conn.getMetaData();
-        System.out.println(dbmt.getDriverName());
-        System.out.println(dbmt.getDatabaseProductName());
-        System.out.println(dbmt.getDatabaseProductVersion());
+
+    public static void main(String[] args) {
+        Connection connection = getConnection();
+        if (connection != null) {
+            System.out.println("thanh cong");
+        } else {
+            System.out.println("that bai");
+        }
     }
 }
