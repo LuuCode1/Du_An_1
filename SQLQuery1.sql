@@ -280,5 +280,8 @@ mau_sac ON trong_kinh.idMauSac = mau_sac.idMauSac INNER JOIN
 chat_lieu ON trong_kinh.idChatLieu = chat_lieu.idChatLieu INNER JOIN
 thuong_hieu ON trong_kinh.idThuongHieu = thuong_hieu.idThuongHieu
 where thuong_hieu.tenThuongHieu =?
+SELECT    maMauSac, tenMauSac FROM mau_sac where maMauSac like ? or tenMauSac like ?
 
----alll
+
+
+
