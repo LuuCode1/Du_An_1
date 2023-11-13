@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  */
 public class DBconnect {
     private static final String USERNAME = "sa";
-    private static final String PASSWORD = "nobita123z";
+    private static final String PASSWORD = "1234";
     private static final String SERVER = "localhost";
     private static final String PORT = "1433";
     private static final String DATABASE_NAME = "Ung_Dung_Ban_Kinh";
@@ -59,5 +59,6 @@ public class DBconnect {
         System.out.println(dbmt.getDriverName());
         System.out.println(dbmt.getDatabaseProductName());
         System.out.println(dbmt.getDatabaseProductVersion());
+        System.out.println("///");
     }
 }
