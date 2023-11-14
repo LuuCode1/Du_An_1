@@ -50,6 +50,7 @@ public class mausac_service {
         }
         return null;
     }
+
     public int insert(mausac ms){
          sql ="insert into mau_sac( maMauSac, tenMauSac) values (?,?) ";
          try {
