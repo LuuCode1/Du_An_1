@@ -18,7 +18,7 @@ public class Giongkinh {
     private int soLuong;
     private String hinhAnh;
     private String moTa;
-
+//b
     public Giongkinh() {
     }
 

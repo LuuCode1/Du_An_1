@@ -15,7 +15,7 @@ public class chatLieu {
 
     public chatLieu() {
     }
-
+//a
     public chatLieu(int idChatLieu, String maChatLieu, String tenChatLieu) {
         this.idChatLieu = idChatLieu;
         this.maChatLieu = maChatLieu;

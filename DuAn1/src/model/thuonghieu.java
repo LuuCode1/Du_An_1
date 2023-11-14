@@ -12,7 +12,7 @@ public class thuonghieu {
     private int idThuongHieu;
     private String maThuongHieu;
     private String tenThuongHieu;
-
+//d
     public thuonghieu() {
     }
 

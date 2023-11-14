@@ -14,7 +14,7 @@ import service.thuonghieu_service;
  * @author leduc
  */
 public class ThuongHieuForm extends javax.swing.JFrame {
-
+//l
     thuonghieu brand;
     thuonghieu_service brandService = new thuonghieu_service();
 
