@@ -47,12 +47,14 @@ public class Main extends javax.swing.JFrame {
                     if (subMenuIndex == 0) {
                         main.showForm(new Form_Home());
                     } else if (subMenuIndex == 1) {
-                        main.showForm(new Form1());
+                        main.showForm(new Form_Home());
                     }
                 }
                 if (menuIndex == 1) {
                     if (subMenuIndex ==0) {
-                        main.showForm(new QuanLyGongKinh());
+                        main.showForm(new com.raven.form.QuanLyGongKinh());
+                    }else if(subMenuIndex==1){
+                        
                     }
                 }
             }
