@@ -101,7 +101,7 @@ void name() {
         CBO_TH.setModel(new DefaultComboBoxModel<>(cbo));
         CBO_TH1_check.setModel(new DefaultComboBoxModel<>(cbo));
     }
-
+//hh
     void showmodel_gongKing(Giongkinh gk1) {
         Giongkinh gk = gk1;
         txt_maGK.setText(gk.getMaGongKinh());
