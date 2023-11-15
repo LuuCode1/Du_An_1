@@ -54,7 +54,7 @@ public class Main extends javax.swing.JFrame {
                     if (subMenuIndex ==0) {
                         main.showForm(new com.raven.form.QuanLyGongKinh());
                     }else if(subMenuIndex==1){
-                        
+                        main.showForm(new com.raven.form.QuanLyTrongKinh());
                     }
                 }
             }
