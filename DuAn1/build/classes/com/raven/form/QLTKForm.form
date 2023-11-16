@@ -185,21 +185,33 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXoaActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnSua">
               <Properties>
                 <Property name="text" type="java.lang.String" value="S&#x1eed;a"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSuaActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnLuu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="L&#x1b0;u"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLuuActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnSPChiTiet">
               <Properties>
                 <Property name="text" type="java.lang.String" value="SP chi ti&#x1ebf;t"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSPChiTietActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -258,10 +270,18 @@
                       </Table>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbl_thongtin_tkMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
             <Component class="javax.swing.JTextField" name="txt_tim_tk">
+              <Events>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txt_tim_tkFocusLost"/>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txt_tim_tkMousePressed"/>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_tim_tkKeyReleased"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
