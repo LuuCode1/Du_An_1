@@ -6,10 +6,7 @@ import com.raven.event.EventMenuSelected;
 import com.raven.event.EventShowPopupMenu;
 import com.raven.form.Form1;
 import com.raven.form.Form_Home;
-import com.raven.form.GongKinhChiTiet;
 import com.raven.form.MainForm;
-import com.raven.form.MauSac;
-import com.raven.form.ThuongHieuu;
 import com.raven.swing.MenuItem;
 import com.raven.swing.PopupMenu;
 import com.raven.swing.icon.GoogleMaterialDesignIcons;
@@ -21,7 +18,6 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
-import com.raven.form.QuanLyGongKinh;
 
 public class Main extends javax.swing.JFrame {
 
@@ -50,35 +46,9 @@ public class Main extends javax.swing.JFrame {
                     if (subMenuIndex == 0) {
                         main.showForm(new Form_Home());
                     } else if (subMenuIndex == 1) {
-                        main.showForm(new Form_Home());
+                        main.showForm(new Form1());
                     }
                 }
-                if (menuIndex == 1) {
-<<<<<<< HEAD
-                    if (subMenuIndex ==0) {
-                        main.showForm(new GongKinhChiTiet());
-                    }else if(subMenuIndex==1){
-=======
-                    if (subMenuIndex == 0) {
-                        main.showForm(new com.raven.form.QuanLyGongKinh());
-                    } else if (subMenuIndex == 1) {
->>>>>>> 60f61568bc7e804db640fb6d3c654d055ad0f436
-                        main.showForm(new com.raven.form.QuanLyTrongKinh());
-                    } else if (subMenuIndex == 2) {
-                        main.showForm(new ThuongHieuu());
-                    } else if (subMenuIndex == 3) {
-                        main.showForm(new MauSac());
-                    }
-                }
-
-                if (menuIndex == 2) {
-                    if (subMenuIndex == 0) {
-                        main.showForm(new com.raven.form.QLTKForm());
-                    } else if (subMenuIndex == 1) {
-                        main.showForm(new com.raven.form.QLGKForm());
-                    }
-                }
-
             }
         });
         menu.addEventShowPopup(new EventShowPopupMenu() {
@@ -198,6 +168,7 @@ public class Main extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
