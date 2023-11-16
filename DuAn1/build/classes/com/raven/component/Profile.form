@@ -45,7 +45,7 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/images/Custom-Icon-Design-Mono-General-3-Home.24.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Du_An_1[Nh&#xf3;m 6]"/>
+        <Property name="text" type="java.lang.String" value="SixStore"/>
       </Properties>
     </Component>
   </SubComponents>

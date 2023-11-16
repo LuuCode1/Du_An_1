@@ -34,6 +34,12 @@ CREATE TABLE gong_kinh (
   idGongKinh INT NOT NULL IDENTITY(1,1),
   maGongKinh  NVARCHAR(50) NOT NULL,
   tenGongKinh  NVARCHAR(50) NOT NULL,
+   PRIMARY KEY (idGongKinh),
+);
+
+CREATE TABLE gong_kinh_chi_tiet (
+  idGongKinhCT INT NOT NULL IDENTITY(1,1),
+  idGongKinh INT NOT NULL ,
   idChatLieu INT NOT NULL,
   idMauSac INT NOT NULL,
   idThuongHieu INT NOT NULL,
@@ -42,7 +48,8 @@ CREATE TABLE gong_kinh (
   hinhanh NVARCHAR(max) NULL,
   moTa NVARCHAR(50) NOT NULL,
   trangThai NVARCHAR(50),
-  PRIMARY KEY (idGongKinh),
+  PRIMARY KEY (idGongKinhCT),
+  FOREIGN KEY (idGongKinh) REFERENCES gong_kinh (idGongKinh),
   FOREIGN KEY (idChatLieu) REFERENCES chat_lieu (idChatLieu),
   FOREIGN KEY (idMauSac) REFERENCES mau_sac (idMauSac),
   FOREIGN KEY (idThuongHieu) REFERENCES thuong_hieu (idThuongHieu),
@@ -56,6 +63,17 @@ CREATE TABLE trong_kinh (
   idTrongKinh INT NOT NULL IDENTITY(1,1),
   maTrongKinh VARCHAR(50) NOT NULL,
   tenTrongKinh  NVARCHAR(50) NOT NULL,
+  
+  PRIMARY KEY (idTrongKinh),
+  
+  
+);
+
+CREATE TABLE trong_kinh_chi_tiet (
+  idTrongKinhCT INT NOT NULL IDENTITY(1,1),
+  idTrongKinh INT NOT NULL ,
+  maTrongKinh VARCHAR(50) NOT NULL,
+  tenTrongKinh  NVARCHAR(50) NOT NULL,
   idChatLieu INT NOT NULL,
   idMauSac INT NOT NULL,
   idThuongHieu INT NOT NULL,
@@ -65,7 +83,8 @@ CREATE TABLE trong_kinh (
   hinhanh NVARCHAR(max) NULL,
   moTa NVARCHAR(50) NOT NULL,
   trangThai NVARCHAR(50),
-  PRIMARY KEY (idTrongKinh),
+  PRIMARY KEY (idTrongKinhCT),
+  FOREIGN KEY (idTrongKinh) REFERENCES trong_kinh (idTrongKinh),
   FOREIGN KEY (idChatLieu) REFERENCES chat_lieu (idChatLieu),
   FOREIGN KEY (idMauSac) REFERENCES mau_sac (idMauSac),
   FOREIGN KEY (idThuongHieu) REFERENCES thuong_hieu (idThuongHieu),
@@ -73,18 +92,19 @@ CREATE TABLE trong_kinh (
 );
 
 
+
 -- Chuyển idGongKinh và idTrongKinh từ NOT NULL thành NULL
 CREATE TABLE hoa_don_chi_tiet (
   idHoaDonChiTiet  INT NOT NULL IDENTITY(1,1),
   maHoaDonChiTiet  VARCHAR(50) NOT NULL,
-  idGongKinh INT  NULL,
-  idTrongKinh INT  NULL,
+  idGongKinhCT INT  NULL,
+  idTrongKinhCT INT  NULL,
   soluong  INT NOT NULL,
   dongia   FLOAT NOT NULL,
   tonggia  FLOAT NOT NULL,
   PRIMARY KEY (idHoaDonChiTiet),
-  FOREIGN KEY (idGongKinh) REFERENCES gong_kinh (idGongKinh),
-  FOREIGN KEY (idTrongKinh) REFERENCES trong_kinh (idTrongKinh),
+  FOREIGN KEY (idGongKinhCT) REFERENCES gong_kinh_chi_tiet (idGongKinhCT),
+  FOREIGN KEY (idTrongKinhCT) REFERENCES trong_kinh_chi_tiet (idTrongKinhCT),
 );
 
 CREATE TABLE nhan_vien (
@@ -281,6 +301,7 @@ chat_lieu ON trong_kinh.idChatLieu = chat_lieu.idChatLieu INNER JOIN
 thuong_hieu ON trong_kinh.idThuongHieu = thuong_hieu.idThuongHieu
 where thuong_hieu.tenThuongHieu =?
 SELECT    maMauSac, tenMauSac FROM mau_sac where maMauSac like ? or tenMauSac like ?
+delete from gong_kinh where maGongKinh like 'GK01'
 
 
 
