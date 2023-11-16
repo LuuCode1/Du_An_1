@@ -9,8 +9,8 @@ import java.util.logging.Logger;
 public class DBconnect {
 
     public static String USER = "sa";
-    public static String PASSWORD = "nobita123z";
-    public static String URL = "jdbc:sqlserver://localhost:1433;databaseName=Ung_Dung_Ban_Kinh;trustServerCertificate=true";
+    public static String PASSWORD = "200408";
+    public static String URL = "jdbc:sqlserver://LocalHost:1433;databaseName=Ung_Dung_Ban_Kinh;trustServerCertificate=true";
 
     static {
         try {
