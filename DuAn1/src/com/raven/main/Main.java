@@ -20,7 +20,7 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
-import view.QuanLyGongKinh;
+import com.raven.form.QuanLyGongKinh;
 
 public class Main extends javax.swing.JFrame {
 

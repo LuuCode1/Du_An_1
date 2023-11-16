@@ -22,13 +22,17 @@ import service.GongKinh_Service;
 import service.chatLieu_service;
 import service.mausac_service;
 import service.thuonghieu_service;
+import view.ChatLieuForm;
+import view.MauSacForm;
+import view.ThuongHieuForm;
 
 /**
  *
  * @author Asus
  */
 public class QuanLyGongKinh extends javax.swing.JPanel {
- Giongkinh gk = new Giongkinh();
+
+    Giongkinh gk = new Giongkinh();
     GongKinh_Service gksv = new GongKinh_Service();
     int index = -1;
     DefaultTableModel model;
@@ -39,6 +43,7 @@ public class QuanLyGongKinh extends javax.swing.JPanel {
     thuonghieu th = new thuonghieu();
     thuonghieu_service thsv = new thuonghieu_service();
     String linkAnh = null;
+
     /**
      * Creates new form QuanLyGongKinh
      */
@@ -53,10 +58,10 @@ public class QuanLyGongKinh extends javax.swing.JPanel {
         CBo_ThuongHieu();
         name();
         txt_seach.setText("Tìm Kiếm");
-        btn_update.setEnabled(false);
-        btn_delete.setEnabled(false);
+
     }
-void name() {
+
+    void name() {
         String[] table1 = {"Mã Gọng Kính", "Tên Giọng Kính", "Chất Liệu", "Màu Sắc", "Thương Hiệu", "Số Lượng", "Giá Bán", "Hình Ảnh", "Mô Tả"};
         for (int i = 0; i < table1.length; i++) {
             lblbang.getColumnModel().getColumn(i).setHeaderValue(table1[i]);
@@ -102,6 +107,7 @@ void name() {
         CBO_TH1_check.setModel(new DefaultComboBoxModel<>(cbo));
     }
 //hh
+
     void showmodel_gongKing(Giongkinh gk1) {
         Giongkinh gk = gk1;
         txt_maGK.setText(gk.getMaGongKinh());
@@ -175,11 +181,19 @@ void name() {
         } else {
             lblCheckTenGongKinh.setText(null);
         }
+        // Kiểm tra tên gọng kính chỉ bao gồm các ký tự chữ và khoảng trắng
+
         try {
             int soLuong = Integer.parseInt(TxtSoLuong.getText());
-
+            if (soLuong < 0) {
+                lblCheckSoLuong.setText("Số lượng phải lớn hơn 0");
+                lblCheckSoLuong.setForeground(Color.RED);
+                return false;
+            } else {
+                lblCheckSoLuong.setText(null);
+            }
         } catch (NumberFormatException ex) {
-            lblCheckSoLuong.setText("Số lượng phải là số nguyên");
+            lblCheckSoLuong.setText("Số lượng phải là số ");
             lblCheckSoLuong.setForeground(Color.RED);
             return false;
         }
@@ -187,15 +201,20 @@ void name() {
 // Kiểm tra trường Giá Bán
         try {
             float giaBan = Float.parseFloat(txt_GiaBan.getText());
-
+            if (giaBan < 0) {
+                lblCheckGiaBan.setText("Số Lượng phải lớn hơn 0");
+                lblCheckGiaBan.setForeground(Color.red);
+                return false;
+            }
         } catch (NumberFormatException ex) {
-            lblCheckGiaBan.setText("Giá bán phải là số thực");
+            lblCheckGiaBan.setText("Giá bán phải là số ");
             lblCheckGiaBan.setForeground(Color.RED);
 
             return false;
         }
         return true;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -244,6 +263,7 @@ void name() {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        themnhanhmausac = new javax.swing.JPanel();
 
         setPreferredSize(new java.awt.Dimension(1058, 394));
 
@@ -437,10 +457,10 @@ void name() {
         jScrollPane1.setViewportView(txt_mota);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, 210, 80));
-        jPanel2.add(lblCheckMaGongKinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 68, 193, 20));
-        jPanel2.add(lblCheckTenGongKinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 123, 193, 20));
-        jPanel2.add(lblCheckSoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 179, 193, 20));
-        jPanel2.add(lblCheckGiaBan, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 235, 193, 20));
+        jPanel2.add(lblCheckMaGongKinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 68, 230, 20));
+        jPanel2.add(lblCheckTenGongKinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 123, 230, 20));
+        jPanel2.add(lblCheckSoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 179, 230, 20));
+        jPanel2.add(lblCheckGiaBan, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 235, 230, 20));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Microsoft-Fluentui-Emoji-Mono-Plus.24.png"))); // NOI18N
         jLabel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -474,6 +494,19 @@ void name() {
             }
         });
         jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 150, 30, 22));
+
+        javax.swing.GroupLayout themnhanhmausacLayout = new javax.swing.GroupLayout(themnhanhmausac);
+        themnhanhmausac.setLayout(themnhanhmausacLayout);
+        themnhanhmausacLayout.setHorizontalGroup(
+            themnhanhmausacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 230, Short.MAX_VALUE)
+        );
+        themnhanhmausacLayout.setVerticalGroup(
+            themnhanhmausacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jPanel2.add(themnhanhmausac, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, 230, 0));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -538,18 +571,12 @@ void name() {
         if (gksv.selectByID(ma) != null) {
             Giongkinh gk = gksv.selectByID(ma);
             showmodel_gongKing(gk);
-            txt_maGK.setEnabled(false);
-            btn_add.setEnabled(false);
-            btn_update.setEnabled(true);
-            btn_delete.setEnabled(true);
+
         }
     }//GEN-LAST:event_lblbangMouseClicked
 
     private void btn_resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resetActionPerformed
-        btn_update.setEnabled(false);
-        btn_delete.setEnabled(false);
-        btn_add.setEnabled(true);
-        txt_maGK.setEnabled(true);
+
         reset();
     }//GEN-LAST:event_btn_resetActionPerformed
 
@@ -577,8 +604,6 @@ void name() {
             if (gksv.update(gk, ma) > 0) {
                 JOptionPane.showMessageDialog(this, "Thành Công");
                 fillTable(gksv.selectAll());
-                btn_add.setEnabled(true);
-                txt_maGK.setEnabled(true);
                 reset();
             }
         }
@@ -590,8 +615,7 @@ void name() {
             if (gksv.delete(gk.getMaGongKinh()) > 0) {
                 JOptionPane.showMessageDialog(this, "Thành Công");
                 fillTable(gksv.selectAll());
-                btn_add.setEnabled(true);
-                txt_maGK.setEnabled(true);
+
                 reset();
             }
         }
@@ -690,23 +714,23 @@ void name() {
     }//GEN-LAST:event_CBO_THActionPerformed
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-//        MauSacForm msf = new MauSacForm();
-//        msf.setVisible(true);
-//        CBo_MauSac();
+        MauSacForm ms = new MauSacForm();
+        ms.setVisible(true);
+        CBo_MauSac();
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
-//        ChatLieuForm clf = new ChatLieuForm();
-//        clf.setVisible(true);
-//        CBo_ChatLieu();
+        ChatLieuForm clf = new ChatLieuForm();
+        clf.setVisible(true);
+        CBo_ChatLieu();
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
         // TODO add your handling code here:
-//        ThuongHieuForm thf = new ThuongHieuForm();
-//        thf.setVisible(true);
-//        CBo_ThuongHieu();
+        ThuongHieuForm thf = new ThuongHieuForm();
+        thf.setVisible(true);
+        CBo_ThuongHieu();
     }//GEN-LAST:event_jLabel12MouseClicked
 
 
@@ -745,6 +769,7 @@ void name() {
     private javax.swing.JLabel lblCheckTenGongKinh;
     private javax.swing.JLabel lbl_anh;
     private javax.swing.JTable lblbang;
+    private javax.swing.JPanel themnhanhmausac;
     private javax.swing.JTextField txt_GiaBan;
     private javax.swing.JTextField txt_maGK;
     private javax.swing.JTextArea txt_mota;
