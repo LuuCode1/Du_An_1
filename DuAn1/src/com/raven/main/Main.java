@@ -53,19 +53,25 @@ public class Main extends javax.swing.JFrame {
                     }
                 }
                 if (menuIndex == 1) {
-                    if (subMenuIndex ==0) {
+                    if (subMenuIndex == 0) {
                         main.showForm(new com.raven.form.QuanLyGongKinh());
-                    }else if(subMenuIndex==1){
+                    } else if (subMenuIndex == 1) {
                         main.showForm(new com.raven.form.QuanLyTrongKinh());
-                    }else if (subMenuIndex==2) {
+                    } else if (subMenuIndex == 2) {
                         main.showForm(new ThuongHieuu());
-                    }else if (subMenuIndex==3) {
+                    } else if (subMenuIndex == 3) {
                         main.showForm(new MauSac());
                     }
                 }
-                
-                
-                
+
+                if (menuIndex == 2) {
+                    if (subMenuIndex == 0) {
+                        main.showForm(new com.raven.form.QLTKForm());
+                    } else if (subMenuIndex == 1) {
+                        main.showForm(new com.raven.form.QLGKForm());
+                    }
+                }
+
             }
         });
         menu.addEventShowPopup(new EventShowPopupMenu() {
