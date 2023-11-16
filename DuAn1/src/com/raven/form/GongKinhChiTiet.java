@@ -4,6 +4,12 @@
  */
 package com.raven.form;
 
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+
 /**
  *
  * @author Asus
@@ -15,6 +21,7 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
      */
     public GongKinhChiTiet() {
         initComponents();
+        setOpaque(false);
     }
 
     /**
@@ -26,19 +33,46 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lbl_maGK = new javax.swing.JLabel();
+
+        setPreferredSize(new java.awt.Dimension(1058, 794));
+
+        lbl_maGK.setFont(new java.awt.Font("STLiti", 0, 48)); // NOI18N
+        lbl_maGK.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_maGK.setToolTipText("");
+        lbl_maGK.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(351, 351, 351)
+                .addComponent(lbl_maGK, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(395, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(lbl_maGK, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(608, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+@Override
+    protected void paintComponent(Graphics grphcs) {
+        Graphics2D g2 = (Graphics2D) grphcs;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        Color lightPurple = new Color(177, 156, 217, 80); // Màu tím nhạt với alpha: 80
 
+        // Tạo GradientPaint với màu xanh biển và màu tím nhạt có alpha thấp
+        GradientPaint gra = new GradientPaint(0, 0, new Color(0, 119, 190), getWidth(), 0, lightPurple);
+        g2.setPaint(gra);
+        g2.fillRect(0, 0, getWidth(), getHeight());
+        super.paintComponent(grphcs);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel lbl_maGK;
     // End of variables declaration//GEN-END:variables
 }

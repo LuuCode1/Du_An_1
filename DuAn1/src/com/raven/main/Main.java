@@ -6,6 +6,7 @@ import com.raven.event.EventMenuSelected;
 import com.raven.event.EventShowPopupMenu;
 import com.raven.form.Form1;
 import com.raven.form.Form_Home;
+import com.raven.form.GongKinhChiTiet;
 import com.raven.form.MainForm;
 import com.raven.form.MauSac;
 import com.raven.form.ThuongHieuu;
@@ -54,7 +55,7 @@ public class Main extends javax.swing.JFrame {
                 }
                 if (menuIndex == 1) {
                     if (subMenuIndex ==0) {
-                        main.showForm(new com.raven.form.QuanLyGongKinh());
+                        main.showForm(new GongKinhChiTiet());
                     }else if(subMenuIndex==1){
                         main.showForm(new com.raven.form.QuanLyTrongKinh());
                     }else if (subMenuIndex==2) {
