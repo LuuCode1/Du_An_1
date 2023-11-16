@@ -32,10 +32,10 @@
                       <Component id="btn_exit" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="txt_ma" alignment="0" pref="166" max="32767" attributes="0"/>
                       <Component id="txt_ten" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="14" max="32767" attributes="0"/>
@@ -74,12 +74,12 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="T&#xea;n ch&#x1ea5;t li&#x1ec7;u:"/>
+        <Property name="text" type="java.lang.String" value="T&#xea;n Th&#x1b0;&#x1a1;ng Hi&#x1ec7;u"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="M&#xe3; ch&#x1ea5;t li&#x1ec7;u:"/>
+        <Property name="text" type="java.lang.String" value="M&#xe3; Th&#x1b0;&#x1a1;ng Hi&#x1ec7;u"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_ten">

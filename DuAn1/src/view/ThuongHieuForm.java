@@ -58,9 +58,9 @@ public class ThuongHieuForm extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Tên chất liệu:");
+        jLabel2.setText("Tên Thương Hiệu");
 
-        jLabel1.setText("Mã chất liệu:");
+        jLabel1.setText("Mã Thương Hiệu");
 
         txt_ten.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,10 +93,10 @@ public class ThuongHieuForm extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btn_exit))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel2)
                         .addComponent(jLabel1)
                         .addComponent(txt_ma, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                        .addComponent(txt_ten)))
+                        .addComponent(txt_ten)
+                        .addComponent(jLabel2)))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
