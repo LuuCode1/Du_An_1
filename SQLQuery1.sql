@@ -72,8 +72,6 @@ CREATE TABLE trong_kinh (
 CREATE TABLE trong_kinh_chi_tiet (
   idTrongKinhCT INT NOT NULL IDENTITY(1,1),
   idTrongKinh INT NOT NULL ,
-  maTrongKinh VARCHAR(50) NOT NULL,
-  tenTrongKinh  NVARCHAR(50) NOT NULL,
   idChatLieu INT NOT NULL,
   idMauSac INT NOT NULL,
   idThuongHieu INT NOT NULL,
