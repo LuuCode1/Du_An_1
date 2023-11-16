@@ -7,6 +7,8 @@ import com.raven.event.EventShowPopupMenu;
 import com.raven.form.Form1;
 import com.raven.form.Form_Home;
 import com.raven.form.MainForm;
+import com.raven.form.MauSac;
+import com.raven.form.ThuongHieuu;
 import com.raven.swing.MenuItem;
 import com.raven.swing.PopupMenu;
 import com.raven.swing.icon.GoogleMaterialDesignIcons;
@@ -55,8 +57,15 @@ public class Main extends javax.swing.JFrame {
                         main.showForm(new com.raven.form.QuanLyGongKinh());
                     }else if(subMenuIndex==1){
                         main.showForm(new com.raven.form.QuanLyTrongKinh());
+                    }else if (subMenuIndex==2) {
+                        main.showForm(new ThuongHieuu());
+                    }else if (subMenuIndex==3) {
+                        main.showForm(new MauSac());
                     }
                 }
+                
+                
+                
             }
         });
         menu.addEventShowPopup(new EventShowPopupMenu() {

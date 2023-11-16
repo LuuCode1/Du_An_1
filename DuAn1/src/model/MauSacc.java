@@ -1,0 +1,45 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package model;
+
+/**
+ *
+ * @author Dat
+ */
+public class MauSacc {
+    private String maMauSac;
+    private String tenMauSac;
+
+    public MauSacc() {
+    }
+
+    public MauSacc(String maMauSac, String tenMauSac) {
+        this.maMauSac = maMauSac;
+        this.tenMauSac = tenMauSac;
+    }
+
+    public String getMaMauSac() {
+        return maMauSac;
+    }
+
+    public void setMaMauSac(String maMauSac) {
+        this.maMauSac = maMauSac;
+    }
+
+    public String getTenMauSac() {
+        return tenMauSac;
+    }
+
+    public void setTenMauSac(String tenMauSac) {
+        this.tenMauSac = tenMauSac;
+    }
+
+    @Override
+    public String toString() {
+        return "MauSacc{" + "maMauSac=" + maMauSac + ", tenMauSac=" + tenMauSac + '}';
+    }
+    
+    
+}
