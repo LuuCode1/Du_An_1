@@ -22,6 +22,7 @@ public class QLGKForm extends javax.swing.JPanel {
      */
     public QLGKForm() {
         initComponents();
+        txt_tim_gk.setText("Tìm kiếm");
         tbl_thongtin_gk.setModel(tblModel);
         String header[] = {
             "ID", "Mã Gọng Kính", "Tên Gọng Kính"
@@ -29,7 +30,7 @@ public class QLGKForm extends javax.swing.JPanel {
         tblModel.setColumnIdentifiers(header);
         
         tblModel = (DefaultTableModel) tbl_thongtin_gk.getModel();
-        LoadDataToTable();
+        LoadDataToTable(qlgks.getALLQLGK());
     }
 
     /**
@@ -177,6 +178,22 @@ public class QLGKForm extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tbl_thongtin_gk);
 
+        txt_tim_gk.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_tim_gkFocusLost(evt);
+            }
+        });
+        txt_tim_gk.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_tim_gkMousePressed(evt);
+            }
+        });
+        txt_tim_gk.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_tim_gkKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -269,7 +286,7 @@ public class QLGKForm extends javax.swing.JPanel {
             QLGK qlgk = getQLGKFormInput();
             if(qlgks.AddQLGK(qlgk) != null){
                 JOptionPane.showMessageDialog(this, "Thêm thành công");
-                LoadDataToTable();
+                LoadDataToTable(qlgks.getALLQLGK());
             }else {
                 JOptionPane.showMessageDialog(this, "Không thêm thành công");
             }
@@ -297,7 +314,7 @@ public class QLGKForm extends javax.swing.JPanel {
             QLGK qlgk = getQLGKFormInput();
             if(qlgks.UpdateQLGK(qlgk) != null){
                 JOptionPane.showMessageDialog(this, "Sửa thành công");
-                LoadDataToTable();
+                LoadDataToTable(qlgks.getALLQLGK());
             }else {
                 JOptionPane.showMessageDialog(this, "Không sửa thành công");
             }
@@ -325,7 +342,7 @@ public class QLGKForm extends javax.swing.JPanel {
             QLGK qlgk = getQLGKFormInput();
             if(qlgks.DeleteQLGK(ma) != null){
                 JOptionPane.showMessageDialog(this, "Xóa thành công");
-                LoadDataToTable();
+                LoadDataToTable(qlgks.getALLQLGK());
             }else {
                 JOptionPane.showMessageDialog(this, "Không xóa thành công");
             }
@@ -340,6 +357,34 @@ public class QLGKForm extends javax.swing.JPanel {
         QuanLyGongKinh panel = new QuanLyGongKinh();
         panel.setVisible(true);
     }//GEN-LAST:event_btnSPChiTietActionPerformed
+
+    private void txt_tim_gkKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tim_gkKeyReleased
+        // TODO add your handling code here:
+        try {
+            String text = "%" + txt_tim_gk.getText() + "%";
+            if(txt_tim_gk.getText().isEmpty()){
+                LoadDataToTable(qlgks.getALLQLGK());
+            }else {
+                ArrayList<QLGK> list = qlgks.Search(text);
+                LoadDataToTable(list);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_txt_tim_gkKeyReleased
+
+    private void txt_tim_gkMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_tim_gkMousePressed
+        // TODO add your handling code here:
+        txt_tim_gk.setText(null);
+    }//GEN-LAST:event_txt_tim_gkMousePressed
+
+    private void txt_tim_gkFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_tim_gkFocusLost
+        // TODO add your handling code here:
+        if(txt_tim_gk.getText().isEmpty()){
+            txt_tim_gk.setText("Tìm kiếm");
+            LoadDataToTable(qlgks.getALLQLGK());
+        }
+    }//GEN-LAST:event_txt_tim_gkFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -362,8 +407,8 @@ public class QLGKForm extends javax.swing.JPanel {
     private javax.swing.JTextField txt_tim_gk;
     // End of variables declaration//GEN-END:variables
 
-    private void LoadDataToTable() {
-        ArrayList<QLGK> list = qlgks.getALLQLGK();
+    private void LoadDataToTable(ArrayList<QLGK> list) {
+        //list = qlgks.getALLQLGK();
         tblModel.setRowCount(0);
         for (QLGK qlgk : list) {
             tblModel.addRow(new Object[]{

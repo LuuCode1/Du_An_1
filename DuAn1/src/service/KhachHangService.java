@@ -4,7 +4,6 @@
  */
 package service;
 
-
 import java.sql.*;
 import java.util.ArrayList;
 import model.KhachHang;
@@ -91,25 +90,32 @@ public class KhachHangService {
         return row;
     }
 
-    public KhachHang findById(String maKH) {
-        String sql = "SELECT * FROM khach_hang where maKhachHang = ? ";
+    public ArrayList<KhachHang> SearchKhachHang(String texttk) {
+        ArrayList<KhachHang> list = new ArrayList<>();
+        String sql = "select * from khach_hang\n"
+                + "where maKhachHang like ?\n"
+                + "	  or tenKhachHang like ?\n"
+                + "	  or diachi like ?\n"
+                + "	  or sdt like ?";
         Connection con = DBconnect.getConnection();
         try {
             PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setString(1, texttk);
+            pstm.setString(2, texttk);
+            pstm.setString(3, texttk);
+            pstm.setString(4, texttk);
             ResultSet rs = pstm.executeQuery();
-            pstm.setString(1, maKH);
             while (rs.next()) {
                 KhachHang kh = new KhachHang();
                 kh.setMaKH(rs.getString("maKhachHang"));
                 kh.setTenKH(rs.getString("tenKhachHang"));
                 kh.setDiaChi(rs.getString("diaChi"));
                 kh.setSdt(rs.getString("sdt"));
-                
-                return kh;
+                list.add(kh);
             }
         } catch (Exception e) {
             System.out.println(e);
         }
-        return null;
+        return list;
     }
 }

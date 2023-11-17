@@ -23,8 +23,8 @@ public class KhachHangForm extends javax.swing.JPanel {
      */
     public KhachHangForm() {
         initComponents();
-        
-        setBackground(Color.BLUE);
+        txtTimKiem.setText("Tìm kiếm");
+        //setBackground(Color.BLUE);
         tblKhachHang.removeAll();
         tblKhachHang.setModel(tblModel);
         String header[] = {
@@ -33,7 +33,7 @@ public class KhachHangForm extends javax.swing.JPanel {
         tblModel.setColumnIdentifiers(header);
 
         tblModel = (DefaultTableModel) tblKhachHang.getModel();
-        loadDataToTable();
+        loadDataToTable(khs.getAllKhachHang());
     }
 
     /**
@@ -45,7 +45,6 @@ public class KhachHangForm extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnFind = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -63,13 +62,6 @@ public class KhachHangForm extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblKhachHang = new javax.swing.JTable();
         txtTimKiem = new javax.swing.JTextField();
-
-        btnFind.setText("Find");
-        btnFind.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFindActionPerformed(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 102, 102));
@@ -188,6 +180,27 @@ public class KhachHangForm extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tblKhachHang);
 
+        txtTimKiem.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtTimKiemFocusLost(evt);
+            }
+        });
+        txtTimKiem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtTimKiemMousePressed(evt);
+            }
+        });
+        txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTimKiemActionPerformed(evt);
+            }
+        });
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -200,10 +213,7 @@ public class KhachHangForm extends javax.swing.JPanel {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
-                                .addComponent(btnFind))
+                            .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(408, 408, 408)
                                 .addComponent(jLabel1))
@@ -218,33 +228,13 @@ public class KhachHangForm extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFind))
+                .addGap(49, 49, 49)
+                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(38, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
-        // TODO add your handling code here:
-        try {
-            if(txtTimKiem.getText().equals("")){
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập mã khách hàng để tìm kiếm");
-            } else {
-                KhachHang kh = khs.findById(txtTimKiem.getText());
-                if(kh != null){
-                    showDetail();
-                }else {
-                    JOptionPane.showMessageDialog(this, "Không tìm thấy");
-                }
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }//GEN-LAST:event_btnFindActionPerformed
 
     private void txtTenKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenKHActionPerformed
         // TODO add your handling code here:
@@ -275,7 +265,7 @@ public class KhachHangForm extends javax.swing.JPanel {
             KhachHang kh = getKhachHangFormInput();
             if (khs.addKhachHang(kh) != null) {
                 JOptionPane.showMessageDialog(this, "Thêm thành công");
-                loadDataToTable();
+                loadDataToTable(khs.getAllKhachHang());
             } else {
                 JOptionPane.showMessageDialog(this, "Không thêm được");
             }
@@ -309,7 +299,7 @@ public class KhachHangForm extends javax.swing.JPanel {
             KhachHang kh = getKhachHangFormInput();
             if (khs.updateKhachHang(kh) != null) {
                 JOptionPane.showMessageDialog(this, "Update thành công");
-                loadDataToTable();
+                loadDataToTable(khs.getAllKhachHang());
             } else {
                 JOptionPane.showMessageDialog(this, "Không update được");
             }
@@ -326,7 +316,7 @@ public class KhachHangForm extends javax.swing.JPanel {
             String maKH = txtMaKH.getText();
             if(khs.deleteKhachHang(maKH) != null){
                 JOptionPane.showMessageDialog(this, "Xóa thành công");
-                loadDataToTable();
+                loadDataToTable(khs.getAllKhachHang());
             }else {
                 JOptionPane.showMessageDialog(this, "Xóa không thành công");
             }
@@ -347,11 +337,42 @@ public class KhachHangForm extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tblKhachHangMouseClicked
 
+    private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTimKiemActionPerformed
+
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+        // TODO add your handling code here:
+        try {
+            String text = "%" + txtTimKiem.getText() + "%";
+            if(txtTimKiem.getText().isEmpty()){
+                loadDataToTable(khs.getAllKhachHang());
+            }else {
+                ArrayList<KhachHang> list = khs.SearchKhachHang(text);
+                loadDataToTable(list);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_txtTimKiemKeyReleased
+
+    private void txtTimKiemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTimKiemMousePressed
+        // TODO add your handling code here:
+        txtTimKiem.setText(null);
+    }//GEN-LAST:event_txtTimKiemMousePressed
+
+    private void txtTimKiemFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTimKiemFocusLost
+        // TODO add your handling code here:
+        if(txtTimKiem.getText().isEmpty()){
+            txtTimKiem.setText("Tìm kiếm");
+            loadDataToTable(khs.getAllKhachHang());
+        }
+    }//GEN-LAST:event_txtTimKiemFocusLost
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnFind;
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
@@ -370,8 +391,8 @@ public class KhachHangForm extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
 
-private void loadDataToTable() {
-        ArrayList<KhachHang> list = khs.getAllKhachHang();
+private void loadDataToTable(ArrayList<KhachHang> list) {
+        //ArrayList<KhachHang> list = khs.getAllKhachHang();
         tblModel.setRowCount(0);
         for (KhachHang kh : list) {
             tblModel.addRow(new Object[]{

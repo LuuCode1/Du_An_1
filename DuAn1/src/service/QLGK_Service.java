@@ -83,4 +83,29 @@ public class QLGK_Service {
         }
         return row;
     }
+
+    public ArrayList<QLGK> Search(String gktk) {
+        ArrayList<QLGK> list = new ArrayList<>();
+        String sql = "select idGongKinh, maGongKinh, tenGongKinh\n"
+                + "from gong_kinh\n"
+                + "where maGongKinh like ? \n"
+                + "	  or tenGongKinh like ?";
+        Connection con = DBconnect.getConnection();
+        try {
+            PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setString(1, gktk);
+            pstm.setString(2, gktk);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                QLGK qlgk = new QLGK();
+                qlgk.setId(rs.getString("idGongKinh"));
+                qlgk.setMaGK(rs.getString("maGongKinh"));
+                qlgk.setTenGK(rs.getString("tenGongKinh"));
+                list.add(qlgk);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
 }
