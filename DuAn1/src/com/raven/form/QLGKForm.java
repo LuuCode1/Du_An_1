@@ -7,7 +7,7 @@ package com.raven.form;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import model.QLGK;
-import service.QLGKForm_Service;
+import service.QLGK_Service;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class QLGKForm extends javax.swing.JPanel {
     DefaultTableModel tblModel = new DefaultTableModel();
-    private final QLGKForm_Service qlgks = new QLGKForm_Service();
+    private final QLGK_Service qlgks = new QLGK_Service();
     /**
      * Creates new form QLGKForm
      */

@@ -12,7 +12,7 @@ import model.QLGK;
  *
  * @author Dat
  */
-public class QLGKForm_Service {
+public class QLGK_Service {
 
     public ArrayList<QLGK> getALLQLGK() {
         ArrayList<QLGK> list = new ArrayList<>();

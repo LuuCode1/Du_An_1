@@ -325,12 +325,12 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_addAnhActionPerformed
 
     private void btn_deleteAnhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteAnhActionPerformed
-        lbl_anh.setIcon(null);
-        if (linkAnh != null) {
-            linkAnh = null;
-        } else {
-            JOptionPane.showMessageDialog(this, "Chưa thêm ảnh");
-        }
+//        lbl_anh.setIcon(null);
+//        if (linkAnh != null) {
+//            linkAnh = null;
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Chưa thêm ảnh");
+//        }
     }//GEN-LAST:event_btn_deleteAnhActionPerformed
 
     private void CBo_MSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBo_MSActionPerformed
