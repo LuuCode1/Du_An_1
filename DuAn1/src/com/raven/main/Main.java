@@ -7,8 +7,13 @@ import com.raven.event.EventShowPopupMenu;
 
 import com.raven.form.Form_Home;
 
+
 import com.raven.form.MainForm;
 import com.raven.form.GKCT;
+
+import com.raven.form.KhachHangForm;
+import com.raven.form.MainForm;
+
 import com.raven.form.QLGKForm;
 import com.raven.form.QLTKForm;
 import com.raven.swing.MenuItem;
@@ -49,6 +54,19 @@ public class Main extends javax.swing.JFrame {
                 if (menuIndex == 1) {
                     if (subMenuIndex == 0) {
                         main.showForm(new QLGKForm());
+                    }
+                }
+                
+                if (menuIndex == 2) {
+                    if (subMenuIndex == 0) {
+                        main.showForm(new QLTKForm());
+                    } else if (subMenuIndex == 1) {
+                        main.showForm(new QLGKForm());
+                    }
+                }
+                if (menuIndex == 3) {
+                    if (subMenuIndex == 0) {
+                        main.showForm(new KhachHangForm());
                     }
                 }
             }
