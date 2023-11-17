@@ -4,9 +4,13 @@ import com.raven.component.Header;
 import com.raven.component.Menu;
 import com.raven.event.EventMenuSelected;
 import com.raven.event.EventShowPopupMenu;
-import com.raven.form.Form1;
+
 import com.raven.form.Form_Home;
+
 import com.raven.form.MainForm;
+import com.raven.form.GKCT;
+import com.raven.form.QLGKForm;
+import com.raven.form.QLTKForm;
 import com.raven.swing.MenuItem;
 import com.raven.swing.PopupMenu;
 import com.raven.swing.icon.GoogleMaterialDesignIcons;
@@ -42,11 +46,9 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void menuSelected(int menuIndex, int subMenuIndex) {
                 System.out.println("Menu Index : " + menuIndex + " SubMenu Index " + subMenuIndex);
-                if (menuIndex == 0) {
+                if (menuIndex == 1) {
                     if (subMenuIndex == 0) {
-                        main.showForm(new Form_Home());
-                    } else if (subMenuIndex == 1) {
-                        main.showForm(new Form1());
+                        main.showForm(new QLGKForm());
                     }
                 }
             }

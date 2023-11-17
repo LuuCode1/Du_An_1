@@ -22,6 +22,11 @@ public class QLGK {
         this.tenGK = tenGK;
     }
 
+    public QLGK(String maGK, String tenGK) {
+        this.maGK = maGK;
+        this.tenGK = tenGK;
+    }
+
     public String getId() {
         return id;
     }
@@ -45,11 +50,8 @@ public class QLGK {
     public void setTenGK(String tenGK) {
         this.tenGK = tenGK;
     }
-
-    @Override
-    public String toString() {
-        return "QLGK{" + "id=" + id + ", maGK=" + maGK + ", tenGK=" + tenGK + '}';
+    
+    public Object[]todata(){
+        return new Object[]{this.id,this.maGK,this.tenGK};
     }
-    
-    
 }

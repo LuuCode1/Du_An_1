@@ -7,7 +7,7 @@ package service;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import model.Giongkinh;
+import model.Gongkinh;
 import model.mausac;
 import model.thuonghieu;
 
