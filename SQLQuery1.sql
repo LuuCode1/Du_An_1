@@ -202,25 +202,43 @@ VALUES ('TH01', N'Gucci'),
 
 
 --Bảng gọng kính 
-INSERT INTO gong_kinh(maGongKinh,tenGongKinh,idChatLieu,idMauSac,idThuongHieu,giaThanh,soLuong,hinhanh,moTa,trangThai)
-VALUES ('GK01', N'Gọng Kính V', 2 , 4 , 3 , 333000, 100,null,N'Sản phẩm thân thiện',N'Đang bán'),
-       ('GK02', N'GỌNG KÍNH CẬN CLUB MASTER', 5 , 1 , 2 , 733000,170, null,N'Sản phẩm thân thiện',N'Đang bán'),
-       ('GK03', N'GỌNG KÍNH GỖ NAM CAO CẤP', 2 , 4 , 5 , 883000,201, null,N'Sản phẩm thân thiện',N'Đang bán'),
-       ('GK04', N'GK – 550CN038', 3 , 5 , 4 , 55000,313, null,N'Sản phẩm thân thiện',N'Đang bán'),
-       ('GK05', N'GK – 380CK113', 4 , 3 , 5 , 89000, 298,null,N'Sản phẩm thân thiện',N'Đang bán');
+INSERT INTO gong_kinh(maGongKinh,tenGongKinh)
+VALUES ('GK01', N'Gọng Kính V'),
+       ('GK02', N'GỌNG KÍNH CẬN CLUB MASTER'),
+       ('GK03', N'GỌNG KÍNH GỖ NAM CAO CẤP'),
+       ('GK04', N'GK – 550CN038'),
+       ('GK05', N'GK – 380CK113');
+
+
+INSERT INTO gong_kinh_chi_tiet(idGongKinh,idChatLieu,idMauSac,idThuongHieu,giaThanh,soLuong,hinhanh,moTa,trangThai)
+VALUES (1, 2 , 4 , 3 , 333000, 100,null,N'Sản phẩm thân thiện',N'Đang bán'),
+       (1, 5 , 1 , 2 , 733000,170, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       (1, 2 , 4 , 5 , 883000,201, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       (2, 3 , 5 , 4 , 55000,313, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       (2, 4 , 3 , 5 , 89000, 298,null,N'Sản phẩm thân thiện',N'Đang bán');
 
 
 --Bảng tròng kính 
-INSERT INTO trong_kinh(maTrongKinh,tenTrongKinh,idChatLieu,idMauSac,idThuongHieu,giaThanh,doCan,soLuong,hinhanh,moTa,trangThai)
-VALUES ('TK01', N'Tròng Kính Chống Ánh Sáng Xanh', 2 , 4 , 3 , 333000, 0,100,null,N'Sản phẩm thân thiện',N'Đang bán'),
-       ('TK02', N'Đa Tròng Essilor Smart-Lens', 5 , 1 , 2 , 733000,0,170, null,N'Sản phẩm thân thiện',N'Đang bán'),
-       ('TK03', N'TRÒNG KÍNH ĐỔI MẦU THÁI LAN TRÁNG', 2 , 4 , 5 , 883000,1.5,201, null,N'Sản phẩm thân thiện',N'Đang bán'),
-       ('TK04', N'TRÒNG KÍNH PHÁP ESSILOR PREVENCIA', 3 , 5 , 4 , 55000,2,313, null,N'Sản phẩm thân thiện',N'Đang bán'),
-       ('TK05', N'TRÒNG KÍNH HÀN QUỐC CHEMI U6 ', 4 , 3 , 5 , 89000,1.75, 298,null,N'Sản phẩm thân thiện',N'Đang bán');
+INSERT INTO trong_kinh(maTrongKinh,tenTrongKinh)
+VALUES ('TK01', N'Tròng Kính Chống Ánh Sáng Xanh'),
+       ('TK02', N'Đa Tròng Essilor Smart-Lens'),
+       ('TK03', N'TRÒNG KÍNH ĐỔI MẦU THÁI LAN TRÁNG'),
+       ('TK04', N'TRÒNG KÍNH PHÁP ESSILOR PREVENCIA'),
+       ('TK05', N'TRÒNG KÍNH HÀN QUỐC CHEMI U6 ');
+
+
+--Bảng tròng kính 
+INSERT INTO trong_kinh_chi_tiet(idTrongKinh,idChatLieu,idMauSac,idThuongHieu,giaThanh,doCan,soLuong,hinhanh,moTa,trangThai)
+VALUES (1, 2 , 4 , 3 , 333000, 0,100,null,N'Sản phẩm thân thiện',N'Đang bán'),
+       (1, 5 , 1 , 2 , 733000,0,170, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       (1, 2 , 4 , 5 , 883000,1.5,201, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       (2, 3 , 5 , 4 , 55000,2,313, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       (2, 4 , 3 , 5 , 89000,1.75, 298,null,N'Sản phẩm thân thiện',N'Đang bán');
+
 
 
 --Bảng Hóa Đơn Chi Tiết 
-INSERT INTO hoa_don_chi_tiet(maHoaDonChiTiet, idGongKinh,idTrongKinh,soluong,dongia,tonggia)
+INSERT INTO hoa_don_chi_tiet(maHoaDonChiTiet, idGongKinhCT,idTrongKinhCT,soluong,dongia,tonggia)
 VALUES ('HDCT01', 1,null,2,666000,660000),
        ('HDCT02', 1,2,1,1066000,1060000),
        ('HDCT03', null,5,3,267000,250000),
@@ -283,6 +301,8 @@ SELECT * FROM bao_hanh
 SELECT * FROM hoa_don_chi_tiet
 SELECT * FROM trong_kinh
 SELECT * FROM gong_kinh
+SELECT * FROM trong_kinh_chi_tiet
+SELECT * FROM gong_kinh_chi_tiet
 SELECT * FROM thuong_hieu
 SELECT * FROM mau_sac
 SELECT    gong_kinh.maGongKinh, gong_kinh.tenGongKinh, chat_lieu.tenChatLieu, mau_sac.tenMauSac, thuong_hieu.tenThuongHieu, gong_kinh.giaThanh, gong_kinh.soLuong, gong_kinh.hinhanh, gong_kinh.moTa
