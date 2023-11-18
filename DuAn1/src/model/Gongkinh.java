@@ -9,6 +9,7 @@ package model;
  * @author Asus
  */
 public class Gongkinh {
+    private int gongKinhChiTiet;
     private QLGK gongKinh;
     private chatLieu tenChatLieu;
     private mausac tenMauSac;
@@ -22,6 +23,19 @@ public class Gongkinh {
     public Gongkinh() {
     }
 
+    public Gongkinh(int gongKinhChiTiet, QLGK gongKinh, chatLieu tenChatLieu, mausac tenMauSac, thuonghieu tenThuongHieu, double giaThanh, int soLuong, String hinhAnh, String moTa, String trangThai) {
+        this.gongKinhChiTiet = gongKinhChiTiet;
+        this.gongKinh = gongKinh;
+        this.tenChatLieu = tenChatLieu;
+        this.tenMauSac = tenMauSac;
+        this.tenThuongHieu = tenThuongHieu;
+        this.giaThanh = giaThanh;
+        this.soLuong = soLuong;
+        this.hinhAnh = hinhAnh;
+        this.moTa = moTa;
+        this.trangThai = trangThai;
+    }
+
     public Gongkinh(QLGK gongKinh, chatLieu tenChatLieu, mausac tenMauSac, thuonghieu tenThuongHieu, double giaThanh, int soLuong, String hinhAnh, String moTa, String trangThai) {
         this.gongKinh = gongKinh;
         this.tenChatLieu = tenChatLieu;
@@ -32,6 +46,14 @@ public class Gongkinh {
         this.hinhAnh = hinhAnh;
         this.moTa = moTa;
         this.trangThai = trangThai;
+    }
+
+    public int getGongKinhChiTiet() {
+        return gongKinhChiTiet;
+    }
+
+    public void setGongKinhChiTiet(int gongKinhChiTiet) {
+        this.gongKinhChiTiet = gongKinhChiTiet;
     }
 
     public QLGK getGongKinh() {
@@ -109,6 +131,6 @@ public class Gongkinh {
     
 
     public Object[] todata(){
-        return new Object[]{this.tenChatLieu.getTenChatLieu(),this.tenMauSac.getTenMauSac(),this.tenThuongHieu.getTenThuongHieu(),this.giaThanh,this.soLuong,this.hinhAnh,this.moTa,this.trangThai};
+        return new Object[]{this.gongKinhChiTiet,this.tenChatLieu.getTenChatLieu(),this.tenMauSac.getTenMauSac(),this.tenThuongHieu.getTenThuongHieu(),this.giaThanh,this.soLuong,this.hinhAnh,this.moTa,this.trangThai};
     }
 }

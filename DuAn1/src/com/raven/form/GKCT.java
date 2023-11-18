@@ -9,11 +9,17 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
+import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import model.Gongkinh;
+import model.QLGK;
 import model.chatLieu;
 import model.mausac;
 import model.thuonghieu;
@@ -27,8 +33,9 @@ import service.thuonghieu_service;
  * @author Asus
  */
 public class GKCT extends javax.swing.JFrame {
+    
     DefaultTableModel model;
-mausac_service mssv = new mausac_service();
+    mausac_service mssv = new mausac_service();
     mausac ms = new mausac();
     chatLieu cl = new chatLieu();
     chatLieu_service clsv = new chatLieu_service();
@@ -37,8 +44,10 @@ mausac_service mssv = new mausac_service();
     String linkAnh = null;
     Gongkinh gk = new Gongkinh();
     GongKinh_Service gksv = new GongKinh_Service();
-    String ma = QLGKForm.magk;
-    int index =-1;
+    int ma = Integer.parseInt(QLGKForm.magk);
+    int index = -1;
+    
+
     /**
      * Creates new form QKCT
      */
@@ -50,11 +59,20 @@ mausac_service mssv = new mausac_service();
         CBo_ChatLieu();
         CBo_MauSac();
         CBo_ThuongHieu();
-        this.lbl_magk.setText(QLGKForm.magk);
+        showMaAndten();
+
     }
 
     private GKCT() {
     }
+
+    void name() {
+        String[] table1 = {"Chất Liệu", "Màu Sắc", "Thương Hiệu", "Số Lượng", "Giá Bán", "Hình Ảnh", "Mô Tả", "Trạng thái"};
+        for (int i = 0; i < table1.length; i++) {
+            lblbang.getColumnModel().getColumn(i).setHeaderValue(table1[i]);
+        }
+    }
+
     void CBo_MauSac() {
         List<mausac> listmausac = mssv.FILL_TO_CBO_MauSac();
         String[] cbo = new String[listmausac.size()];
@@ -64,7 +82,14 @@ mausac_service mssv = new mausac_service();
         cbomausac.setModel(new DefaultComboBoxModel<>(cbo));
 
     }
-    
+
+    void showMaAndten() {
+        QLGK qlgk = gksv.Show(ma);
+        String ma = qlgk.getMaGK();
+        String ten = qlgk.getTenGK();
+        String name = ma + "-" + ten.replace("ơ", "o");
+        this.lbl_magk.setText(name);
+    }
 
     void CBo_ChatLieu() {
         List<chatLieu> listchatlieu = clsv.FILL_TO_CBO_ChatLieu();
@@ -86,24 +111,52 @@ mausac_service mssv = new mausac_service();
         cbothuonghieu.setModel(new DefaultComboBoxModel<>(cbo));
         CBO_TH1_check.setModel(new DefaultComboBoxModel<>(cbo));
     }
-    void fillTable(){
-        
+
+    void fillTable() {
+
         model = (DefaultTableModel) lblbang.getModel();
         model.setRowCount(0);
-        
+
         List<Gongkinh> list = gksv.selectAll(ma);
         for (Gongkinh gongkinh : list) {
             model.addRow(gongkinh.todata());
+            
         }
-        }
-    void Show(int index){
-        Gongkinh gk = gksv.selectAll(ma).get(index);
+        
+    }
+
+    void Show(Gongkinh gk1) {
+        Gongkinh gk = gk1;
         TxtSoLuong1.setText(String.valueOf(gk.getSoLuong()));
         txt_GiaBan1.setText(String.valueOf(gk.getGiaThanh()));
+        txt_mota1.setText(gk.getMoTa());
         cbomausac.setSelectedItem(gk.getTenMauSac().getTenMauSac());
         cbochatlieu.setSelectedItem(gk.getTenChatLieu().getTenChatLieu());
         cbothuonghieu.setSelectedItem(gk.getTenThuongHieu().getTenThuongHieu());
+        try {
+            lbl_anh.setIcon(null);
+            File file = new File(gk.getHinhAnh());
+            Image img = ImageIO.read(file);
+            int width = lbl_anh.getWidth();
+            int height = lbl_anh.getHeight();
+            Image resizedImage = img.getScaledInstance(width, height, 0);
+            lbl_anh.setIcon(new ImageIcon(resizedImage));
+            linkAnh = file.getAbsolutePath();
+        } catch (Exception e) {
+        }
     }
+
+    Gongkinh Read() {
+        Gongkinh gk = new Gongkinh();
+        gk.setGiaThanh(Double.parseDouble(txt_GiaBan1.getText()));
+        gk.setMoTa(txt_mota1.getText());
+        gk.setSoLuong(Integer.parseInt(TxtSoLuong1.getText()));
+        gk.setTenChatLieu((chatLieu) cbochatlieu.getSelectedItem());
+        gk.setTenMauSac((mausac) cbomausac.getSelectedItem());
+        gk.setTenThuongHieu((thuonghieu) cbothuonghieu.getSelectedItem());
+        return gk;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -361,7 +414,7 @@ mausac_service mssv = new mausac_service();
             }
         });
 
-        lbl_magk.setFont(new java.awt.Font("STLiti", 0, 48)); // NOI18N
+        lbl_magk.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 48)); // NOI18N
         lbl_magk.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_magk.setToolTipText("");
         lbl_magk.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -533,9 +586,17 @@ mausac_service mssv = new mausac_service();
                 {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "null"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         lblbang.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblbangMouseClicked(evt);
@@ -589,10 +650,10 @@ mausac_service mssv = new mausac_service();
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, color1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lbl_magk, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(369, 369, 369))
+            .addGroup(color1Layout.createSequentialGroup()
+                .addGap(200, 200, 200)
+                .addComponent(lbl_magk, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         color1Layout.setVerticalGroup(
             color1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -659,7 +720,7 @@ mausac_service mssv = new mausac_service();
             int height = lbl_anh.getHeight();
             Image resizedImage = img.getScaledInstance(width, height, 0);
             lbl_anh.setIcon(new ImageIcon(resizedImage));
-            //            linkAnh = file.getAbsolutePath();
+                        linkAnh = file.getAbsolutePath();
 
         } catch (Exception e) {
 
@@ -669,12 +730,12 @@ mausac_service mssv = new mausac_service();
     }//GEN-LAST:event_btn_addAnhActionPerformed
 
     private void btn_deleteAnhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteAnhActionPerformed
-        //        lbl_anh.setIcon(null);
-        //        if (linkAnh != null) {
-            //            linkAnh = null;
-            //        } else {
-            //            JOptionPane.showMessageDialog(this, "Chưa thêm ảnh");
-            //        }
+                lbl_anh.setIcon(null);
+                if (linkAnh != null) {
+                    linkAnh = null;
+                } else {
+                    JOptionPane.showMessageDialog(this, "Chưa thêm ảnh");
+                }
     }//GEN-LAST:event_btn_deleteAnhActionPerformed
 
     private void CBo_MSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBo_MSActionPerformed
@@ -726,7 +787,7 @@ mausac_service mssv = new mausac_service();
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-        
+
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -759,10 +820,10 @@ mausac_service mssv = new mausac_service();
     private void btn_deleteAnh1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteAnh1ActionPerformed
         //        lbl_anh.setIcon(null);
         //        if (linkAnh != null) {
-            //            linkAnh = null;
-            //        } else {
-            //            JOptionPane.showMessageDialog(this, "Chưa thêm ảnh");
-            //        }
+        //            linkAnh = null;
+        //        } else {
+        //            JOptionPane.showMessageDialog(this, "Chưa thêm ảnh");
+        //        }
     }//GEN-LAST:event_btn_deleteAnh1ActionPerformed
 
     private void cbochatlieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbochatlieuActionPerformed
@@ -794,8 +855,10 @@ mausac_service mssv = new mausac_service();
     }//GEN-LAST:event_CBO_TH1_checkActionPerformed
 
     private void lblbangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblbangMouseClicked
-       index = lblbang.getSelectedRow();
-        Show(index);
+        index = lblbang.getSelectedRow();
+        int a = (int) lblbang.getValueAt(index, 0);
+        Gongkinh gk = gksv.selectByID(a);
+        Show(gk);
     }//GEN-LAST:event_lblbangMouseClicked
 
     private void cbothuonghieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbothuonghieuActionPerformed

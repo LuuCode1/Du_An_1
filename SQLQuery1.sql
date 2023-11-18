@@ -305,14 +305,16 @@ SELECT * FROM trong_kinh_chi_tiet
 SELECT * FROM gong_kinh_chi_tiet
 SELECT * FROM thuong_hieu
 SELECT * FROM mau_sac
-SELECT    mau_sac.tenMauSac, chat_lieu.tenChatLieu, thuong_hieu.tenThuongHieu, gong_kinh_chi_tiet.giaThanh, gong_kinh_chi_tiet.soLuong, gong_kinh_chi_tiet.hinhanh, gong_kinh_chi_tiet.moTa, 
+SELECT     chat_lieu.tenChatLieu,mau_sac.tenMauSac, thuong_hieu.tenThuongHieu, gong_kinh_chi_tiet.giaThanh, gong_kinh_chi_tiet.soLuong, gong_kinh_chi_tiet.hinhanh, gong_kinh_chi_tiet.moTa, 
                       gong_kinh_chi_tiet.trangThai
 FROM         gong_kinh INNER JOIN
                       gong_kinh_chi_tiet ON gong_kinh.idGongKinh = gong_kinh_chi_tiet.idGongKinh INNER JOIN
                       chat_lieu ON gong_kinh_chi_tiet.idChatLieu = chat_lieu.idChatLieu INNER JOIN
                       thuong_hieu ON gong_kinh_chi_tiet.idThuongHieu = thuong_hieu.idThuongHieu INNER JOIN
                       mau_sac ON gong_kinh_chi_tiet.idMauSac = mau_sac.idMauSac
-
+					  where gong_kinh_chi_tiet.idGongKinhCT=2
+SELECT    maGongKinh, tenGongKinh
+FROM         gong_kinh where idGongKinh = 1
 
 
 
