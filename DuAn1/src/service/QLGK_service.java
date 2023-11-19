@@ -23,7 +23,7 @@ public class QLGK_service {
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
                 QLGK qlgk = new QLGK();
-                qlgk.setId(rs.getString("idGongKinh"));
+                qlgk.setId(rs.getInt("idGongKinh"));
                 qlgk.setMaGK(rs.getString("maGongKinh"));
                 qlgk.setTenGK(rs.getString("tenGongKinh"));
                 list.add(qlgk);
@@ -95,7 +95,7 @@ public class QLGK_service {
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
                 QLGK qlgk = new QLGK();
-                qlgk.setId(rs.getString("idGongKinh"));
+                qlgk.setId(rs.getInt("idGongKinh"));
                 qlgk.setMaGK(rs.getString("maGongKinh"));
                 qlgk.setTenGK(rs.getString("tenGongKinh"));
                 list.add(qlgk);
@@ -120,7 +120,7 @@ public class QLGK_service {
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
                 QLGK qlgk = new QLGK();
-                qlgk.setId(rs.getString("idGongKinh"));
+                qlgk.setId(rs.getInt("idGongKinh"));
                 qlgk.setMaGK(rs.getString("maGongKinh"));
                 qlgk.setTenGK(rs.getString("tenGongKinh"));
                 return  qlgk;

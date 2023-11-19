@@ -15,17 +15,20 @@ import service.QLGK_service;
  * @author Asus
  */
 public class QLGKForm extends javax.swing.JPanel {
+    private MainForm mainForm;
  DefaultTableModel tblModel;
     QLGK qlgk = new QLGK();
     QLGK_service gksv = new QLGK_service();
     int index = -1;
     public static String magk;
-    String linkanh = null;
+//    String linkanh = null;
+    
     
     /**
      * Creates new form QLGKForm
      */
-    public QLGKForm() {
+    public QLGKForm(MainForm main) {
+        this.mainForm = main;
         initComponents();
         initTable();
         setOpaque(false);
@@ -113,7 +116,7 @@ public class QLGKForm extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Tròng kính");
+        jLabel1.setText("Gọng kính");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -340,9 +343,12 @@ public class QLGKForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private void btnSPChiTietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSPChiTietActionPerformed
-        magk = lbl_id_gk.getText();
-        GKCT gkct = new GKCT(lbl_id_gk.getText());
-        gkct.setVisible(true);
+        try {
+          magk = lbl_id_gk.getText();
+        mainForm.showForm(new GongKinhChiTiet(lbl_id_gk.getText()));  
+        } catch (Exception e) {
+        }
+        
     }//GEN-LAST:event_btnSPChiTietActionPerformed
 
     private void tbl_thongtin_gkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_thongtin_gkMouseClicked

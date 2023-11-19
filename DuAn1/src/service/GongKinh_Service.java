@@ -44,7 +44,7 @@ public class GongKinh_Service {
                 chatLieu cl = new chatLieu(null, rs.getString(2));
                 mausac ms = new mausac(null, rs.getString(3));
                 thuonghieu th = new thuonghieu(null, rs.getString(4));
-                Gongkinh gk = new Gongkinh(rs.getInt(1),null, cl, ms, th, rs.getDouble(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9));
+                Gongkinh gk = new Gongkinh(rs.getInt(1), null, cl, ms, th, rs.getDouble(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9));
                 list.add(gk);
             }
             return list;
@@ -77,7 +77,7 @@ public class GongKinh_Service {
     }
 
     public Gongkinh selectByID(int gkct) {
-        sql = "SELECT     chat_lieu.tenChatLieu,mau_sac.tenMauSac, thuong_hieu.tenThuongHieu, gong_kinh_chi_tiet.giaThanh, gong_kinh_chi_tiet.soLuong, gong_kinh_chi_tiet.hinhanh, gong_kinh_chi_tiet.moTa, \n"
+        sql = "SELECT     gong_kinh_chi_tiet.idGongKinhCT,chat_lieu.tenChatLieu,mau_sac.tenMauSac, thuong_hieu.tenThuongHieu, gong_kinh_chi_tiet.giaThanh, gong_kinh_chi_tiet.soLuong, gong_kinh_chi_tiet.hinhanh, gong_kinh_chi_tiet.moTa, \n"
                 + "                      gong_kinh_chi_tiet.trangThai\n"
                 + "FROM         gong_kinh INNER JOIN\n"
                 + "                      gong_kinh_chi_tiet ON gong_kinh.idGongKinh = gong_kinh_chi_tiet.idGongKinh INNER JOIN\n"
@@ -91,10 +91,10 @@ public class GongKinh_Service {
             ps.setObject(1, gkct);
             rs = ps.executeQuery();
             while (rs.next()) {
-                chatLieu cl = new chatLieu(null, rs.getString(1));
-                mausac ms = new mausac(null, rs.getString(2));
-                thuonghieu th = new thuonghieu(null, rs.getString(3));
-                Gongkinh gk = new Gongkinh(null, cl, ms, th, rs.getDouble(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8));
+                chatLieu cl = new chatLieu(null, rs.getString(2));
+                mausac ms = new mausac(null, rs.getString(3));
+                thuonghieu th = new thuonghieu(null, rs.getString(4));
+                Gongkinh gk = new Gongkinh(rs.getInt(1), null, cl, ms, th, rs.getDouble(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9));
                 return gk;
             }
         } catch (Exception e) {
@@ -103,131 +103,160 @@ public class GongKinh_Service {
         }
         return null;
     }
-//
-//    public int Insert(Gongkinh gk) {
-//        sql = "INSERT INTO gong_kinh(maGongKinh,tenGongKinh,idChatLieu,idMauSac,idThuongHieu,giaThanh,soLuong,hinhAnh,moTa)\n"
-//                + "VALUES (?,?,?,?,?,?,?,?,?)";
-//        try {
-//            con = DBconnect.getConnection();
-//            ps = con.prepareStatement(sql);
-//            ps.setObject(1, gk.getMaGongKinh());
-//            ps.setObject(2, gk.getTenGongKinh());
-//            ps.setObject(3, gk.getTenChatLieu().getIdChatLieu());
-//            ps.setObject(4, gk.getTenMauSac().getIdMauSac());
-//            ps.setObject(5, gk.getTenThuongHieu().getIdThuongHieu());
-//            ps.setObject(6, gk.getGiaThanh());
-//            ps.setObject(7, gk.getSoLuong());
-//            ps.setObject(8, gk.getHinhAnh());
-//            ps.setObject(9, gk.getMoTa());
-//            return ps.executeUpdate();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return 0;
-//        }
-//    }
-//
-//    public int delete(String ma) {
-//        sql = "Delete from gong_kinh where maGongKinh =?";
-//        try {
-//            con = DBconnect.getConnection();
-//            ps = con.prepareStatement(sql);
-//            ps.setObject(1, ma);
-//            return ps.executeUpdate();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return 0;
-//        }
-//    }
-//
-//    public int update(Gongkinh gk, String ma) {
-//        sql = "UPDATE gong_kinh SET tenGongKinh = ?, idChatLieu = ?, idMauSac = ?, idThuongHieu = ?, giaThanh = ?, soLuong = ?, hinhanh = ?, moTa = ? "
-//                + "WHERE maGongKinh = ?";
-//        try {
-//            con = DBconnect.getConnection();
-//            ps = con.prepareStatement(sql);
-//            ps.setObject(1, gk.getTenGongKinh());
-//            ps.setObject(2, gk.getTenChatLieu().getIdChatLieu());
-//            ps.setObject(3, gk.getTenMauSac().getIdMauSac());
-//            ps.setObject(4, gk.getTenThuongHieu().getIdThuongHieu());
-//            ps.setObject(5, gk.getGiaThanh());
-//            ps.setObject(6, gk.getSoLuong());
-//            ps.setObject(7, gk.getHinhAnh());
-//            ps.setObject(8, gk.getMoTa());
-//            ps.setObject(9, ma);
-//            return ps.executeUpdate();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return 0;
-//        }
-//    }
-//
-//    public List<Gongkinh> check_Cbo(String thuongHieu) {
-//        sql = "SELECT    gong_kinh.maGongKinh, gong_kinh.tenGongKinh, chat_lieu.tenChatLieu, mau_sac.tenMauSac, thuong_hieu.tenThuongHieu, gong_kinh.giaThanh, gong_kinh.soLuong, gong_kinh.hinhanh, gong_kinh.moTa\n"
-//                + "FROM chat_lieu INNER JOIN\n"
-//                + " gong_kinh ON chat_lieu.idChatLieu = gong_kinh.idChatLieu INNER JOIN\n"
-//                + "  mau_sac ON gong_kinh.idMauSac = mau_sac.idMauSac INNER JOIN\n"
-//                + " thuong_hieu ON gong_kinh.idThuongHieu = thuong_hieu.idThuongHieu\n"
-//                + " where thuong_hieu.tenThuongHieu = ? ";
-//        List<Gongkinh> gk = new ArrayList<>();
-//        try {
-//            con = DBconnect.getConnection();
-//            ps = con.prepareStatement(sql);
-//            ps.setObject(1, thuongHieu);
-//            rs = ps.executeQuery();
-//            while (rs.next()) {
-//                chatLieu cl = new chatLieu(null, rs.getString(3));
-//                mausac ms = new mausac(null, rs.getString(4));
-//                thuonghieu th = new thuonghieu(null, rs.getString(5));
-//                Gongkinh gongkinh = new Gongkinh(rs.getString(1),
-//                        rs.getString(2),
-//                        cl,
-//                        ms,
-//                        th,
-//                        rs.getDouble(6), rs.getInt(7), rs.getString(8), rs.getString(9));
-//                gk.add(gongkinh);
-//            }
-//            return gk;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//
-//        }
-//        return null;
-//    }
-//
-//    public List<Gongkinh> seach(String a) {
-//        List<Gongkinh> list = new ArrayList<>();
-//        sql = "SELECT    gong_kinh.maGongKinh, gong_kinh.tenGongKinh, chat_lieu.tenChatLieu, mau_sac.tenMauSac, thuong_hieu.tenThuongHieu, gong_kinh.giaThanh, gong_kinh.soLuong, gong_kinh.hinhanh, gong_kinh.moTa\n"
-//                + "FROM chat_lieu INNER JOIN\n"
-//                + "  gong_kinh ON chat_lieu.idChatLieu = gong_kinh.idChatLieu INNER JOIN\n"
-//                + " mau_sac ON gong_kinh.idMauSac = mau_sac.idMauSac INNER JOIN\n"
-//                + " thuong_hieu ON gong_kinh.idThuongHieu = thuong_hieu.idThuongHieu\n"
-//                + " where gong_kinh.maGongKinh like ? or gong_kinh.tenGongKinh like ? or chat_lieu.tenChatLieu like ? or mau_sac.tenMauSac like ? or thuong_hieu.tenThuongHieu like ?";
-//        try {
-//            con = DBconnect.getConnection();
-//            ps = con.prepareStatement(sql);
-//            ps.setObject(1, a);
-//            ps.setObject(2, a);
-//            ps.setObject(3, a);
-//            ps.setObject(4, a);
-//            ps.setObject(5, a);
-//            rs = ps.executeQuery();
-//            while (rs.next()) {                
-//                chatLieu cl = new chatLieu(null, rs.getString(3));
-//                mausac ms = new mausac(null, rs.getString(4));
-//                thuonghieu th = new thuonghieu(null, rs.getString(5));
-//                Gongkinh gongkinh = new Gongkinh(rs.getString(1),
-//                        rs.getString(2),
-//                        cl,
-//                        ms,
-//                        th,
-//                        rs.getDouble(6), rs.getInt(7), rs.getString(8), rs.getString(9));
-//                list.add(gongkinh);
-//            }
-//            return list;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
+
+    public int Insert(Gongkinh gk) {
+        sql = "INSERT INTO gong_kinh_chi_tiet(idGongKinh,idChatLieu,idMauSac,idThuongHieu,giaThanh,soLuong,hinhAnh,moTa,trangThai)\n"
+                + "VALUES (?,?,?,?,?,?,?,?,?)";
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, gk.getGongKinh().getId());
+            ps.setObject(2, gk.getTenChatLieu().getIdChatLieu());
+            ps.setObject(3, gk.getTenMauSac().getIdMauSac());
+            ps.setObject(4, gk.getTenThuongHieu().getIdThuongHieu());
+            ps.setObject(5, gk.getGiaThanh());
+            ps.setObject(6, gk.getSoLuong());
+            ps.setObject(7, gk.getHinhAnh());
+            ps.setObject(8, gk.getMoTa());
+            ps.setObject(9, gk.getTrangThai());
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int delete(int ma) {
+        sql = "Delete from gong_kinh_chi_tiet where idGongKinhCT =?";
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, ma);
+            return ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int update(Gongkinh gk, int ma) {
+        sql = "UPDATE gong_kinh_chi_tiet SET  idChatLieu = ?, idMauSac = ?, idThuongHieu = ?, giaThanh = ?, soLuong = ?, hinhanh = ?, moTa = ? ,trangThai = ? WHERE gong_kinh_chi_tiet.idGongKinhCT = ?";
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, gk.getTenChatLieu().getIdChatLieu());
+            ps.setObject(2, gk.getTenMauSac().getIdMauSac());
+            ps.setObject(3, gk.getTenThuongHieu().getIdThuongHieu());
+            ps.setObject(4, gk.getGiaThanh());
+            ps.setObject(5, gk.getSoLuong());
+            ps.setObject(6, gk.getHinhAnh());
+            ps.setObject(7, gk.getMoTa());
+            ps.setObject(8, gk.getTrangThai());
+            ps.setObject(9, ma);
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public List<Gongkinh> check_Cbo(int ma, String thuongHieu) {
+        sql = "SELECT  gong_kinh_chi_tiet.idGongKinhCT,chat_lieu.tenChatLieu,mau_sac.tenMauSac, thuong_hieu.tenThuongHieu, gong_kinh_chi_tiet.giaThanh, gong_kinh_chi_tiet.soLuong, gong_kinh_chi_tiet.hinhanh, gong_kinh_chi_tiet.moTa, \n"
+                + "                      gong_kinh_chi_tiet.trangThai\n"
+                + "FROM         gong_kinh INNER JOIN\n"
+                + "                      gong_kinh_chi_tiet ON gong_kinh.idGongKinh = gong_kinh_chi_tiet.idGongKinh INNER JOIN\n"
+                + "                      chat_lieu ON gong_kinh_chi_tiet.idChatLieu = chat_lieu.idChatLieu INNER JOIN\n"
+                + "                      thuong_hieu ON gong_kinh_chi_tiet.idThuongHieu = thuong_hieu.idThuongHieu INNER JOIN\n"
+                + "                      mau_sac ON gong_kinh_chi_tiet.idMauSac = mau_sac.idMauSac\n"
+                + "					  where gong_kinh.idGongKinh = ? and thuong_hieu.tenThuongHieu = ? ";
+        List<Gongkinh> list = new ArrayList<>();
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, ma);
+            ps.setObject(2, thuongHieu);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                chatLieu cl = new chatLieu(null, rs.getString(2));
+                mausac ms = new mausac(null, rs.getString(3));
+                thuonghieu th = new thuonghieu(null, rs.getString(4));
+                Gongkinh gk = new Gongkinh(rs.getInt(1), null, cl, ms, th, rs.getDouble(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9));
+                list.add(gk);
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Gongkinh> seach(int ma, String a) {
+        List<Gongkinh> list = new ArrayList<>();
+        sql = "SELECT  gong_kinh_chi_tiet.idGongKinhCT,chat_lieu.tenChatLieu,mau_sac.tenMauSac, thuong_hieu.tenThuongHieu, gong_kinh_chi_tiet.giaThanh, gong_kinh_chi_tiet.soLuong, gong_kinh_chi_tiet.hinhanh, gong_kinh_chi_tiet.moTa, \n"
+                + "                      gong_kinh_chi_tiet.trangThai\n"
+                + "FROM         gong_kinh INNER JOIN\n"
+                + "                      gong_kinh_chi_tiet ON gong_kinh.idGongKinh = gong_kinh_chi_tiet.idGongKinh INNER JOIN\n"
+                + "                      chat_lieu ON gong_kinh_chi_tiet.idChatLieu = chat_lieu.idChatLieu INNER JOIN\n"
+                + "                      thuong_hieu ON gong_kinh_chi_tiet.idThuongHieu = thuong_hieu.idThuongHieu INNER JOIN\n"
+                + "                      mau_sac ON gong_kinh_chi_tiet.idMauSac = mau_sac.idMauSac\n"
+                + "					  where gong_kinh.idGongKinh =? and (chat_lieu.tenChatLieu like ? or mau_sac.tenMauSac like ? or thuong_hieu.tenThuongHieu like ?)";
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, ma);
+            ps.setObject(2, a);
+            ps.setObject(3, a);
+            ps.setObject(4, a);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                chatLieu cl = new chatLieu(null, rs.getString(2));
+                mausac ms = new mausac(null, rs.getString(3));
+                thuonghieu th = new thuonghieu(null, rs.getString(4));
+                Gongkinh gk = new Gongkinh(rs.getInt(1), null, cl, ms, th, rs.getDouble(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9));
+                list.add(gk);
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Gongkinh check_MS_CL_TH(String mausac, String chatlieu, String thuonghieu) {
+    sql = "SELECT  gong_kinh_chi_tiet.idGongKinhCT, chat_lieu.tenChatLieu, mau_sac.tenMauSac, thuong_hieu.tenThuongHieu, gong_kinh_chi_tiet.giaThanh, gong_kinh_chi_tiet.soLuong, gong_kinh_chi_tiet.hinhanh, \n"
+        + "           gong_kinh_chi_tiet.moTa, gong_kinh_chi_tiet.trangThai\n"
+        + "FROM     gong_kinh_chi_tiet INNER JOIN\n"
+        + "           gong_kinh ON gong_kinh_chi_tiet.idGongKinh = gong_kinh.idGongKinh INNER JOIN\n"
+        + "           mau_sac ON gong_kinh_chi_tiet.idMauSac = mau_sac.idMauSac INNER JOIN\n"
+        + "           chat_lieu ON gong_kinh_chi_tiet.idChatLieu = chat_lieu.idChatLieu INNER JOIN\n"
+        + "           thuong_hieu ON gong_kinh_chi_tiet.idThuongHieu = thuong_hieu.idThuongHieu\n"
+        + "					 WHERE gong_kinh_chi_tiet.tenChatLieu = ? AND gong_kinh_chi_tiet.tenMauSac = ? AND gong_kinh_chi_tiet.tenThuongHieu = ?";
+
+    try {
+        con = DBconnect.getConnection();
+        ps = con.prepareStatement(sql);
+        ps.setObject(1, mausac);
+        ps.setObject(2, chatlieu);
+        ps.setObject(3, thuonghieu);
+
+        rs = ps.executeQuery();
+
+        while (rs.next()) {
+            chatLieu cl = new chatLieu(null, rs.getString(2));
+            mausac ms = new mausac(null, rs.getString(3));
+            thuonghieu th = new thuonghieu(null, rs.getString(4));
+            Gongkinh gk = new Gongkinh(rs.getInt(1), null, cl, ms, th, rs.getDouble(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9));
+
+            return gk;
+        }
+
+        return null;
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return null;
+}
+
 }

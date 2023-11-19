@@ -9,14 +9,14 @@ package model;
  * @author Dat
  */
 public class QLGK {
-    private String id;
+    private int id;
     private String maGK;
     private String tenGK;
 
     public QLGK() {
     }
 
-    public QLGK(String id, String maGK, String tenGK) {
+    public QLGK(int id, String maGK, String tenGK) {
         this.id = id;
         this.maGK = maGK;
         this.tenGK = tenGK;
@@ -27,11 +27,11 @@ public class QLGK {
         this.tenGK = tenGK;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

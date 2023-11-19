@@ -6,8 +6,10 @@
             <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/service/GongKinh_Service.java</file>
             <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/com/raven/form/QLGKForm.java</file>
             <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/model/Gongkinh.java</file>
+            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/model/chatLieu.java</file>
             <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/com/raven/main/Main.java</file>
-            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/com/raven/form/GKCT.java</file>
+            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/service/chatLieu_service.java</file>
+            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/com/raven/form/GongKinhChiTiet.java</file>
         </group>
     </open-files>
 </project-private>
