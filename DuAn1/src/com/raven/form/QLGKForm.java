@@ -4,6 +4,7 @@
  */
 package com.raven.form;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -15,78 +16,84 @@ import service.QLGK_service;
  * @author Asus
  */
 public class QLGKForm extends javax.swing.JPanel {
+
+    DefaultTableModel tblModel = new DefaultTableModel();
+    private final QLGK_service qlgks = new QLGK_service();
     private MainForm mainForm;
- DefaultTableModel tblModel;
-    QLGK qlgk = new QLGK();
-    QLGK_service gksv = new QLGK_service();
-    int index = -1;
+//    DefaultTableModel tblModel;
+//    QLGK qlgk = new QLGK();
+//    QLGK_service gksv = new QLGK_service();
+//    int index = -1;
     public static String magk;
-//    String linkanh = null;
-    
-    
+////    String linkanh = null;
+
     /**
      * Creates new form QLGKForm
      */
     public QLGKForm(MainForm main) {
         this.mainForm = main;
         initComponents();
-        initTable();
-        setOpaque(false);
-        fillTable(gksv.getALLQLGK());
         txt_tim_gk.setText("Tìm kiếm");
+        tbl_thongtin_gk.setModel(tblModel);
+        String header[] = {
+            "ID", "Mã Gọng Kính", "Tên Gọng Kính"
+        };
+        tblModel.setColumnIdentifiers(header);
+
+        tblModel = (DefaultTableModel) tbl_thongtin_gk.getModel();
+        LoadDataToTable(qlgks.getALLQLGK());
     }
- public void initTable() {
+
+    public void initTable() {
         tblModel = (DefaultTableModel) tbl_thongtin_gk.getModel();
         String[] table = new String[]{
             "STT", "Mã SP", "Tên SP"};
         tblModel.setColumnIdentifiers(table);
     }
 
-    public void fillTable(List<QLGK> list) {
-        tblModel = (DefaultTableModel) tbl_thongtin_gk.getModel();
-        tblModel.setRowCount(0);
-        for (QLGK qlgk : list) {
-            tblModel.addRow(qlgk.todata());
-        }
-    }
-
-    public QLGK getModel() {
-        QLGK gk = new QLGK();
-        gk.setMaGK(txt_ma_gk.getText());
-        gk.setTenGK(txt_ten_gk.getText());
-        return gk;
-    }
-
-    public void setModel(int index) {
-        QLGK gk = gksv.getALLQLGK().get(index);
-        txt_ma_gk.setText(gk.getMaGK());
-        txt_ten_gk.setText(gk.getTenGK());
-        lbl_id_gk.setText(String.valueOf(gk.getId()));
-    }
-
-    public boolean checkValidate() {
-        if (txt_ma_gk.getText().isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Nhập mã sản phẩm");
-            return false;
-        } else {
-            txt_ma_gk.setText(null);
-        }
-        if (txt_ten_gk.getText().isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Nhập tên sản phẩm");
-            return false;
-        } else {
-            txt_ten_gk.setText(null);
-        }
-        return true;
-    }
-
-    public void Reset() {
-        lbl_id_gk.setText(null);
-        txt_ma_gk.setText(null);
-        txt_ten_gk.setText(null);
-
-    }
-
+//    public void fillTable(List<QLGK> list) {
+//        tblModel = (DefaultTableModel) tbl_thongtin_gk.getModel();
+//        tblModel.setRowCount(0);
+//        for (QLGK qlgk : list) {
+//            tblModel.addRow(qlgk.todata());
+//        }
+//    }
+//
+//    public QLGK getModel() {
+//        QLGK gk = new QLGK();
+//        gk.setMaGK(txt_ma_gk.getText());
+//        gk.setTenGK(txt_ten_gk.getText());
+//        return gk;
+//    }
+//
+//    public void setModel(int index) {
+//        QLGK gk = gksv.getALLQLGK().get(index);
+//        txt_ma_gk.setText(gk.getMaGK());
+//        txt_ten_gk.setText(gk.getTenGK());
+//        lbl_id_gk.setText(String.valueOf(gk.getId()));
+//    }
+//
+//    public boolean checkValidate() {
+//        if (txt_ma_gk.getText().isEmpty()) {
+//            javax.swing.JOptionPane.showMessageDialog(this, "Nhập mã sản phẩm");
+//            return false;
+//        } else {
+//            txt_ma_gk.setText(null);
+//        }
+//        if (txt_ten_gk.getText().isEmpty()) {
+//            javax.swing.JOptionPane.showMessageDialog(this, "Nhập tên sản phẩm");
+//            return false;
+//        } else {
+//            txt_ten_gk.setText(null);
+//        }
+//        return true;
+//    }
+//
+//    public void Reset() {
+//        lbl_id_gk.setText(null);
+//        txt_ma_gk.setText(null);
+//        txt_ten_gk.setText(null);
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -308,59 +315,110 @@ public class QLGKForm extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        if (checkValidate()) {
-           String ma = tbl_thongtin_gk.getValueAt(index, 0).toString();
-            if (gksv.DeleteQLGK(ma)>0) {
-                JOptionPane.showMessageDialog(this, "thành công");
-                fillTable(gksv.getALLQLGK());
+        try {
+            if (txt_ma_gk.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập mã gọng kính");
+                return;
+            } else if (txt_ten_gk.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập tên gọng kính");
+                return;
             }
+            String ma = txt_ma_gk.getText();
+//            if(checkTrung(ma)){
+//                JOptionPane.showMessageDialog(this, "Trùng mã");
+//                return ;
+//            }
+
+            QLGK qlgk = getQLGKFormInput();
+            if (qlgks.DeleteQLGK(ma) != null) {
+                JOptionPane.showMessageDialog(this, "Xóa thành công");
+                LoadDataToTable(qlgks.getALLQLGK());
+            } else {
+                JOptionPane.showMessageDialog(this, "Không xóa thành công");
+            }
+
+        } catch (Exception e) {
         }
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        if (checkValidate()) {
-            QLGK gk = this.getModel();
-            String ma = tbl_thongtin_gk.getValueAt(index, 0).toString();
-            if (gksv.UpdateQLGK(gk, ma)>0) {
-                 JOptionPane.showMessageDialog(this, "thành công");
-                fillTable(gksv.getALLQLGK());
+        try {
+            if (txt_ma_gk.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập mã gọng kính");
+                return;
+            } else if (txt_ten_gk.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập tên gọng kính");
+                return;
             }
+//            String ma = txt_ma_gk.getText();
+//            if(checkTrung(ma)){
+//                JOptionPane.showMessageDialog(this, "Trùng mã");
+//                return ;
+//            }
+
+            QLGK qlgk = getQLGKFormInput();
+            if (qlgks.UpdateQLGK(qlgk) != null) {
+                JOptionPane.showMessageDialog(this, "Sửa thành công");
+                LoadDataToTable(qlgks.getALLQLGK());
+            } else {
+                JOptionPane.showMessageDialog(this, "Không sửa thành công");
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-        if (checkValidate()) {
-           QLGK gk = this.getModel();
-            if (gksv.byID(gk.getMaGK())!=null) {
-                JOptionPane.showMessageDialog(this, "Ma đã tồn tại");
-            }else{
-                if (gksv.AddQLGK(gk)>0) {
-                    JOptionPane.showMessageDialog(this, "thành công");
-                fillTable(gksv.getALLQLGK());
-                }
+        try {
+            if (txt_ma_gk.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập mã gọng kính");
+                return;
+            } else if (txt_ten_gk.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập tên gọng kính");
+                return;
             }
+            String ma = txt_ma_gk.getText();
+            if (checkTrung(ma)) {
+                JOptionPane.showMessageDialog(this, "Trùng mã");
+                return;
+            }
+
+            QLGK qlgk = getQLGKFormInput();
+            if (qlgks.AddQLGK(qlgk) != null) {
+                JOptionPane.showMessageDialog(this, "Thêm thành công");
+                LoadDataToTable(qlgks.getALLQLGK());
+            } else {
+                JOptionPane.showMessageDialog(this, "Không thêm thành công");
+            }
+
+        } catch (Exception e) {
         }
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private void btnSPChiTietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSPChiTietActionPerformed
         try {
-          magk = lbl_id_gk.getText();
-        mainForm.showForm(new GongKinhChiTiet(lbl_id_gk.getText()));  
+            magk = lbl_id_gk.getText();
+            mainForm.showForm(new GongKinhChiTiet(lbl_id_gk.getText()));
         } catch (Exception e) {
         }
-        
+
     }//GEN-LAST:event_btnSPChiTietActionPerformed
 
     private void tbl_thongtin_gkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_thongtin_gkMouseClicked
-       index = tbl_thongtin_gk.getSelectedRow();
-       this.setModel(index);
+        try {
+            showDetail();
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_tbl_thongtin_gkMouseClicked
 
     private void txt_tim_gkFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_tim_gkFocusLost
         if (txt_tim_gk.getText().isEmpty()) {
-            txt_tim_gk.setText("Tìm kiếm");
-            fillTable(gksv.getALLQLGK());
+            LoadDataToTable(qlgks.getALLQLGK());
         }
+        txt_tim_gk.setText("Tìm kiếm");
+        LoadDataToTable(qlgks.getALLQLGK());
+
     }//GEN-LAST:event_txt_tim_gkFocusLost
 
     private void txt_tim_gkMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_tim_gkMousePressed
@@ -368,13 +426,18 @@ public class QLGKForm extends javax.swing.JPanel {
     }//GEN-LAST:event_txt_tim_gkMousePressed
 
     private void txt_tim_gkKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tim_gkKeyReleased
-        String text = "%" + txt_tim_gk.getText() + "%";
-        if (txt_tim_gk.getText().isEmpty()) {
-             fillTable(gksv.getALLQLGK());
-        } else {
-            List<QLGK> listtk = gksv.selectByID(text);
-            fillTable(listtk);
+        try {
+            String text = "%" + txt_tim_gk.getText() + "%";
+            if (txt_tim_gk.getText().isEmpty()) {
+                LoadDataToTable(qlgks.getALLQLGK());
+            } else {
+                ArrayList<QLGK> list = qlgks.Search(text);
+                LoadDataToTable(list);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
+
     }//GEN-LAST:event_txt_tim_gkKeyReleased
 
 
@@ -397,4 +460,40 @@ public class QLGKForm extends javax.swing.JPanel {
     private javax.swing.JTextField txt_ten_gk;
     private javax.swing.JTextField txt_tim_gk;
     // End of variables declaration//GEN-END:variables
+
+    private void LoadDataToTable(ArrayList<QLGK> list) {
+        //list = qlgks.getALLQLGK();
+        tblModel.setRowCount(0);
+        for (QLGK qlgk : list) {
+            tblModel.addRow(new Object[]{
+                qlgk.getId(),
+                qlgk.getMaGK(),
+                qlgk.getTenGK()
+            });
+        }
+    }
+
+    private void showDetail() {
+        int index = tbl_thongtin_gk.getSelectedRow();
+        System.out.println(index);
+        lbl_id_gk.setText(tblModel.getValueAt(index, 0).toString());
+        txt_ma_gk.setText(tblModel.getValueAt(index, 1).toString());
+        txt_ten_gk.setText(tblModel.getValueAt(index, 2).toString());
+    }
+
+    private QLGK getQLGKFormInput() {
+        QLGK qlgk = new QLGK();
+        qlgk.setMaGK(txt_ma_gk.getText());
+        qlgk.setTenGK(txt_ten_gk.getText());
+        return qlgk;
+    }
+
+    private boolean checkTrung(String maGongKinh) {
+        for (int i = 0; i < tbl_thongtin_gk.getRowCount() - 1; i++) {
+            if (tbl_thongtin_gk.getValueAt(i, 1).toString().equalsIgnoreCase(maGongKinh)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

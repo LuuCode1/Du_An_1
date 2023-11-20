@@ -17,6 +17,13 @@ public class QLTK {
     public QLTK() {
     }
 
+    public QLTK(String maTK, String tenTK) {
+        this.maTK = maTK;
+        this.tenTK = tenTK;
+    }
+    
+    
+
     public QLTK(int idTK, String maTK, String tenTK) {
         this.idTK = idTK;
         this.maTK = maTK;

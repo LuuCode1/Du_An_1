@@ -8,13 +8,12 @@ package model;
  *
  * @author leduc
  */
-public class TrongKinh {
+public class TrongKinhChiTiet {
     private int    idTrongKinh;
-    private String maTrongKinh;
-    private String tenTrongKinh;
-    private mausac color;
-    private thuonghieu brand;
-    private chatLieu material;
+    private QLTK   tk;
+    private Mausac color;
+    private Thuonghieu brand;
+    private ChatLieu material;
     private double giathanh;
     private double docan;
     private Integer soluong;
@@ -22,13 +21,28 @@ public class TrongKinh {
     private String mota;
     private String trangthai;
 //e
-    public TrongKinh() {
+
+    public TrongKinhChiTiet() {
     }
 
-    public TrongKinh(int idTrongKinh, String maTrongKinh, String tenTrongKinh, mausac color, thuonghieu brand, chatLieu material, double giathanh, double docan, Integer soluong, String hinhanh, String mota, String trangthai) {
+    public TrongKinhChiTiet(QLTK tk, Mausac color, Thuonghieu brand, ChatLieu material, double giathanh, double docan, Integer soluong, String hinhanh, String mota, String trangthai) {
+        this.tk = tk;
+        this.color = color;
+        this.brand = brand;
+        this.material = material;
+        this.giathanh = giathanh;
+        this.docan = docan;
+        this.soluong = soluong;
+        this.hinhanh = hinhanh;
+        this.mota = mota;
+        this.trangthai = trangthai;
+    }
+    
+    
+
+    public TrongKinhChiTiet(int idTrongKinh, QLTK tk, Mausac color, Thuonghieu brand, ChatLieu material, double giathanh, double docan, Integer soluong, String hinhanh, String mota, String trangthai) {
         this.idTrongKinh = idTrongKinh;
-        this.maTrongKinh = maTrongKinh;
-        this.tenTrongKinh = tenTrongKinh;
+        this.tk = tk;
         this.color = color;
         this.brand = brand;
         this.material = material;
@@ -48,43 +62,35 @@ public class TrongKinh {
         this.idTrongKinh = idTrongKinh;
     }
 
-    public String getMaTrongKinh() {
-        return maTrongKinh;
+    public QLTK getTk() {
+        return tk;
     }
 
-    public void setMaTrongKinh(String maTrongKinh) {
-        this.maTrongKinh = maTrongKinh;
+    public void setTk(QLTK tk) {
+        this.tk = tk;
     }
 
-    public String getTenTrongKinh() {
-        return tenTrongKinh;
-    }
-
-    public void setTenTrongKinh(String tenTrongKinh) {
-        this.tenTrongKinh = tenTrongKinh;
-    }
-
-    public mausac getColor() {
+    public Mausac getColor() {
         return color;
     }
 
-    public void setColor(mausac color) {
+    public void setColor(Mausac color) {
         this.color = color;
     }
 
-    public thuonghieu getBrand() {
+    public Thuonghieu getBrand() {
         return brand;
     }
 
-    public void setBrand(thuonghieu brand) {
+    public void setBrand(Thuonghieu brand) {
         this.brand = brand;
     }
 
-    public chatLieu getMaterial() {
+    public ChatLieu getMaterial() {
         return material;
     }
 
-    public void setMaterial(chatLieu material) {
+    public void setMaterial(ChatLieu material) {
         this.material = material;
     }
 
@@ -135,12 +141,15 @@ public class TrongKinh {
     public void setTrangthai(String trangthai) {
         this.trangthai = trangthai;
     }
+    
+    
+    
 
  
     public Object[] todata(){
-        return new Object[]{this.maTrongKinh,this.tenTrongKinh,this.color.getTenMauSac(),
+        return new Object[]{this.idTrongKinh,this.color.getTenMauSac(),
             this.brand.getTenThuongHieu(),this.material.getTenChatLieu(),this.giathanh,this.docan,
-            this.soluong,this.hinhanh,this.mota};
+            this.soluong,this.hinhanh,this.mota,this.trangthai};
     }
     
 }

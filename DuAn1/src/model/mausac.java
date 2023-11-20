@@ -8,21 +8,21 @@ package model;
  *
  * @author Asus
  */
-public class mausac {
+public class Mausac {
     private int idMauSac;
    private String maMauSac;
    private String tenMauSac;
 //c
-    public mausac() {
+    public Mausac() {
     }
 
-    public mausac(int idMauSac, String maMauSac, String tenMauSac) {
+    public Mausac(int idMauSac, String maMauSac, String tenMauSac) {
         this.idMauSac = idMauSac;
         this.maMauSac = maMauSac;
         this.tenMauSac = tenMauSac;
     }
 
-    public mausac(String maMauSac, String tenMauSac) {
+    public Mausac(String maMauSac, String tenMauSac) {
         this.maMauSac = maMauSac;
         this.tenMauSac = tenMauSac;
     }

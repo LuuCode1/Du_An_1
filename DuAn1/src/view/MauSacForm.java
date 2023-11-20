@@ -5,7 +5,7 @@
 package view;
 
 import javax.swing.JOptionPane;
-import model.mausac;
+import model.Mausac;
 import service.mausac_service;
 
 /**
@@ -14,7 +14,7 @@ import service.mausac_service;
  */
 public class MauSacForm extends javax.swing.JFrame {
 //l
-    mausac color;
+    Mausac color;
     mausac_service colorService = new mausac_service();
 
     /**
@@ -26,7 +26,7 @@ public class MauSacForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     
-    mausac setModel() {
+    Mausac setModel() {
         color.setMaMauSac(txt_ma.getText());
         color.setTenMauSac(txt_ten.getText());
         return color;
@@ -134,7 +134,7 @@ public class MauSacForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_exitActionPerformed
 
     private void tbn_checkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbn_checkActionPerformed
-        mausac color = setModel();
+        Mausac color = setModel();
         if (colorService.insert(color) > 0) {
             JOptionPane.showMessageDialog(this, "them thanh cong");
         }

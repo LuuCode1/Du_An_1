@@ -65,9 +65,8 @@ CREATE TABLE trong_kinh (
   tenTrongKinh  NVARCHAR(50) NOT NULL,
   
   PRIMARY KEY (idTrongKinh),
-  
-  
 );
+
 
 CREATE TABLE trong_kinh_chi_tiet (
   idTrongKinhCT INT NOT NULL IDENTITY(1,1),
@@ -97,9 +96,10 @@ CREATE TABLE hoa_don_chi_tiet (
   maHoaDonChiTiet  VARCHAR(50) NOT NULL,
   idGongKinhCT INT  NULL,
   idTrongKinhCT INT  NULL,
-  soluong  INT NOT NULL,
-  dongia   FLOAT NOT NULL,
-  tonggia  FLOAT NOT NULL,
+  soluongGongKinh  INT NOT NULL,
+  soluongTrongKinh  INT NOT NULL,
+  dongiaGongKinh   FLOAT NOT NULL,
+  dongiaTrongKinh   FLOAT NOT NULL,
   PRIMARY KEY (idHoaDonChiTiet),
   FOREIGN KEY (idGongKinhCT) REFERENCES gong_kinh_chi_tiet (idGongKinhCT),
   FOREIGN KEY (idTrongKinhCT) REFERENCES trong_kinh_chi_tiet (idTrongKinhCT),

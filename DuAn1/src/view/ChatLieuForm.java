@@ -5,8 +5,8 @@
 package view;
 
 import javax.swing.JOptionPane;
-import model.chatLieu;
-import model.mausac;
+import model.ChatLieu;
+import model.Mausac;
 import service.chatLieu_service;
 
 /**
@@ -15,7 +15,7 @@ import service.chatLieu_service;
  */
 public class ChatLieuForm extends javax.swing.JFrame {
 //l
-    chatLieu cl = new chatLieu();
+    ChatLieu cl = new ChatLieu();
     chatLieu_service clsv = new chatLieu_service();
 
     /**
@@ -27,7 +27,7 @@ public class ChatLieuForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
-    chatLieu setModel() {
+    ChatLieu setModel() {
         cl.setMaChatLieu(txt_ma.getText());
         cl.setTenChatLieu(txt_ten.getText());
         return cl;
@@ -122,7 +122,7 @@ public class ChatLieuForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbn_checkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbn_checkActionPerformed
-        chatLieu cl = setModel();
+        ChatLieu cl = setModel();
         if (clsv.insert(cl) > 0) {
             JOptionPane.showMessageDialog(this, "them thanh cong");
            

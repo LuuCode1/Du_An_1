@@ -15,12 +15,15 @@ import service.QLTK_Serivce;
  */
 public class QLTKForm extends javax.swing.JPanel {
 
+    private MainForm mainForm;
     DefaultTableModel tblModel;
     QLTK_Serivce tkService = new QLTK_Serivce();
     QLTK tk = new QLTK();
+    public static String idtk;
     int index = -1;
 
-    public QLTKForm() {
+    public QLTKForm(MainForm main) {
+        this.mainForm = main;
         initComponents();
         initTable();
         fillTable(tkService.getGK());
@@ -365,7 +368,7 @@ public class QLTKForm extends javax.swing.JPanel {
             if (t.getMaTK().equals(txt_ma_tk.getText())) {
                 int choice = javax.swing.JOptionPane.showConfirmDialog(this, "Delete ?", "Comfirm", javax.swing.JOptionPane.YES_NO_OPTION);
                 if (choice == javax.swing.JOptionPane.YES_NO_OPTION) {
-                   tkService.Delete(txt_ma_tk.getText());
+                    tkService.Delete(txt_ma_tk.getText());
                     fillTable(tkService.getGK());
                     javax.swing.JOptionPane.showMessageDialog(this, "Xóa thành công");
                     return;
@@ -378,9 +381,12 @@ public class QLTKForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnSPChiTietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSPChiTietActionPerformed
-        this.setVisible(false);
-        QuanLyTrongKinh panel = new QuanLyTrongKinh();
-        panel.setVisible(true);
+        try {
+            idtk = lbl_id_tk.getText();
+            mainForm.showForm(new TrongKinhChiTiet(lbl_id_tk.getText()));
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }//GEN-LAST:event_btnSPChiTietActionPerformed
 
 

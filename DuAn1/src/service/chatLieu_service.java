@@ -6,8 +6,8 @@ package service;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import model.chatLieu;
-import model.mausac;
+import model.ChatLieu;
+import model.Mausac;
 /**
  *
  * @author Asus
@@ -18,15 +18,15 @@ public class chatLieu_service {
     PreparedStatement ps = null;
     String sql = null;
     ResultSet rs = null;
-    public List<chatLieu> FILL_TO_CBO_ChatLieu() {
-        List<chatLieu> list = new ArrayList<>();
+    public List<ChatLieu> FILL_TO_CBO_ChatLieu() {
+        List<ChatLieu> list = new ArrayList<>();
         sql ="SELECT  maChatLieu, tenChatLieu FROM  chat_lieu";
         try {
             con = DBconnect.getConnection();
             ps =  con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {                
-                 chatLieu cl = new chatLieu(rs.getString(1), rs.getString(2));
+                 ChatLieu cl = new ChatLieu(rs.getString(1), rs.getString(2));
                  list.add(cl);
             }
             return list;
@@ -35,7 +35,7 @@ public class chatLieu_service {
             return null;
         }
         }
-     public chatLieu tenchatLieu(String chatlieu){
+     public ChatLieu tenchatLieu(String chatlieu){
         sql ="SELECT * FROM  chat_lieu where tenChatLieu =?";
         try {
             con = DBconnect.getConnection();
@@ -43,7 +43,7 @@ public class chatLieu_service {
             ps.setObject(1, chatlieu);
             rs = ps.executeQuery();
             while (rs.next()) {                
-                chatLieu ms = new chatLieu(rs.getInt(1), rs.getString(2),rs.getString(3));
+                ChatLieu ms = new ChatLieu(rs.getInt(1), rs.getString(2),rs.getString(3));
                 return ms;
             }
         } catch (Exception e) {
@@ -52,7 +52,7 @@ public class chatLieu_service {
         }
         return null;
     }
-     public int insert(chatLieu cl){
+     public int insert(ChatLieu cl){
          sql ="insert into chat_lieu( maChatLieu, tenChatLieu) values (?,?) ";
          try {
              con = DBconnect.getConnection();

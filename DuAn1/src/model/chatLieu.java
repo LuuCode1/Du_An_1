@@ -8,21 +8,21 @@ package model;
  *
  * @author Asus
  */
-public class chatLieu {
+public class ChatLieu {
     private int idChatLieu;
     private String maChatLieu;
     private String tenChatLieu;
 
-    public chatLieu() {
+    public ChatLieu() {
     }
 //a
-    public chatLieu(int idChatLieu, String maChatLieu, String tenChatLieu) {
+    public ChatLieu(int idChatLieu, String maChatLieu, String tenChatLieu) {
         this.idChatLieu = idChatLieu;
         this.maChatLieu = maChatLieu;
         this.tenChatLieu = tenChatLieu;
     }
 
-    public chatLieu(String maChatLieu, String tenChatLieu) {
+    public ChatLieu(String maChatLieu, String tenChatLieu) {
         this.maChatLieu = maChatLieu;
         this.tenChatLieu = tenChatLieu;
     }

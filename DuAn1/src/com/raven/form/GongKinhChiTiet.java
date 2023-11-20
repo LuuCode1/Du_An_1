@@ -13,15 +13,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.Gongkinh;
 import model.QLGK;
-import model.chatLieu;
-import model.mausac;
-import model.thuonghieu;
+import model.ChatLieu;
+import model.Mausac;
+import model.Thuonghieu;
 import service.GongKinh_Service;
 import service.chatLieu_service;
 import service.mausac_service;
 import service.thuonghieu_service;
+import view.ChatLieuForm;
+import view.ThuongHieuForm;
 
 /**
  *
@@ -31,13 +32,13 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
 
     DefaultTableModel model;
     mausac_service mssv = new mausac_service();
-    mausac ms = new mausac();
-    chatLieu cl = new chatLieu();
+    Mausac ms = new Mausac();
+    ChatLieu cl = new ChatLieu();
     chatLieu_service clsv = new chatLieu_service();
-    thuonghieu th = new thuonghieu();
+    Thuonghieu th = new Thuonghieu();
     thuonghieu_service thsv = new thuonghieu_service();
     String linkAnh = null;
-    Gongkinh gk = new Gongkinh();
+    model.GongKinhChiTiet gk = new model.GongKinhChiTiet();
     GongKinh_Service gksv = new GongKinh_Service();
     int ma = Integer.parseInt(QLGKForm.magk);
     int index = -1;
@@ -67,7 +68,7 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
     }
 
     void CBo_MauSac() {
-        List<mausac> listmausac = mssv.FILL_TO_CBO_MauSac();
+        List<Mausac> listmausac = mssv.FILL_TO_CBO_MauSac();
         String[] cbo = new String[listmausac.size()];
         for (int i = 0; i < listmausac.size(); i++) {
             cbo[i] = listmausac.get(i).getTenMauSac();
@@ -85,7 +86,7 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
     }
 
     void CBo_ChatLieu() {
-        List<chatLieu> listchatlieu = clsv.FILL_TO_CBO_ChatLieu();
+        List<ChatLieu> listchatlieu = clsv.FILL_TO_CBO_ChatLieu();
         String[] cbo = new String[listchatlieu.size()];
         for (int i = 0; i < listchatlieu.size(); i++) {
             cbo[i] = listchatlieu.get(i).getTenChatLieu();
@@ -95,7 +96,7 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
     }
 
     void CBo_ThuongHieu() {
-        List<thuonghieu> listthuonghieu = thsv.FILL_TO_CBO_ThuongHieu();
+        List<Thuonghieu> listthuonghieu = thsv.FILL_TO_CBO_ThuongHieu();
         String[] cbo = new String[listthuonghieu.size()];
         for (int i = 0; i < listthuonghieu.size(); i++) {
             cbo[i] = listthuonghieu.get(i).getTenThuongHieu();
@@ -105,17 +106,17 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
         CBO_TH1_check.setModel(new DefaultComboBoxModel<>(cbo));
     }
 
-    void fillTable(List<Gongkinh> list) {
+    void fillTable(List<model.GongKinhChiTiet> list) {
         model = (DefaultTableModel) lblbang.getModel();
         model.setRowCount(0);
-        for (Gongkinh gongkinh : list) {
+        for (model.GongKinhChiTiet gongkinh : list) {
             model.addRow(gongkinh.todata());
 
         }
     }
 
-    void Show(Gongkinh gk1) {
-        Gongkinh gk = gk1;
+    void Show(model.GongKinhChiTiet gk1) {
+        model.GongKinhChiTiet gk = gk1;
         TxtSoLuong.setText(String.valueOf(gk.getSoLuong()));
         txt_GiaBan.setText(String.valueOf(gk.getGiaThanh()));
         txt_mota.setText(gk.getMoTa());
@@ -142,17 +143,17 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
         }
     }
 
-    Gongkinh read() {
-        Gongkinh gk = new Gongkinh();
+    model.GongKinhChiTiet read() {
+        model.GongKinhChiTiet gk = new model.GongKinhChiTiet();
         gk.setGongKinh(new QLGK(ma, null, null));
         gk.setGiaThanh(Double.parseDouble(txt_GiaBan.getText()));
         gk.setMoTa(txt_mota.getText());
         gk.setSoLuong(Integer.parseInt(TxtSoLuong.getText()));
-        mausac ms = mssv.tenMauSac(cbomausac.getSelectedItem().toString());
+        Mausac ms = mssv.tenMauSac(cbomausac.getSelectedItem().toString());
         gk.setTenMauSac(ms);
-        chatLieu cl = clsv.tenchatLieu(cbochatlieu.getSelectedItem().toString());
+        ChatLieu cl = clsv.tenchatLieu(cbochatlieu.getSelectedItem().toString());
         gk.setTenChatLieu(cl);
-        thuonghieu th = thsv.tenThuongHieu(cbothuonghieu.getSelectedItem().toString());
+        Thuonghieu th = thsv.tenThuongHieu(cbothuonghieu.getSelectedItem().toString());
         gk.setTenThuongHieu(th);
         gk.setHinhAnh(linkAnh);
         if (rboDB.isSelected() == true) {
@@ -181,7 +182,7 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
         if (TxtSoLuong.getText().trim().isEmpty()) {
             lblCheckSoLuong.setText("Vui lòng nhập số lượng");
             lblCheckSoLuong.setForeground(java.awt.Color.red);
-            return false;
+            
 
         } else {
             lblCheckSoLuong.setText(null);
@@ -191,41 +192,35 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
             if (soLuong <= 0) {
                 lblCheckSoLuong.setText("Số lượng lớn hơn 0");
                 lblCheckSoLuong.setForeground(java.awt.Color.red);
-                return false;
+              
             }
         } catch (Exception e) {
             lblCheckSoLuong.setText("Số lượng phải là số nguyên");
             lblCheckSoLuong.setForeground(java.awt.Color.red);
-            return false;
+          
         }
 
         //gia
         if (txt_GiaBan.getText().trim().isEmpty()) {
             lblCheckGiaBan.setText("Vui lòng nhập giá thành");
             lblCheckGiaBan.setForeground(java.awt.Color.red);
-            return false;
-
-        } else {
-            lblCheckGiaBan.setText(null);
-        }
-
-        if (Integer.parseInt(txt_GiaBan.getText()) < 0) {
-            lblCheckGiaBan.setText("Gía thành lớn hơn 0");
-            lblCheckGiaBan.setForeground(java.awt.Color.red);
-            return false;
+           
 
         } else {
             lblCheckGiaBan.setText(null);
         }
 
         try {
-            float giaBan = Float.parseFloat(txt_GiaBan.getText());
-
-        } catch (NumberFormatException ex) {
-            lblCheckGiaBan.setText("Giá thành phải là số");
+            double soLuong = Double.parseDouble(txt_GiaBan.getText());
+            if (soLuong <= 0) {
+                lblCheckGiaBan.setText("Giá bán lớn hơn 0");
+                lblCheckGiaBan.setForeground(java.awt.Color.red);
+             
+            }
+        } catch (Exception e) {
+            lblCheckGiaBan.setText("Giá bán phải là số nguyên");
             lblCheckGiaBan.setForeground(java.awt.Color.red);
-
-            return false;
+       
         }
         return true;
     }
@@ -274,6 +269,7 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        lblCheckSoLuong1 = new javax.swing.JLabel();
         btn_Delete = new javax.swing.JButton();
         btn_reset = new javax.swing.JButton();
         CBO_TH1_check = new javax.swing.JComboBox<>();
@@ -384,9 +380,24 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
         form2.add(btn_deleteAnh1, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 260, -1, -1));
 
         cbochatlieu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbochatlieu.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cbochatlieuFocusLost(evt);
+            }
+        });
+        cbochatlieu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cbochatlieuMouseClicked(evt);
+            }
+        });
         cbochatlieu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbochatlieuActionPerformed(evt);
+            }
+        });
+        cbochatlieu.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                cbochatlieuKeyReleased(evt);
             }
         });
         form2.add(cbochatlieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 193, 30));
@@ -435,6 +446,11 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
         form2.add(themnhanhmausac1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, 230, 0));
 
         cbothuonghieu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbothuonghieu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cbothuonghieuMouseClicked(evt);
+            }
+        });
         cbothuonghieu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbothuonghieuActionPerformed(evt);
@@ -475,7 +491,13 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Microsoft-Fluentui-Emoji-Mono-Plus.24.png"))); // NOI18N
         jButton1.setBorder(null);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         form2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 220, 30, 30));
+        form2.add(lblCheckSoLuong1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 230, 20));
 
         color1.add(form2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 85, 1058, 300));
 
@@ -574,7 +596,7 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         if (check()) {
-            Gongkinh gk = this.read();
+            model.GongKinhChiTiet gk = this.read();
             String mausac = cbomausac.getSelectedItem().toString();
             String chatlieu = cbochatlieu.getSelectedItem().toString();
             String thuonghieu = cbothuonghieu.getSelectedItem().toString();
@@ -594,7 +616,7 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
         if (check()) {
-            Gongkinh gk = this.read();
+            model.GongKinhChiTiet gk = this.read();
             int b = (int) lblbang.getValueAt(index, 0);
             if (gksv.update(gk, b) > 0) {
                 JOptionPane.showMessageDialog(this, "thanh cong");
@@ -640,6 +662,7 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
 
     private void cbochatlieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbochatlieuActionPerformed
         // TODO add your handling code here:
+        CBo_ChatLieu();
     }//GEN-LAST:event_cbochatlieuActionPerformed
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
@@ -648,6 +671,9 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
 
     private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
         // TODO add your handling code here:
+        ThuongHieuForm ql = new ThuongHieuForm();
+        ql.setVisible(true);
+        CBo_ThuongHieu(); 
     }//GEN-LAST:event_jLabel21MouseClicked
 
     private void cbothuonghieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbothuonghieuActionPerformed
@@ -681,14 +707,14 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
     private void lblbangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblbangMouseClicked
         index = lblbang.getSelectedRow();
         int a = (int) lblbang.getValueAt(index, 0);
-        Gongkinh gk = gksv.selectByID(a);
+        model.GongKinhChiTiet gk = gksv.selectByID(a);
         Show(gk);
     }//GEN-LAST:event_lblbangMouseClicked
 
     private void CBO_TH1_checkItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CBO_TH1_checkItemStateChanged
         String name = CBO_TH1_check.getSelectedItem().toString();
         if (gksv.check_Cbo(ma, name) != null) {
-            List<Gongkinh> gkcheck = gksv.check_Cbo(ma, name);
+            List<model.GongKinhChiTiet> gkcheck = gksv.check_Cbo(ma, name);
             fillTable(gkcheck);
         }
     }//GEN-LAST:event_CBO_TH1_checkItemStateChanged
@@ -706,9 +732,35 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
 
     private void txt_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyReleased
         String search = "%" + txt_search.getText() + "%";
-        List<Gongkinh> listsearch = gksv.seach(ma, search);
+        List<model.GongKinhChiTiet> listsearch = gksv.seach(ma, search);
         fillTable(listsearch);
     }//GEN-LAST:event_txt_searchKeyReleased
+
+    private void cbothuonghieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbothuonghieuMouseClicked
+        // TODO add your handling code here:
+        CBo_ThuongHieu(); 
+    }//GEN-LAST:event_cbothuonghieuMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        ChatLieuForm ql = new ChatLieuForm();
+        ql.setVisible(true);
+        
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void cbochatlieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbochatlieuMouseClicked
+        // TODO add your handling code here:
+        CBo_ChatLieu();
+    }//GEN-LAST:event_cbochatlieuMouseClicked
+
+    private void cbochatlieuFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbochatlieuFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbochatlieuFocusLost
+
+    private void cbochatlieuKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbochatlieuKeyReleased
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_cbochatlieuKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -744,6 +796,7 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblCheckGiaBan;
     private javax.swing.JLabel lblCheckSoLuong;
+    private javax.swing.JLabel lblCheckSoLuong1;
     private javax.swing.JLabel lbl_anh;
     private javax.swing.JLabel lbl_magk;
     private javax.swing.JTable lblbang;

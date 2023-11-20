@@ -8,21 +8,21 @@ package model;
  *
  * @author Asus
  */
-public class thuonghieu {
+public class Thuonghieu {
     private int idThuongHieu;
     private String maThuongHieu;
     private String tenThuongHieu;
 //d
-    public thuonghieu() {
+    public Thuonghieu() {
     }
 
-    public thuonghieu(int idThuongHieu, String maThuongHieu, String tenThuongHieu) {
+    public Thuonghieu(int idThuongHieu, String maThuongHieu, String tenThuongHieu) {
         this.idThuongHieu = idThuongHieu;
         this.maThuongHieu = maThuongHieu;
         this.tenThuongHieu = tenThuongHieu;
     }
 
-    public thuonghieu(String maThuongHieu, String tenThuongHieu) {
+    public Thuonghieu(String maThuongHieu, String tenThuongHieu) {
         this.maThuongHieu = maThuongHieu;
         this.tenThuongHieu = tenThuongHieu;
     }

@@ -8,22 +8,22 @@ package model;
  *
  * @author Asus
  */
-public class Gongkinh {
+public class GongKinhChiTiet {
     private int gongKinhChiTiet;
     private QLGK gongKinh;
-    private chatLieu tenChatLieu;
-    private mausac tenMauSac;
-    private thuonghieu tenThuongHieu;
+    private ChatLieu tenChatLieu;
+    private Mausac tenMauSac;
+    private Thuonghieu tenThuongHieu;
     private double giaThanh;
     private int soLuong;
     private String hinhAnh;
     private String moTa;
     private String trangThai;
 //b
-    public Gongkinh() {
+    public GongKinhChiTiet() {
     }
 
-    public Gongkinh(int gongKinhChiTiet, QLGK gongKinh, chatLieu tenChatLieu, mausac tenMauSac, thuonghieu tenThuongHieu, double giaThanh, int soLuong, String hinhAnh, String moTa, String trangThai) {
+    public GongKinhChiTiet(int gongKinhChiTiet, QLGK gongKinh, ChatLieu tenChatLieu, Mausac tenMauSac, Thuonghieu tenThuongHieu, double giaThanh, int soLuong, String hinhAnh, String moTa, String trangThai) {
         this.gongKinhChiTiet = gongKinhChiTiet;
         this.gongKinh = gongKinh;
         this.tenChatLieu = tenChatLieu;
@@ -36,7 +36,7 @@ public class Gongkinh {
         this.trangThai = trangThai;
     }
 
-    public Gongkinh(QLGK gongKinh, chatLieu tenChatLieu, mausac tenMauSac, thuonghieu tenThuongHieu, double giaThanh, int soLuong, String hinhAnh, String moTa, String trangThai) {
+    public GongKinhChiTiet(QLGK gongKinh, ChatLieu tenChatLieu, Mausac tenMauSac, Thuonghieu tenThuongHieu, double giaThanh, int soLuong, String hinhAnh, String moTa, String trangThai) {
         this.gongKinh = gongKinh;
         this.tenChatLieu = tenChatLieu;
         this.tenMauSac = tenMauSac;
@@ -64,27 +64,27 @@ public class Gongkinh {
         this.gongKinh = gongKinh;
     }
 
-    public chatLieu getTenChatLieu() {
+    public ChatLieu getTenChatLieu() {
         return tenChatLieu;
     }
 
-    public void setTenChatLieu(chatLieu tenChatLieu) {
+    public void setTenChatLieu(ChatLieu tenChatLieu) {
         this.tenChatLieu = tenChatLieu;
     }
 
-    public mausac getTenMauSac() {
+    public Mausac getTenMauSac() {
         return tenMauSac;
     }
 
-    public void setTenMauSac(mausac tenMauSac) {
+    public void setTenMauSac(Mausac tenMauSac) {
         this.tenMauSac = tenMauSac;
     }
 
-    public thuonghieu getTenThuongHieu() {
+    public Thuonghieu getTenThuongHieu() {
         return tenThuongHieu;
     }
 
-    public void setTenThuongHieu(thuonghieu tenThuongHieu) {
+    public void setTenThuongHieu(Thuonghieu tenThuongHieu) {
         this.tenThuongHieu = tenThuongHieu;
     }
 

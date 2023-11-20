@@ -18,11 +18,11 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import model.Gongkinh;
+import model.GongKinhChiTiet;
 import model.QLGK;
-import model.chatLieu;
-import model.mausac;
-import model.thuonghieu;
+import model.ChatLieu;
+import model.Mausac;
+import model.Thuonghieu;
 import service.GongKinh_Service;
 import service.chatLieu_service;
 import service.mausac_service;
@@ -36,13 +36,13 @@ public class GKCT extends javax.swing.JFrame {
     
     DefaultTableModel model;
     mausac_service mssv = new mausac_service();
-    mausac ms = new mausac();
-    chatLieu cl = new chatLieu();
+    Mausac ms = new Mausac();
+    ChatLieu cl = new ChatLieu();
     chatLieu_service clsv = new chatLieu_service();
-    thuonghieu th = new thuonghieu();
+    Thuonghieu th = new Thuonghieu();
     thuonghieu_service thsv = new thuonghieu_service();
     String linkAnh = null;
-    Gongkinh gk = new Gongkinh();
+    GongKinhChiTiet gk = new GongKinhChiTiet();
     GongKinh_Service gksv = new GongKinh_Service();
     int ma = Integer.parseInt(QLGKForm.magk);
     int index = -1;
@@ -74,7 +74,7 @@ public class GKCT extends javax.swing.JFrame {
     }
 
     void CBo_MauSac() {
-        List<mausac> listmausac = mssv.FILL_TO_CBO_MauSac();
+        List<Mausac> listmausac = mssv.FILL_TO_CBO_MauSac();
         String[] cbo = new String[listmausac.size()];
         for (int i = 0; i < listmausac.size(); i++) {
             cbo[i] = listmausac.get(i).getTenMauSac();
@@ -92,7 +92,7 @@ public class GKCT extends javax.swing.JFrame {
     }
 
     void CBo_ChatLieu() {
-        List<chatLieu> listchatlieu = clsv.FILL_TO_CBO_ChatLieu();
+        List<ChatLieu> listchatlieu = clsv.FILL_TO_CBO_ChatLieu();
         String[] cbo = new String[listchatlieu.size()];
         for (int i = 0; i < listchatlieu.size(); i++) {
             cbo[i] = listchatlieu.get(i).getTenChatLieu();
@@ -102,7 +102,7 @@ public class GKCT extends javax.swing.JFrame {
     }
 
     void CBo_ThuongHieu() {
-        List<thuonghieu> listthuonghieu = thsv.FILL_TO_CBO_ThuongHieu();
+        List<Thuonghieu> listthuonghieu = thsv.FILL_TO_CBO_ThuongHieu();
         String[] cbo = new String[listthuonghieu.size()];
         for (int i = 0; i < listthuonghieu.size(); i++) {
             cbo[i] = listthuonghieu.get(i).getTenThuongHieu();
@@ -117,16 +117,16 @@ public class GKCT extends javax.swing.JFrame {
         model = (DefaultTableModel) lblbang.getModel();
         model.setRowCount(0);
 
-        List<Gongkinh> list = gksv.selectAll(ma);
-        for (Gongkinh gongkinh : list) {
+        List<GongKinhChiTiet> list = gksv.selectAll(ma);
+        for (GongKinhChiTiet gongkinh : list) {
             model.addRow(gongkinh.todata());
             
         }
         
     }
 
-    void Show(Gongkinh gk1) {
-        Gongkinh gk = gk1;
+    void Show(GongKinhChiTiet gk1) {
+        GongKinhChiTiet gk = gk1;
         TxtSoLuong1.setText(String.valueOf(gk.getSoLuong()));
         txt_GiaBan1.setText(String.valueOf(gk.getGiaThanh()));
         txt_mota1.setText(gk.getMoTa());
@@ -146,14 +146,14 @@ public class GKCT extends javax.swing.JFrame {
         }
     }
 
-    Gongkinh Read() {
-        Gongkinh gk = new Gongkinh();
+    GongKinhChiTiet Read() {
+        GongKinhChiTiet gk = new GongKinhChiTiet();
         gk.setGiaThanh(Double.parseDouble(txt_GiaBan1.getText()));
         gk.setMoTa(txt_mota1.getText());
         gk.setSoLuong(Integer.parseInt(TxtSoLuong1.getText()));
-        gk.setTenChatLieu((chatLieu) cbochatlieu.getSelectedItem());
-        gk.setTenMauSac((mausac) cbomausac.getSelectedItem());
-        gk.setTenThuongHieu((thuonghieu) cbothuonghieu.getSelectedItem());
+        gk.setTenChatLieu((ChatLieu) cbochatlieu.getSelectedItem());
+        gk.setTenMauSac((Mausac) cbomausac.getSelectedItem());
+        gk.setTenThuongHieu((Thuonghieu) cbothuonghieu.getSelectedItem());
         return gk;
     }
 
@@ -857,7 +857,7 @@ public class GKCT extends javax.swing.JFrame {
     private void lblbangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblbangMouseClicked
         index = lblbang.getSelectedRow();
         int a = (int) lblbang.getValueAt(index, 0);
-        Gongkinh gk = gksv.selectByID(a);
+        GongKinhChiTiet gk = gksv.selectByID(a);
         Show(gk);
     }//GEN-LAST:event_lblbangMouseClicked
 

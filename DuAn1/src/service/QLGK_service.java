@@ -3,16 +3,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package service;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import model.Gongkinh;
+import model.GongKinhChiTiet;
 import model.QLGK;
+
 /**
  *
  * @author Asus
  */
 public class QLGK_service {
+
     public ArrayList<QLGK> getALLQLGK() {
         ArrayList<QLGK> list = new ArrayList<>();
         String sql = "select idGongKinh, maGongKinh, tenGongKinh\n"
@@ -50,21 +53,21 @@ public class QLGK_service {
         return row;
     }
 
-    public int UpdateQLGK(QLGK qlgk,String ma) {
-        
+    public Integer UpdateQLGK(QLGK qlgk) {
+        Integer row = null;
         String sql = "update gong_kinh\n"
-                + "set tenGongKinh = ?\n"
+                + "set tenGongKinh =?\n"
                 + "where maGongKinh like ?";
         Connection con = DBconnect.getConnection();
         try {
             PreparedStatement pstm = con.prepareStatement(sql);
-            pstm.setString(2, ma);
+            pstm.setString(2, qlgk.getMaGK());
             pstm.setString(1, qlgk.getTenGK());
-            return pstm.executeUpdate();
+            row = pstm.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
         }
-        return 0;
+        return row;
     }
 
     public Integer DeleteQLGK(String maGongKinh) {
@@ -83,8 +86,8 @@ public class QLGK_service {
         return row;
     }
 
-    public List<QLGK> selectByID(String a){
-        String sql  = "select idGongKinh, maGongKinh, tenGongKinh from gong_kinh where maGongKinh like ? or tenGongKinh like ?";
+    public List<QLGK> selectByID(String a) {
+        String sql = "select idGongKinh, maGongKinh, tenGongKinh from gong_kinh where maGongKinh like ? or tenGongKinh like ?";
         List<QLGK> list = new ArrayList<>();
         try {
             Connection con = DBconnect.getConnection();
@@ -104,18 +107,18 @@ public class QLGK_service {
             return list;
         } catch (Exception e) {
             e.printStackTrace();
-            
+
         }
         return null;
 
     }
-    public QLGK byID(String a){
-        String sql  = "select idGongKinh, maGongKinh, tenGongKinh from gong_kinh where maGongKinh like ? ";
+
+    public QLGK byID(String a) {
+        String sql = "select idGongKinh, maGongKinh, tenGongKinh from gong_kinh where maGongKinh like ? ";
         try {
             Connection con = DBconnect.getConnection();
             PreparedStatement pstm = con.prepareStatement(sql);
             pstm.setObject(1, a);
-            
 
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
@@ -123,10 +126,35 @@ public class QLGK_service {
                 qlgk.setId(rs.getInt("idGongKinh"));
                 qlgk.setMaGK(rs.getString("maGongKinh"));
                 qlgk.setTenGK(rs.getString("tenGongKinh"));
-                return  qlgk;
+                return qlgk;
             }
         } catch (Exception e) {
         }
         return null;
-}
+    }
+
+    public ArrayList<QLGK> Search(String gktk) {
+        ArrayList<QLGK> list = new ArrayList<>();
+        String sql = "select idGongKinh, maGongKinh, tenGongKinh\n"
+                + "from gong_kinh\n"
+                + "where maGongKinh like ? \n"
+                + "	  or tenGongKinh like ?";
+        Connection con = DBconnect.getConnection();
+        try {
+            PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setString(1, gktk);
+            pstm.setString(2, gktk);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                QLGK qlgk = new QLGK();
+                qlgk.setId(rs.getInt("idGongKinh"));
+                qlgk.setMaGK(rs.getString("maGongKinh"));
+                qlgk.setTenGK(rs.getString("tenGongKinh"));
+                list.add(qlgk);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
 }

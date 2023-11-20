@@ -7,7 +7,7 @@ package view;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
-import model.mausac;
+import model.Mausac;
 import service.mausac_service;
 
 /**
@@ -18,7 +18,7 @@ public class MauSac extends javax.swing.JFrame {
 //l
     DefaultTableModel model;
     mausac_service mssv = new mausac_service();
-    mausac ms = new mausac();
+    Mausac ms = new Mausac();
     
 
     /**
@@ -30,10 +30,10 @@ public class MauSac extends javax.swing.JFrame {
         filltable(mssv.FILL_TO_CBO_MauSac());
     }
 
-    void filltable(List<mausac> list) {
+    void filltable(List<Mausac> list) {
         model = (DefaultTableModel) tbl_bang.getModel();
         model.setRowCount(0);
-        for (mausac ms : list) {
+        for (Mausac ms : list) {
      model.addRow(ms.todata()); 
   }
     }

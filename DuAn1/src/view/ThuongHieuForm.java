@@ -5,7 +5,7 @@
 package view;
 
 import javax.swing.JOptionPane;
-import model.thuonghieu;
+import model.Thuonghieu;
 import service.chatLieu_service;
 import service.thuonghieu_service;
 
@@ -15,7 +15,7 @@ import service.thuonghieu_service;
  */
 public class ThuongHieuForm extends javax.swing.JFrame {
 //l
-    thuonghieu brand;
+    Thuonghieu brand;
     thuonghieu_service brandService = new thuonghieu_service();
 
     /**
@@ -27,7 +27,7 @@ public class ThuongHieuForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
-    thuonghieu setModel() {
+    Thuonghieu setModel() {
         brand.setMaThuongHieu(txt_ma.getText());
         brand.setTenThuongHieu(txt_ten.getText());
         return brand;
@@ -121,7 +121,7 @@ public class ThuongHieuForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbn_checkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbn_checkActionPerformed
-        thuonghieu brand = setModel();
+        Thuonghieu brand = setModel();
         if (brandService.insert(brand) > 0) {
             JOptionPane.showMessageDialog(this, "them thanh cong");
         }
