@@ -22,6 +22,7 @@ import service.chatLieu_service;
 import service.mausac_service;
 import service.thuonghieu_service;
 import view.ChatLieuForm;
+import view.MauSacForm;
 import view.ThuongHieuForm;
 
 /**
@@ -258,8 +259,6 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
         txt_mota = new javax.swing.JTextArea();
         lblCheckSoLuong = new javax.swing.JLabel();
         lblCheckGiaBan = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
         themnhanhmausac1 = new javax.swing.JPanel();
         cbothuonghieu = new javax.swing.JComboBox<>();
         cbomausac = new javax.swing.JComboBox<>();
@@ -270,6 +269,8 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         lblCheckSoLuong1 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         btn_Delete = new javax.swing.JButton();
         btn_reset = new javax.swing.JButton();
         CBO_TH1_check = new javax.swing.JComboBox<>();
@@ -389,6 +390,9 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cbochatlieuMouseClicked(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                cbochatlieuMousePressed(evt);
+            }
         });
         cbochatlieu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -411,27 +415,6 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
         form2.add(lblCheckSoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 230, 20));
         form2.add(lblCheckGiaBan, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 230, 20));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Microsoft-Fluentui-Emoji-Mono-Plus.24.png"))); // NOI18N
-        jLabel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel4.setName(""); // NOI18N
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
-            }
-        });
-        form2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 160, 30, 30));
-
-        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Colebemis-Feather-Plus.16.png"))); // NOI18N
-        jLabel21.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel21.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel21MouseClicked(evt);
-            }
-        });
-        form2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 40, 30, 30));
-
         javax.swing.GroupLayout themnhanhmausac1Layout = new javax.swing.GroupLayout(themnhanhmausac1);
         themnhanhmausac1.setLayout(themnhanhmausac1Layout);
         themnhanhmausac1Layout.setHorizontalGroup(
@@ -450,6 +433,9 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cbothuonghieuMouseClicked(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                cbothuonghieuMousePressed(evt);
+            }
         });
         cbothuonghieu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -459,6 +445,11 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
         form2.add(cbothuonghieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 193, 30));
 
         cbomausac.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbomausac.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                cbomausacMousePressed(evt);
+            }
+        });
         cbomausac.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbomausacActionPerformed(evt);
@@ -496,8 +487,28 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
                 jButton1MouseClicked(evt);
             }
         });
-        form2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 220, 30, 30));
+        form2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 40, 30, 30));
         form2.add(lblCheckSoLuong1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 230, 20));
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Microsoft-Fluentui-Emoji-Mono-Plus.24.png"))); // NOI18N
+        jButton2.setBorder(null);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
+        form2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 220, 30, 30));
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Microsoft-Fluentui-Emoji-Mono-Plus.24.png"))); // NOI18N
+        jButton3.setBorder(null);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
+        form2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 160, 30, 30));
 
         color1.add(form2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 85, 1058, 300));
 
@@ -665,17 +676,6 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
         CBo_ChatLieu();
     }//GEN-LAST:event_cbochatlieuActionPerformed
 
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-
-    }//GEN-LAST:event_jLabel4MouseClicked
-
-    private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
-        // TODO add your handling code here:
-        ThuongHieuForm ql = new ThuongHieuForm();
-        ql.setVisible(true);
-        CBo_ThuongHieu(); 
-    }//GEN-LAST:event_jLabel21MouseClicked
-
     private void cbothuonghieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbothuonghieuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbothuonghieuActionPerformed
@@ -743,9 +743,8 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        ChatLieuForm ql = new ChatLieuForm();
+        ThuongHieuForm ql = new ThuongHieuForm();
         ql.setVisible(true);
-        
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void cbochatlieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbochatlieuMouseClicked
@@ -761,6 +760,33 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_cbochatlieuKeyReleased
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+        ChatLieuForm ql = new ChatLieuForm();
+        ql.setVisible(true);
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        // TODO add your handling code here:
+        MauSacForm ql = new MauSacForm();
+        ql.setVisible(true);
+    }//GEN-LAST:event_jButton3MouseClicked
+
+    private void cbomausacMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbomausacMousePressed
+        // TODO add your handling code here:
+        CBo_MauSac();
+    }//GEN-LAST:event_cbomausacMousePressed
+
+    private void cbochatlieuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbochatlieuMousePressed
+        // TODO add your handling code here:
+        CBo_ChatLieu();
+    }//GEN-LAST:event_cbochatlieuMousePressed
+
+    private void cbothuonghieuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbothuonghieuMousePressed
+        // TODO add your handling code here:
+        CBo_ThuongHieu();
+    }//GEN-LAST:event_cbothuonghieuMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -779,6 +805,8 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
     private com.raven.form.Color color1;
     private javax.swing.JPanel form2;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -787,9 +815,7 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;

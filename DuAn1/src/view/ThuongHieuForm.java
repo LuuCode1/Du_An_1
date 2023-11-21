@@ -15,7 +15,8 @@ import service.thuonghieu_service;
  */
 public class ThuongHieuForm extends javax.swing.JFrame {
 //l
-    Thuonghieu brand;
+
+    Thuonghieu brand = new Thuonghieu();
     thuonghieu_service brandService = new thuonghieu_service();
 
     /**
@@ -28,9 +29,21 @@ public class ThuongHieuForm extends javax.swing.JFrame {
     }
 
     Thuonghieu setModel() {
-        brand.setMaThuongHieu(txt_ma.getText());
-        brand.setTenThuongHieu(txt_ten.getText());
+        brand.setMaThuongHieu(txt_math.getText());
+        brand.setTenThuongHieu(txt_tenth.getText());
         return brand;
+    }
+
+    public boolean Validate() {
+        if (txt_math.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã thương hiệu không được để trống");
+            return false;
+        }
+        if (txt_tenth.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên thương hiệu không được để trống");
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -45,8 +58,8 @@ public class ThuongHieuForm extends javax.swing.JFrame {
         tbn_check = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        txt_ten = new javax.swing.JTextField();
-        txt_ma = new javax.swing.JTextField();
+        txt_tenth = new javax.swing.JTextField();
+        txt_math = new javax.swing.JTextField();
         btn_exit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -62,15 +75,15 @@ public class ThuongHieuForm extends javax.swing.JFrame {
 
         jLabel1.setText("Mã Thương Hiệu");
 
-        txt_ten.addActionListener(new java.awt.event.ActionListener() {
+        txt_tenth.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_tenActionPerformed(evt);
+                txt_tenthActionPerformed(evt);
             }
         });
 
-        txt_ma.addActionListener(new java.awt.event.ActionListener() {
+        txt_math.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_maActionPerformed(evt);
+                txt_mathActionPerformed(evt);
             }
         });
 
@@ -94,8 +107,8 @@ public class ThuongHieuForm extends javax.swing.JFrame {
                         .addComponent(btn_exit))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel1)
-                        .addComponent(txt_ma, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                        .addComponent(txt_ten)
+                        .addComponent(txt_math, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                        .addComponent(txt_tenth)
                         .addComponent(jLabel2)))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
@@ -105,11 +118,11 @@ public class ThuongHieuForm extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_ma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_math, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_ten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_tenth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tbn_check)
@@ -121,19 +134,21 @@ public class ThuongHieuForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbn_checkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbn_checkActionPerformed
-        Thuonghieu brand = setModel();
-        if (brandService.insert(brand) > 0) {
-            JOptionPane.showMessageDialog(this, "them thanh cong");
+        if (Validate()) {
+            Thuonghieu brand = setModel();
+            if (brandService.insert(brand) > 0) {
+                JOptionPane.showMessageDialog(this, "them thanh cong");
+            }
         }
     }//GEN-LAST:event_tbn_checkActionPerformed
 
-    private void txt_tenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tenActionPerformed
+    private void txt_tenthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tenthActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_tenActionPerformed
+    }//GEN-LAST:event_txt_tenthActionPerformed
 
-    private void txt_maActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_maActionPerformed
+    private void txt_mathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_mathActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_maActionPerformed
+    }//GEN-LAST:event_txt_mathActionPerformed
 
     private void btn_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exitActionPerformed
         this.setVisible(false);
@@ -180,7 +195,7 @@ public class ThuongHieuForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton tbn_check;
-    private javax.swing.JTextField txt_ma;
-    private javax.swing.JTextField txt_ten;
+    private javax.swing.JTextField txt_math;
+    private javax.swing.JTextField txt_tenth;
     // End of variables declaration//GEN-END:variables
 }

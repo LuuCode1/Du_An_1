@@ -9,7 +9,7 @@ package model;
  * @author Asus
  */
 public class Mausac {
-    private int idMauSac;
+   private int idMauSac;
    private String maMauSac;
    private String tenMauSac;
 //c

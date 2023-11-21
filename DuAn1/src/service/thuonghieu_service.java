@@ -41,35 +41,36 @@ public class thuonghieu_service {
         }
     }
 
-        public Thuonghieu tenThuongHieu(String th){
-        sql ="SELECT * FROM  thuong_hieu where tenThuongHieu =?";
+    public Thuonghieu tenThuongHieu(String th) {
+        sql = "SELECT * FROM  thuong_hieu where tenThuongHieu =?";
         try {
             con = DBconnect.getConnection();
-            ps =  con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
             ps.setObject(1, th);
             rs = ps.executeQuery();
-            while (rs.next()) {                
-                Thuonghieu ms = new Thuonghieu(rs.getInt(1), rs.getString(2),rs.getString(3));
+            while (rs.next()) {
+                Thuonghieu ms = new Thuonghieu(rs.getInt(1), rs.getString(2), rs.getString(3));
                 return ms;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            
+
         }
         return null;
     }
-     
-     public int insert(Thuonghieu th){
-         sql ="insert into thuong_hieu( maThuongHieu, tenThuongHieu) values (?,?) ";
-         try {
-             con = DBconnect.getConnection();
-            ps =  con.prepareStatement(sql);
+
+    public int insert(Thuonghieu th) {
+        sql = "INSERT INTO thuong_hieu(maThuongHieu, tenThuongHieu)\n"
+                + "VALUES (?, ?)";
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
             ps.setObject(1, th.getMaThuongHieu());
             ps.setObject(2, th.getTenThuongHieu());
             return ps.executeUpdate();
-         } catch (Exception e) {
-             e.printStackTrace();
-             return 0;
-         }
-     }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }

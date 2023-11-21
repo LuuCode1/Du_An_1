@@ -14,7 +14,8 @@ import service.mausac_service;
  */
 public class MauSacForm extends javax.swing.JFrame {
 //l
-    Mausac color;
+
+    Mausac color = new Mausac();
     mausac_service colorService = new mausac_service();
 
     /**
@@ -25,13 +26,26 @@ public class MauSacForm extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
     }
-    
+
     Mausac setModel() {
         color.setMaMauSac(txt_ma.getText());
         color.setTenMauSac(txt_ten.getText());
         return color;
 
     }
+
+    public boolean Validate() {
+        if (txt_ma.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã chất liệu không được để trống");
+            return false;
+        }
+        if (txt_ten.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên chất liệu không được để trống");
+            return false;
+        }
+        return true;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -134,9 +148,11 @@ public class MauSacForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_exitActionPerformed
 
     private void tbn_checkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbn_checkActionPerformed
-        Mausac color = setModel();
-        if (colorService.insert(color) > 0) {
-            JOptionPane.showMessageDialog(this, "them thanh cong");
+        if (Validate()) {
+            Mausac color = setModel();
+            if (colorService.insert(color) > 0) {
+                JOptionPane.showMessageDialog(this, "them thanh cong");
+            }
         }
     }//GEN-LAST:event_tbn_checkActionPerformed
 

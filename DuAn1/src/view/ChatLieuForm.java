@@ -15,6 +15,7 @@ import service.chatLieu_service;
  */
 public class ChatLieuForm extends javax.swing.JFrame {
 //l
+
     ChatLieu cl = new ChatLieu();
     chatLieu_service clsv = new chatLieu_service();
 
@@ -32,6 +33,18 @@ public class ChatLieuForm extends javax.swing.JFrame {
         cl.setTenChatLieu(txt_ten.getText());
         return cl;
 
+    }
+
+    public boolean Validate() {
+        if (txt_ma.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã chất liệu không được để trống");
+            return false;
+        }
+        if (txt_ten.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên chất liệu không được để trống");
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -122,10 +135,12 @@ public class ChatLieuForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbn_checkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbn_checkActionPerformed
-        ChatLieu cl = setModel();
-        if (clsv.insert(cl) > 0) {
-            JOptionPane.showMessageDialog(this, "them thanh cong");
-           
+        if (Validate()) {
+            ChatLieu cl = setModel();
+            if (clsv.insert(cl) > 0) {
+                JOptionPane.showMessageDialog(this, "them thanh cong");
+
+            }
         }
     }//GEN-LAST:event_tbn_checkActionPerformed
 
