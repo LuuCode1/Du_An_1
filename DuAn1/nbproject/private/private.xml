@@ -5,7 +5,12 @@
         <group>
             <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/com/raven/form/Quan_ly_tong_hop.java</file>
             <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/com/raven/form/TrongKinhChiTiet.java</file>
+            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/model/Mausac.java</file>
+            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/model/ChatLieu.java</file>
+            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/model/Thuonghieu.java</file>
             <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/service/DBconnect.java</file>
+            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/com/raven/main/Main.java</file>
+            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/service/chatLieu_service.java</file>
         </group>
     </open-files>
 </project-private>

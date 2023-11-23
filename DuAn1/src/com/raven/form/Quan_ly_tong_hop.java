@@ -4,17 +4,31 @@
  */
 package com.raven.form;
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import model.ChatLieu;
+import service.chatLieu_service;
+
 /**
  *
  * @author Asus
  */
 public class Quan_ly_tong_hop extends javax.swing.JPanel {
-
+    chatLieu_service clsv = new chatLieu_service();
+    DefaultTableModel model;
     /**
      * Creates new form NewJPanel
      */
     public Quan_ly_tong_hop() {
         initComponents();
+        
+    }
+    void fillTable(List<ChatLieu> list){
+        model = (DefaultTableModel) tbl_bang.getModel();
+        model.setRowCount(0);
+        for (ChatLieu chatLieu : list) {
+            model.addRow(chatLieu.todata_ChatLieu());
+        }
     }
 
     /**
@@ -27,24 +41,33 @@ public class Quan_ly_tong_hop extends javax.swing.JPanel {
     private void initComponents() {
 
         jTextField1 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         color1 = new com.raven.form.Color();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        rbo_MS = new javax.swing.JRadioButton();
+        rbo_CL = new javax.swing.JRadioButton();
+        Rbo_TH = new javax.swing.JRadioButton();
+        txt_name = new javax.swing.JTextField();
+        txt_ma = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_bang = new javax.swing.JTable();
         jTextField3 = new javax.swing.JTextField();
 
         jTextField1.setText("jTextField1");
+
+        jLabel2.setText("jLabel2");
+
+        jRadioButton1.setText("jRadioButton1");
 
         color1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -55,11 +78,19 @@ public class Quan_ly_tong_hop extends javax.swing.JPanel {
         jPanel2.setBackground(java.awt.Color.white);
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jRadioButton1.setText("jRadioButton1");
+        buttonGroup1.add(rbo_MS);
+        rbo_MS.setText("Chất liệu");
+        rbo_MS.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbo_MSMouseClicked(evt);
+            }
+        });
 
-        jRadioButton2.setText("jRadioButton2");
+        buttonGroup1.add(rbo_CL);
+        rbo_CL.setText("Màu Săc");
 
-        jRadioButton3.setText("jRadioButton3");
+        buttonGroup1.add(Rbo_TH);
+        Rbo_TH.setText("Thương hiệu");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -68,31 +99,45 @@ public class Quan_ly_tong_hop extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton3)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jRadioButton2)
-                        .addComponent(jRadioButton1)))
+                    .addComponent(Rbo_TH)
+                    .addComponent(rbo_MS)
+                    .addComponent(rbo_CL))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(jRadioButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addComponent(jRadioButton2)
-                .addGap(43, 43, 43)
-                .addComponent(jRadioButton3)
+                .addComponent(rbo_MS)
+                .addGap(42, 42, 42)
+                .addComponent(rbo_CL)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addComponent(Rbo_TH)
                 .addGap(42, 42, 42))
         );
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, -1, 220));
+        jPanel1.add(txt_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 460, 42));
 
-        jTextField2.setText("jTextField2");
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 460, 42));
+        txt_ma.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_maFocusLost(evt);
+            }
+        });
+        txt_ma.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_maMousePressed(evt);
+            }
+        });
+        jPanel1.add(txt_ma, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 460, 42));
 
-        jTextField4.setText("jTextField2");
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 460, 42));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setText("Tên");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 110, -1));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setText("Mã");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 110, -1));
 
         color1.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, 790, 270));
 
@@ -117,18 +162,26 @@ public class Quan_ly_tong_hop extends javax.swing.JPanel {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Bảng quản lý"));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_bang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tbl_bang);
 
         jTextField3.setText("jTextField2");
         jTextField3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -171,24 +224,41 @@ public class Quan_ly_tong_hop extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txt_maFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_maFocusLost
+       
+    }//GEN-LAST:event_txt_maFocusLost
+
+    private void txt_maMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_maMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_maMousePressed
+
+    private void rbo_MSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbo_MSMouseClicked
+        fillTable(clsv.FILL_TO_CBO_ChatLieu());
+    }//GEN-LAST:event_rbo_MSMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton Rbo_TH;
+    private javax.swing.ButtonGroup buttonGroup1;
     private com.raven.form.Color color1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JRadioButton rbo_CL;
+    private javax.swing.JRadioButton rbo_MS;
+    private javax.swing.JTable tbl_bang;
+    private javax.swing.JTextField txt_ma;
+    private javax.swing.JTextField txt_name;
     // End of variables declaration//GEN-END:variables
 }

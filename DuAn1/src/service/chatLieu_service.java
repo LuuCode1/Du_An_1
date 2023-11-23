@@ -20,13 +20,13 @@ public class chatLieu_service {
     ResultSet rs = null;
     public List<ChatLieu> FILL_TO_CBO_ChatLieu() {
         List<ChatLieu> list = new ArrayList<>();
-        sql ="SELECT  maChatLieu, tenChatLieu FROM  chat_lieu";
+        sql ="SELECT idChatLieu, maChatLieu, tenChatLieu FROM  chat_lieu";
         try {
             con = DBconnect.getConnection();
             ps =  con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {                
-                 ChatLieu cl = new ChatLieu(rs.getString(1), rs.getString(2));
+                 ChatLieu cl = new ChatLieu(rs.getInt(1),rs.getString(2), rs.getString(3));
                  list.add(cl);
             }
             return list;

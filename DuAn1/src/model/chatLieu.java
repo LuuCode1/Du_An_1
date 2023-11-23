@@ -51,6 +51,6 @@ public class ChatLieu {
         this.tenChatLieu = tenChatLieu;
     }
     public Object[] todata_ChatLieu(){
-        return new Object[]{this.maChatLieu,this.tenChatLieu};
+        return new Object[]{this.idChatLieu,this.maChatLieu,this.tenChatLieu};
     }
 }

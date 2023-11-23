@@ -19,7 +19,7 @@ public class mausac_service {
     ResultSet rs = null;
     public List<Mausac> FILL_TO_CBO_MauSac() {
         List<Mausac> list = new ArrayList<>();
-        sql ="SELECT  maMauSac, tenMauSac FROM  mau_sac";
+        sql ="SELECT  idMauSac,maMauSac, tenMauSac FROM  mau_sac";
         try {
             con = DBconnect.getConnection();
             ps =  con.prepareStatement(sql);

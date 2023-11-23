@@ -27,39 +27,64 @@ CREATE TABLE thuong_hieu (
   PRIMARY KEY (idThuongHieu)
 );
 
-CREATE TABLE loai_sp (
-  idloai_sp INT NOT NULL IDENTITY(1,1),
-  maloai_sp VARCHAR(50) NOT NULL,
-  tenloai_sp NVARCHAR(50) NOT NULL,
-  PRIMARY KEY (idloai_sp)
+
+CREATE TABLE gong_kinh_chi_tiet (
+  idGongKinhCT INT NOT NULL IDENTITY(1,1),
+  maGongKinh  NVARCHAR(50) NOT NULL,
+  tenGongKinh  NVARCHAR(50) NOT NULL,
+  idChatLieu INT NOT NULL,
+  idMauSac INT NOT NULL,
+  idThuongHieu INT NOT NULL,
+  giaThanh FLOAT NOT NULL,
+  soLuong INT NOT NULL,
+  hinhanh NVARCHAR(max) NULL,
+  moTa NVARCHAR(50) NOT NULL,
+  trangThai NVARCHAR(50),
+  PRIMARY KEY (idGongKinhCT),
+  FOREIGN KEY (idChatLieu) REFERENCES chat_lieu (idChatLieu),
+  FOREIGN KEY (idMauSac) REFERENCES mau_sac (idMauSac),
+  FOREIGN KEY (idThuongHieu) REFERENCES thuong_hieu (idThuongHieu),
+  
 );
 
 
-CREATE TABLE san_pham(
-  idsp          INT NOT NULL IDENTITY(1,1), 
-  masp          VARCHAR(50) NOT NULL,
-  tensp         NVARCHAR(50) NOT NULL,
-  idloai_sp     INT NOT NULL,
-  idThuongHieu  INT NOT NULL,
-  PRIMARY KEY  (idsp),
-  FOREIGN KEY (idloai_sp) REFERENCES loai_sp (idloai_sp),
+CREATE TABLE trong_kinh_chi_tiet (
+  idTrongKinhCT INT NOT NULL IDENTITY(1,1),
+  maTrongKinh VARCHAR(50) NOT NULL,
+  tenTrongKinh  NVARCHAR(50) NOT NULL,
+  idChatLieu INT NOT NULL,
+  idMauSac INT NOT NULL,
+  idThuongHieu INT NOT NULL,
+  giaThanh FLOAT NOT NULL,
+  doCan FLOAT NOT NULL,
+  soLuong INT NOT NULL,
+  hinhanh NVARCHAR(max) NULL,
+  moTa NVARCHAR(50) NOT NULL,
+  trangThai NVARCHAR(50),
+  PRIMARY KEY (idTrongKinhCT),
+  FOREIGN KEY (idChatLieu) REFERENCES chat_lieu (idChatLieu),
+  FOREIGN KEY (idMauSac) REFERENCES mau_sac (idMauSac),
   FOREIGN KEY (idThuongHieu) REFERENCES thuong_hieu (idThuongHieu), 
+);
+
+CREATE TABLE san_pham(
+  idkinh        INT NOT NULL IDENTITY(1,1), 
+  makinh        VARCHAR(50) NOT NULL,
+  tenkinh       NVARCHAR(50) NOT NULL,
+  PRIMARY KEY  (idkinh),
 )
 
 CREATE TABLE san_pham_chi_tiet(
-  id_sp_chi_tiet         INT NOT NULL IDENTITY(1,1), 
-  idsp                   INT NULL, 
-  idChatLieu             INT NOT NULL,
-  idMauSac               INT NOT NULL,
-  giaThanh               FLOAT NOT NULL,
+  idkinh_chi_tiet        INT NOT NULL IDENTITY(1,1), 
+  idkinh                 INT NULL, 
+  idGongKinhCT           INT  NULL,
+  idTrongKinhCT          INT  NULL,
   soLuong                INT NOT NULL,
-  hinhanh                NVARCHAR(max) NULL,
-  moTa                   NVARCHAR(50) NOT NULL,
-  trangThai              NVARCHAR(50),
-  PRIMARY KEY (id_sp_chi_tiet),
-  FOREIGN KEY (idsp) REFERENCES san_pham (idsp), 
-  FOREIGN KEY (idChatLieu) REFERENCES chat_lieu (idChatLieu),
-  FOREIGN KEY (idMauSac) REFERENCES mau_sac (idMauSac),
+  giaThanh               FLOAT NOT NULL,
+  PRIMARY KEY (idkinh_chi_tiet),
+  FOREIGN KEY (idkinh) REFERENCES san_pham (idkinh),
+  FOREIGN KEY (idGongKinhCT) REFERENCES gong_kinh_chi_tiet (idGongKinhCT),
+  FOREIGN KEY (idTrongKinhCT) REFERENCES trong_kinh_chi_tiet (idTrongKinhCT),
 )
 
 CREATE TABLE nhan_vien (
@@ -168,27 +193,25 @@ VALUES ('TH01', N'Gucci'),
        ('TH04', N'Gentle Monster'),
        ('TH05', N'Prada');
 
-INSERT INTO loai_sp(maloai_sp,tenloai_sp)
-VALUES ('L01', N'Mat Kinh'),
-       ('L02', N'Trong Kinh'),
-       ('L03', N'Gong Kinh');
 
 
-INSERT INTO san_pham(masp,tensp,idloai_sp,idThuongHieu)
-VALUES ('SP01', N'Tròng Kính Chống Ánh Sáng Xanh', 2 , 4 ),
-       ('SP02', N'Mat Kinh 2', 1 , 3),
-	   ('SP03', N'Gong Kinh 1', 3 , 1),
-	   ('SP04', N'Mat Kinh 1', 1 , 2),
-	   ('SP05', N'Trong Kinh 1', 2 , 5);
 
+
+INSERT INTO gong_kinh_chi_tiet(maGongKinh,tenGongKinh,idChatLieu,idMauSac,idThuongHieu,giaThanh,soLuong,hinhanh,moTa,trangThai)
+VALUES ('GK01', N'Gọng Kính V', 2 , 4 , 3 , 333000, 100,null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('GK02', N'GỌNG KÍNH CẬN CLUB MASTER', 5 , 1 , 2 , 733000,170, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('GK03', N'GỌNG KÍNH GỖ NAM CAO CẤP', 2 , 4 , 5 , 883000,201, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('GK04', N'GK – 550CN038', 3 , 5 , 4 , 55000,313, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('GK05', N'GK – 380CK113', 4 , 3 , 5 , 89000, 298,null,N'Sản phẩm thân thiện',N'Đang bán');
 
 --Bảng tròng kính 
-INSERT INTO san_pham_chi_tiet(idsp,idChatLieu,idMauSac,giaThanh,soLuong,hinhanh,moTa,trangThai)
-VALUES (1, 2 , 4 ,333000,100,null,N'Sản phẩm thân thiện',N'Đang bán'),
-       (1, 5 , 1 ,733000,170, null,N'Sản phẩm thân thiện',N'Đang bán'),
-       (1, 2 , 4 ,883000,201, null,N'Sản phẩm thân thiện',N'Đang bán'),
-       (2, 3 , 5 ,55000,313, null,N'Sản phẩm thân thiện',N'Đang bán'),
-       (2, 4 , 3 ,89000,298,null,N'Sản phẩm thân thiện',N'Đang bán');
+--Bảng tròng kính 
+INSERT INTO trong_kinh_chi_tiet(maTrongKinh,tenTrongKinh,idChatLieu,idMauSac,idThuongHieu,giaThanh,doCan,soLuong,hinhanh,moTa,trangThai)
+VALUES ('TK01', N'Tròng Kính Chống Ánh Sáng Xanh', 2 , 4 , 3 , 333000, 0,100,null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('TK02', N'Đa Tròng Essilor Smart-Lens', 5 , 1 , 2 , 733000,0,170, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('TK03', N'TRÒNG KÍNH ĐỔI MẦU THÁI LAN TRÁNG', 2 , 4 , 5 , 883000,1.5,201, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('TK04', N'TRÒNG KÍNH PHÁP ESSILOR PREVENCIA', 3 , 5 , 4 , 55000,2,313, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('TK05', N'TRÒNG KÍNH HÀN QUỐC CHEMI U6 ', 4 , 3 , 5 , 89000,1.75, 298,null,N'Sản phẩm thân thiện',N'Đang bán');
 
 
 
@@ -246,40 +269,21 @@ VALUES ('BH01',1,N'Bảo hành 1', '4-15-2023', '4-15-2024', 8760 , N'Còn hiệ
        ('BH04',4,N'Bảo hành 6', '8-4-2023', '8-4-2024', 8760 , N'Còn hiệu lực'),
        ('BH05',5,N'Bảo hành 9', '7-19-2023', '7-19-2024', 8760 , N'Còn hiệu lực');
 
-SELECT * FROM loai_sp
-SELECT * FROM thuong_hieu
-SELECT * FROM mau_sac
-SELECT * FROM chat_lieu
-SELECT * FROM san_pham
-SELECT * FROM san_pham_chi_tiet
 
 SELECT * FROM hoa_don
+SELECT * FROM chat_lieu
 SELECT * FROM khach_hang
 SELECT * FROM vouchers
 SELECT * FROM nhan_vien
 SELECT * FROM bao_hanh
 SELECT * FROM hoa_don_chi_tiet
+SELECT * FROM trong_kinh
+SELECT * FROM gong_kinh
+SELECT * FROM trong_kinh_chi_tiet
+SELECT * FROM gong_kinh_chi_tiet
+SELECT * FROM thuong_hieu
+SELECT * FROM mau_sac
+SELECT    idGongKinhCT, maGongKinh, tenGongKinh, idChatLieu, idMauSac, idThuongHieu, giaThanh, soLuong, moTa, trangThai
+FROM         gong_kinh_chi_tiet
 
-
-SELECT     chat_lieu.tenChatLieu,mau_sac.tenMauSac, thuong_hieu.tenThuongHieu, gong_kinh_chi_tiet.giaThanh, gong_kinh_chi_tiet.soLuong, gong_kinh_chi_tiet.hinhanh, gong_kinh_chi_tiet.moTa, 
-                      gong_kinh_chi_tiet.trangThai
-FROM         gong_kinh INNER JOIN
-                      gong_kinh_chi_tiet ON gong_kinh.idGongKinh = gong_kinh_chi_tiet.idGongKinh INNER JOIN
-                      chat_lieu ON gong_kinh_chi_tiet.idChatLieu = chat_lieu.idChatLieu INNER JOIN
-                      thuong_hieu ON gong_kinh_chi_tiet.idThuongHieu = thuong_hieu.idThuongHieu INNER JOIN
-                      mau_sac ON gong_kinh_chi_tiet.idMauSac = mau_sac.idMauSac
-					  where gong_kinh_chi_tiet.idGongKinhCT=2
-SELECT    maGongKinh, tenGongKinh
-FROM         gong_kinh where idGongKinh = 1
-
-SELECT  trong_kinh_chi_tiet.idTrongKinhCT,trong_kinh_chi_tiet.maTrongKinh,trong_kinh_chi_tiet.tenTrongKinh,
-               chat_lieu.maChatLieu,chat_lieu.tenChatLieu
-			   mau_sac.tenMauSac, 
-			   thuong_hieu.tenThuongHieu, 
-			   trong_kinh_chi_tiet.giaThanh,trong_kinh_chi_tiet.doCan ,trong_kinh_chi_tiet.soLuong, 
-			   trong_kinh_chi_tiet.hinhanh, trong_kinh_chi_tiet.moTa, trong_kinh_chi_tiet.trangThai
-                FROM  trong_kinh_chi_tiet INNER JOIN
-                      chat_lieu ON trong_kinh_chi_tiet.idChatLieu = chat_lieu.idChatLieu INNER JOIN
-                      thuong_hieu ON trong_kinh_chi_tiet.idThuongHieu = thuong_hieu.idThuongHieu INNER JOIN
-                      mau_sac ON trong_kinh_chi_tiet.idMauSac = mau_sac.idMauSac
 
