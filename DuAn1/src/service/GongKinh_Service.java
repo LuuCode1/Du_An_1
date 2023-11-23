@@ -8,7 +8,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import model.GongKinhChiTiet;
-import model.QLGK;
 import model.ChatLieu;
 import model.Mausac;
 import model.Thuonghieu;
