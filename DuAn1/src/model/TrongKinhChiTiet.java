@@ -10,7 +10,8 @@ package model;
  */
 public class TrongKinhChiTiet {
     private int    idTrongKinh;
-    private QLTK   tk;
+    private String maTK;
+    private String tenTK;
     private Mausac color;
     private Thuonghieu brand;
     private ChatLieu material;
@@ -25,8 +26,10 @@ public class TrongKinhChiTiet {
     public TrongKinhChiTiet() {
     }
 
-    public TrongKinhChiTiet(QLTK tk, Mausac color, Thuonghieu brand, ChatLieu material, double giathanh, double docan, Integer soluong, String hinhanh, String mota, String trangthai) {
-        this.tk = tk;
+    public TrongKinhChiTiet(int idTrongKinh, String maTK, String tenTK, Mausac color, Thuonghieu brand, ChatLieu material, double giathanh, double docan, Integer soluong, String hinhanh, String mota, String trangthai) {
+        this.idTrongKinh = idTrongKinh;
+        this.maTK = maTK;
+        this.tenTK = tenTK;
         this.color = color;
         this.brand = brand;
         this.material = material;
@@ -37,12 +40,10 @@ public class TrongKinhChiTiet {
         this.mota = mota;
         this.trangthai = trangthai;
     }
-    
-    
 
-    public TrongKinhChiTiet(int idTrongKinh, QLTK tk, Mausac color, Thuonghieu brand, ChatLieu material, double giathanh, double docan, Integer soluong, String hinhanh, String mota, String trangthai) {
-        this.idTrongKinh = idTrongKinh;
-        this.tk = tk;
+    public TrongKinhChiTiet(String maTK, String tenTK, Mausac color, Thuonghieu brand, ChatLieu material, double giathanh, double docan, Integer soluong, String hinhanh, String mota, String trangthai) {
+        this.maTK = maTK;
+        this.tenTK = tenTK;
         this.color = color;
         this.brand = brand;
         this.material = material;
@@ -62,12 +63,20 @@ public class TrongKinhChiTiet {
         this.idTrongKinh = idTrongKinh;
     }
 
-    public QLTK getTk() {
-        return tk;
+    public String getMaTK() {
+        return maTK;
     }
 
-    public void setTk(QLTK tk) {
-        this.tk = tk;
+    public void setMaTK(String maTK) {
+        this.maTK = maTK;
+    }
+
+    public String getTenTK() {
+        return tenTK;
+    }
+
+    public void setTenTK(String tenTK) {
+        this.tenTK = tenTK;
     }
 
     public Mausac getColor() {
@@ -141,13 +150,9 @@ public class TrongKinhChiTiet {
     public void setTrangthai(String trangthai) {
         this.trangthai = trangthai;
     }
-    
-    
-    
-
  
     public Object[] todata(){
-        return new Object[]{this.idTrongKinh,this.color.getTenMauSac(),
+        return new Object[]{this.idTrongKinh,this.maTK,this.tenTK,this.color.getTenMauSac(),
             this.brand.getTenThuongHieu(),this.material.getTenChatLieu(),this.giathanh,this.docan,
             this.soluong,this.hinhanh,this.mota,this.trangthai};
     }

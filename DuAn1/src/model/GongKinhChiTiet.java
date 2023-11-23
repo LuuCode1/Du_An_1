@@ -10,7 +10,8 @@ package model;
  */
 public class GongKinhChiTiet {
     private int gongKinhChiTiet;
-    private QLGK gongKinh;
+    private String maGK;
+    private String tenGK;
     private ChatLieu tenChatLieu;
     private Mausac tenMauSac;
     private Thuonghieu tenThuongHieu;
@@ -23,9 +24,10 @@ public class GongKinhChiTiet {
     public GongKinhChiTiet() {
     }
 
-    public GongKinhChiTiet(int gongKinhChiTiet, QLGK gongKinh, ChatLieu tenChatLieu, Mausac tenMauSac, Thuonghieu tenThuongHieu, double giaThanh, int soLuong, String hinhAnh, String moTa, String trangThai) {
+    public GongKinhChiTiet(int gongKinhChiTiet, String maGK, String tenGK, ChatLieu tenChatLieu, Mausac tenMauSac, Thuonghieu tenThuongHieu, double giaThanh, int soLuong, String hinhAnh, String moTa, String trangThai) {
         this.gongKinhChiTiet = gongKinhChiTiet;
-        this.gongKinh = gongKinh;
+        this.maGK = maGK;
+        this.tenGK = tenGK;
         this.tenChatLieu = tenChatLieu;
         this.tenMauSac = tenMauSac;
         this.tenThuongHieu = tenThuongHieu;
@@ -36,8 +38,9 @@ public class GongKinhChiTiet {
         this.trangThai = trangThai;
     }
 
-    public GongKinhChiTiet(QLGK gongKinh, ChatLieu tenChatLieu, Mausac tenMauSac, Thuonghieu tenThuongHieu, double giaThanh, int soLuong, String hinhAnh, String moTa, String trangThai) {
-        this.gongKinh = gongKinh;
+    public GongKinhChiTiet(String maGK, String tenGK, ChatLieu tenChatLieu, Mausac tenMauSac, Thuonghieu tenThuongHieu, double giaThanh, int soLuong, String hinhAnh, String moTa, String trangThai) {
+        this.maGK = maGK;
+        this.tenGK = tenGK;
         this.tenChatLieu = tenChatLieu;
         this.tenMauSac = tenMauSac;
         this.tenThuongHieu = tenThuongHieu;
@@ -56,12 +59,20 @@ public class GongKinhChiTiet {
         this.gongKinhChiTiet = gongKinhChiTiet;
     }
 
-    public QLGK getGongKinh() {
-        return gongKinh;
+    public String getMaGK() {
+        return maGK;
     }
 
-    public void setGongKinh(QLGK gongKinh) {
-        this.gongKinh = gongKinh;
+    public void setMaGK(String maGK) {
+        this.maGK = maGK;
+    }
+
+    public String getTenGK() {
+        return tenGK;
+    }
+
+    public void setTenGK(String tenGK) {
+        this.tenGK = tenGK;
     }
 
     public ChatLieu getTenChatLieu() {
@@ -130,7 +141,9 @@ public class GongKinhChiTiet {
 
     
 
+    
+
     public Object[] todata(){
-        return new Object[]{this.gongKinhChiTiet,this.tenChatLieu.getTenChatLieu(),this.tenMauSac.getTenMauSac(),this.tenThuongHieu.getTenThuongHieu(),this.giaThanh,this.soLuong,this.hinhAnh,this.moTa,this.trangThai};
+        return new Object[]{this.maGK,this.tenGK,this.tenChatLieu.getTenChatLieu(),this.tenMauSac.getTenMauSac(),this.tenThuongHieu.getTenThuongHieu(),this.giaThanh,this.soLuong,this.hinhAnh,this.moTa,this.trangThai};
     }
 }
