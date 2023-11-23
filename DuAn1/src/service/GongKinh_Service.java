@@ -8,7 +8,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import model.GongKinhChiTiet;
-import model.QLGK;
 import model.ChatLieu;
 import model.Mausac;
 import model.Thuonghieu;
@@ -199,7 +198,7 @@ public class GongKinh_Service {
                 + "                      chat_lieu ON gong_kinh_chi_tiet.idChatLieu = chat_lieu.idChatLieu INNER JOIN\n"
                 + "                      thuong_hieu ON gong_kinh_chi_tiet.idThuongHieu = thuong_hieu.idThuongHieu INNER JOIN\n"
                 + "                      mau_sac ON gong_kinh_chi_tiet.idMauSac = mau_sac.idMauSac\n"
-                + "					  where gong_kinh.idGongKinh =? and (chat_lieu.tenChatLieu like ? or mau_sac.tenMauSac like ? or thuong_hieu.tenThuongHieu like ?)";
+                + "					  where gong_kinh_chi_tiet.idGongKinhCT =? and (chat_lieu.tenChatLieu like ? or mau_sac.tenMauSac like ? or thuong_hieu.tenThuongHieu like ?)";
         try {
             con = DBconnect.getConnection();
             ps = con.prepareStatement(sql);
