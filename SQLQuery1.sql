@@ -261,25 +261,5 @@ SELECT * FROM bao_hanh
 SELECT * FROM hoa_don_chi_tiet
 
 
-SELECT     chat_lieu.tenChatLieu,mau_sac.tenMauSac, thuong_hieu.tenThuongHieu, gong_kinh_chi_tiet.giaThanh, gong_kinh_chi_tiet.soLuong, gong_kinh_chi_tiet.hinhanh, gong_kinh_chi_tiet.moTa, 
-                      gong_kinh_chi_tiet.trangThai
-FROM         gong_kinh INNER JOIN
-                      gong_kinh_chi_tiet ON gong_kinh.idGongKinh = gong_kinh_chi_tiet.idGongKinh INNER JOIN
-                      chat_lieu ON gong_kinh_chi_tiet.idChatLieu = chat_lieu.idChatLieu INNER JOIN
-                      thuong_hieu ON gong_kinh_chi_tiet.idThuongHieu = thuong_hieu.idThuongHieu INNER JOIN
-                      mau_sac ON gong_kinh_chi_tiet.idMauSac = mau_sac.idMauSac
-					  where gong_kinh_chi_tiet.idGongKinhCT=2
-SELECT    maGongKinh, tenGongKinh
-FROM         gong_kinh where idGongKinh = 1
 
-SELECT  trong_kinh_chi_tiet.idTrongKinhCT,trong_kinh_chi_tiet.maTrongKinh,trong_kinh_chi_tiet.tenTrongKinh,
-               chat_lieu.maChatLieu,chat_lieu.tenChatLieu
-			   mau_sac.tenMauSac, 
-			   thuong_hieu.tenThuongHieu, 
-			   trong_kinh_chi_tiet.giaThanh,trong_kinh_chi_tiet.doCan ,trong_kinh_chi_tiet.soLuong, 
-			   trong_kinh_chi_tiet.hinhanh, trong_kinh_chi_tiet.moTa, trong_kinh_chi_tiet.trangThai
-                FROM  trong_kinh_chi_tiet INNER JOIN
-                      chat_lieu ON trong_kinh_chi_tiet.idChatLieu = chat_lieu.idChatLieu INNER JOIN
-                      thuong_hieu ON trong_kinh_chi_tiet.idThuongHieu = thuong_hieu.idThuongHieu INNER JOIN
-                      mau_sac ON trong_kinh_chi_tiet.idMauSac = mau_sac.idMauSac
 

@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.QLGK;
+//import model.QLGK;
 import model.ChatLieu;
 import model.Mausac;
 import model.Thuonghieu;
@@ -49,7 +49,7 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
      */
     public GongKinhChiTiet(String dataControner) {
         initComponents();
-        fillTable(gksv.selectAll(ma));
+        //fillTable(gksv.selectAll(ma));
         CBo_ChatLieu();
         CBo_MauSac();
         CBo_ThuongHieu();
@@ -79,11 +79,11 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
     }
 
     void showMaAndten() {
-        QLGK qlgk = gksv.Show(ma);
-        String ma = qlgk.getMaGK();
-        String ten = qlgk.getTenGK();
-        String name = ma + "-" + ten.replace("ơ", "o");
-        this.lbl_magk.setText(name);
+        //QLGK qlgk = gksv.Show(ma);
+        //String ma = qlgk.getMaGK();
+        //String ten = qlgk.getTenGK();
+        //String name = ma + "-" + ten.replace("ơ", "o");
+        //this.lbl_magk.setText(name);
     }
 
     void CBo_ChatLieu() {
@@ -146,7 +146,7 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
 
     model.GongKinhChiTiet read() {
         model.GongKinhChiTiet gk = new model.GongKinhChiTiet();
-        gk.setGongKinh(new QLGK(ma, null, null));
+        //gk.setGongKinh(new QLGK(ma, null, null));
         gk.setGiaThanh(Double.parseDouble(txt_GiaBan.getText()));
         gk.setMoTa(txt_mota.getText());
         gk.setSoLuong(Integer.parseInt(TxtSoLuong.getText()));
@@ -608,35 +608,33 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         if (check()) {
             model.GongKinhChiTiet gk = this.read();
-            String mausac = cbomausac.getSelectedItem().toString();
-            String chatlieu = cbochatlieu.getSelectedItem().toString();
-            String thuonghieu = cbothuonghieu.getSelectedItem().toString();
-            if (gksv.check_MS_CL_TH(mausac, chatlieu, thuonghieu)== null) {
-                if (gksv.Insert(gk) > 0) {
+            //String mausac = cbomausac.getSelectedItem().toString();
+            //String chatlieu = cbochatlieu.getSelectedItem().toString();
+            //String thuonghieu = cbothuonghieu.getSelectedItem().toString();
+            //if (gksv.check_MS_CL_TH(mausac, chatlieu, thuonghieu)== null) {
+                //if (gksv.Insert(gk) > 0) {
                     JOptionPane.showMessageDialog(this, "thanh cong");
-                    fillTable(gksv.selectAll(ma));
+                    //fillTable(gksv.selectAll(ma));
                     reset();
                 }
-            } else {
+            //} else {
                 
-                JOptionPane.showMessageDialog(this, "Đã tồn tại");
-            }
-        }
+                //JOptionPane.showMessageDialog(this, "Đã tồn tại");
+            //}
+        //}
 
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
         if (check()) {
-            model.GongKinhChiTiet gk = this.read();
-            int b = (int) lblbang.getValueAt(index, 0);
-            if (gksv.update(gk, b) > 0) {
+            //model.GongKinhChiTiet gk = this.read();
+            //int b = (int) lblbang.getValueAt(index, 0);
+            //if (gksv.update(gk, b) > 0) {
                 JOptionPane.showMessageDialog(this, "thanh cong");
-                fillTable(gksv.selectAll(ma));
+                //fillTable(gksv.selectAll(ma));
                 reset();
-            }
+            //}
         }
-
-
     }//GEN-LAST:event_btn_updateActionPerformed
 
     private void btn_addAnh1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addAnh1ActionPerformed
@@ -687,12 +685,12 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
     private void btn_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DeleteActionPerformed
 //        if (check()) {
             int a = (int) lblbang.getValueAt(index, 0);
-            if (gksv.delete(a) > 0) {
+            //if (gksv.delete(a) > 0) {
                 JOptionPane.showMessageDialog(this, "thành công");
-                fillTable(gksv.selectAll(ma));
+            //    fillTable(gksv.selectAll(ma));
                 reset();
 //            }
-        }
+        //}
 
     }//GEN-LAST:event_btn_DeleteActionPerformed
 
@@ -707,23 +705,23 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
     private void lblbangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblbangMouseClicked
         index = lblbang.getSelectedRow();
         int a = (int) lblbang.getValueAt(index, 0);
-        model.GongKinhChiTiet gk = gksv.selectByID(a);
+       // model.GongKinhChiTiet gk = gksv.selectByID(a);
         Show(gk);
     }//GEN-LAST:event_lblbangMouseClicked
 
     private void CBO_TH1_checkItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CBO_TH1_checkItemStateChanged
         String name = CBO_TH1_check.getSelectedItem().toString();
-        if (gksv.check_Cbo(ma, name) != null) {
-            List<model.GongKinhChiTiet> gkcheck = gksv.check_Cbo(ma, name);
-            fillTable(gkcheck);
-        }
+//        if (gksv.check_Cbo(ma, name) != null) {
+//            List<model.GongKinhChiTiet> gkcheck = gksv.check_Cbo(ma, name);
+//            fillTable(gkcheck);
+       // }
     }//GEN-LAST:event_CBO_TH1_checkItemStateChanged
 
     private void txt_searchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_searchFocusLost
-        if (txt_search.getText().isEmpty()) {
-            txt_search.setText("Tìm Kiếm");
-            fillTable(gksv.selectAll(ma));
-        }
+//        if (txt_search.getText().isEmpty()) {
+//            txt_search.setText("Tìm Kiếm");
+//            fillTable(gksv.selectAll(ma));
+//        }
     }//GEN-LAST:event_txt_searchFocusLost
 
     private void txt_searchMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_searchMousePressed
@@ -732,8 +730,8 @@ public class GongKinhChiTiet extends javax.swing.JPanel {
 
     private void txt_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyReleased
         String search = "%" + txt_search.getText() + "%";
-        List<model.GongKinhChiTiet> listsearch = gksv.seach(ma, search);
-        fillTable(listsearch);
+       // List<model.GongKinhChiTiet> listsearch = gksv.seach(ma, search);
+        //fillTable(listsearch);
     }//GEN-LAST:event_txt_searchKeyReleased
 
     private void cbothuonghieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbothuonghieuMouseClicked

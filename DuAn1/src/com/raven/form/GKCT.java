@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import model.GongKinhChiTiet;
-import model.QLGK;
+//import model.QLGK;
 import model.ChatLieu;
 import model.Mausac;
 import model.Thuonghieu;
@@ -84,11 +84,11 @@ public class GKCT extends javax.swing.JFrame {
     }
 
     void showMaAndten() {
-        QLGK qlgk = gksv.Show(ma);
-        String ma = qlgk.getMaGK();
-        String ten = qlgk.getTenGK();
-        String name = ma + "-" + ten.replace("ơ", "o");
-        this.lbl_magk.setText(name);
+        //QLGK qlgk = gksv.Show(ma);
+        //String ma = qlgk.getMaGK();
+        //String ten = qlgk.getTenGK();
+        //String name = ma + "-" + ten.replace("ơ", "o");
+        //this.lbl_magk.setText(name);
     }
 
     void CBo_ChatLieu() {
@@ -117,11 +117,11 @@ public class GKCT extends javax.swing.JFrame {
         model = (DefaultTableModel) lblbang.getModel();
         model.setRowCount(0);
 
-        List<GongKinhChiTiet> list = gksv.selectAll(ma);
-        for (GongKinhChiTiet gongkinh : list) {
-            model.addRow(gongkinh.todata());
-            
-        }
+        //List<GongKinhChiTiet> list = gksv.selectAll(ma);
+//        for (GongKinhChiTiet gongkinh : list) {
+//            model.addRow(gongkinh.todata());
+//            
+//        }
         
     }
 
@@ -855,10 +855,10 @@ public class GKCT extends javax.swing.JFrame {
     }//GEN-LAST:event_CBO_TH1_checkActionPerformed
 
     private void lblbangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblbangMouseClicked
-        index = lblbang.getSelectedRow();
-        int a = (int) lblbang.getValueAt(index, 0);
-        GongKinhChiTiet gk = gksv.selectByID(a);
-        Show(gk);
+//        index = lblbang.getSelectedRow();
+//        int a = (int) lblbang.getValueAt(index, 0);
+//        GongKinhChiTiet gk = gksv.selectByID(a);
+//        Show(gk);
     }//GEN-LAST:event_lblbangMouseClicked
 
     private void cbothuonghieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbothuonghieuActionPerformed

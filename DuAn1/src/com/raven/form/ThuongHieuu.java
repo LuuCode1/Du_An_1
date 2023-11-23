@@ -7,7 +7,7 @@ package com.raven.form;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.ThuongHieu1;
+//import model.ThuongHieu1;
 import service.THService;
 
 /**
@@ -16,72 +16,72 @@ import service.THService;
  */
 public class ThuongHieuu extends javax.swing.JPanel {
 
-    DefaultTableModel tblModel;
-    ThuongHieu1 th = new ThuongHieu1();
-    private final THService thService = new THService();
-    int index = -1;
-    public ThuongHieuu() {
-        initComponents();
-        initTable();
-        fillTable(thService.getThuongHieu());
-        txtSearch.setText("Tìm Kiếm");
-        btnSua.setEnabled(false);
-        btnXoa.setEnabled(false);
-    }
-
-    public void initTable() {
-        tblModel = (DefaultTableModel) tblTHuongHieu.getModel();
-        String[] cols = new String[]{
-            "Mã thương hiệu", "Tên thương hiệu"};
-        tblModel.setColumnIdentifiers(cols);
-    }
-
-    public void fillTable(List<ThuongHieu1> list) {
-        tblModel = (DefaultTableModel) tblTHuongHieu.getModel();
-        tblModel.setRowCount(0);
-        Object[] row = new Object[2];
-        for (ThuongHieu1 tH : list) {
-            row[0] = tH.getMaTH();
-            row[1] = tH.getTenTH();
-            tblModel.addRow(row);
-        }
-    }
-
-    public ThuongHieu1 getModel() {
-        ThuongHieu1 th = new ThuongHieu1();
-        th.setMaTH(txtMaTH.getText());
-        th.setTenTH(txtTenTH.getText());
-        return th;
-    }
-
-    public void setModel(ThuongHieu1 t) {
-        txtMaTH.setText(t.getMaTH());
-        txtTenTH.setText(t.getTenTH());
-    }
-
-    public void Reset() {
-        txtMaTH.setText("");
-        txtTenTH.setText("");
-    }
-
-    public boolean checkValidate() {
-        if (txtMaTH.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nhập mã");
-            return false;
-        }
-
-        ThuongHieu1 th = this.getModel();
-        if (thService.selectByID(th.getMaTH()) != null) {
-            JOptionPane.showMessageDialog(this, "Mã thương hiệu đã tồn tại");
-            return false;
-        }
-
-        if (txtTenTH.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nhập tên");
-            return false;
-        }
-        return true;
-    }
+//    DefaultTableModel tblModel;
+//    ThuongHieu1 th = new ThuongHieu1();
+//    private final THService thService = new THService();
+//    int index = -1;
+//    public ThuongHieuu() {
+//        initComponents();
+//        initTable();
+//        fillTable(thService.getThuongHieu());
+//        txtSearch.setText("Tìm Kiếm");
+//        btnSua.setEnabled(false);
+//        btnXoa.setEnabled(false);
+//    }
+//
+//    public void initTable() {
+//        tblModel = (DefaultTableModel) tblTHuongHieu.getModel();
+//        String[] cols = new String[]{
+//            "Mã thương hiệu", "Tên thương hiệu"};
+//        tblModel.setColumnIdentifiers(cols);
+//    }
+//
+//    public void fillTable(List<ThuongHieu1> list) {
+//        tblModel = (DefaultTableModel) tblTHuongHieu.getModel();
+//        tblModel.setRowCount(0);
+//        Object[] row = new Object[2];
+//        for (ThuongHieu1 tH : list) {
+//            row[0] = tH.getMaTH();
+//            row[1] = tH.getTenTH();
+//            tblModel.addRow(row);
+//        }
+//    }
+//
+//    public ThuongHieu1 getModel() {
+//        ThuongHieu1 th = new ThuongHieu1();
+//        th.setMaTH(txtMaTH.getText());
+//        th.setTenTH(txtTenTH.getText());
+//        return th;
+//    }
+//
+//    public void setModel(ThuongHieu1 t) {
+//        txtMaTH.setText(t.getMaTH());
+//        txtTenTH.setText(t.getTenTH());
+//    }
+//
+//    public void Reset() {
+//        txtMaTH.setText("");
+//        txtTenTH.setText("");
+//    }
+//
+//    public boolean checkValidate() {
+//        if (txtMaTH.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Nhập mã");
+//            return false;
+//        }
+//
+//        ThuongHieu1 th = this.getModel();
+//        if (thService.selectByID(th.getMaTH()) != null) {
+//            JOptionPane.showMessageDialog(this, "Mã thương hiệu đã tồn tại");
+//            return false;
+//        }
+//
+//        if (txtTenTH.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Nhập tên");
+//            return false;
+//        }
+//        return true;
+//    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -253,58 +253,58 @@ public class ThuongHieuu extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblTHuongHieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTHuongHieuMouseClicked
-        index = tblTHuongHieu.getSelectedRow();
-        if (index >= 0) {
-            ThuongHieu1 th = thService.getThuongHieu().get(index);
-            setModel(th);
-            txtMaTH.setEditable(false);
-            btnLuu.setEnabled(false);
-            btnSua.setEnabled(true);
-            btnXoa.setEnabled(true);
-        }
+//        index = tblTHuongHieu.getSelectedRow();
+//        if (index >= 0) {
+//            ThuongHieu1 th = thService.getThuongHieu().get(index);
+//            setModel(th);
+//            txtMaTH.setEditable(false);
+//            btnLuu.setEnabled(false);
+//            btnSua.setEnabled(true);
+//            btnXoa.setEnabled(true);
+//        }
     }//GEN-LAST:event_tblTHuongHieuMouseClicked
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-        if (checkValidate()) {
-            ThuongHieu1 th = getModel();
-            if (thService.Save(th) > 0) {
-                JOptionPane.showMessageDialog(this, "Thành Công");
-                fillTable(thService.getThuongHieu());
-                Reset();
-            }
-        }
+//        if (checkValidate()) {
+//            ThuongHieu1 th = getModel();
+//            if (thService.Save(th) > 0) {
+//                JOptionPane.showMessageDialog(this, "Thành Công");
+//                fillTable(thService.getThuongHieu());
+//                Reset();
+//            }
+//        }
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        ThuongHieu1 t = getModel();
-        String ma = tblTHuongHieu.getValueAt(index, 0).toString();
-        if (thService.Update(t, ma) > 0) {
-            JOptionPane.showMessageDialog(this, "Thành Công");
-            fillTable(thService.getThuongHieu());
-            btnLuu.setEnabled(true);
-            txtMaTH.setEnabled(true);
-            Reset();
-        }
+//        ThuongHieu1 t = getModel();
+//        String ma = tblTHuongHieu.getValueAt(index, 0).toString();
+//        if (thService.Update(t, ma) > 0) {
+//            JOptionPane.showMessageDialog(this, "Thành Công");
+//            fillTable(thService.getThuongHieu());
+//            btnLuu.setEnabled(true);
+//            txtMaTH.setEnabled(true);
+//            Reset();
+//        }
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        for (ThuongHieu1 tH : thService.getThuongHieu()) {
-            if (tH.getMaTH().equals(txtMaTH.getText())) {
-                int choice = JOptionPane.showConfirmDialog(this, "Chắc chắn muốn xóa ?", "Confirm", JOptionPane.YES_NO_OPTION);
-                if (choice == JOptionPane.YES_NO_OPTION) {
-                    thService.Delete(txtMaTH.getText());
-                    JOptionPane.showMessageDialog(this, "Đã xóa");
-                    fillTable(thService.getThuongHieu());
-                    btnLuu.setEnabled(true);
-                    txtMaTH.setEnabled(true);
-                    Reset();
-                    return;
-                } else {
-                    return;
-                }
-            }
-        }
-        JOptionPane.showMessageDialog(this, "Không tồn tại dữ liệu để xóa");
+//        for (ThuongHieu1 tH : thService.getThuongHieu()) {
+//            if (tH.getMaTH().equals(txtMaTH.getText())) {
+//                int choice = JOptionPane.showConfirmDialog(this, "Chắc chắn muốn xóa ?", "Confirm", JOptionPane.YES_NO_OPTION);
+//                if (choice == JOptionPane.YES_NO_OPTION) {
+//                    thService.Delete(txtMaTH.getText());
+//                    JOptionPane.showMessageDialog(this, "Đã xóa");
+//                    fillTable(thService.getThuongHieu());
+//                    btnLuu.setEnabled(true);
+//                    txtMaTH.setEnabled(true);
+//                    Reset();
+//                    return;
+//                } else {
+//                    return;
+//                }
+//            }
+//        }
+//        JOptionPane.showMessageDialog(this, "Không tồn tại dữ liệu để xóa");
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
@@ -312,13 +312,13 @@ public class ThuongHieuu extends javax.swing.JPanel {
         btnSua.setEnabled(false);
         btnXoa.setEnabled(false);
         btnLuu.setEnabled(true);
-        Reset();
+        //Reset();
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void txtSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusLost
         if (txtSearch.getText().isEmpty()) {
             txtSearch.setText("Tìm kiếm");
-            fillTable(thService.getThuongHieu());
+            //fillTable(thService.getThuongHieu());
         }
     }//GEN-LAST:event_txtSearchFocusLost
 
@@ -327,19 +327,19 @@ public class ThuongHieuu extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSearchMousePressed
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
-        try {
-            String check = '%' + txtSearch.getText() + '%';
-            if (txtSearch.getText().isEmpty()) {
-                fillTable(thService.getThuongHieu());
-
-            } else {
-                List<ThuongHieu1> listds = thService.Search(check);
-                fillTable(listds);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
+//        try {
+//            String check = '%' + txtSearch.getText() + '%';
+//            if (txtSearch.getText().isEmpty()) {
+//                fillTable(thService.getThuongHieu());
+//
+//            } else {
+//                List<ThuongHieu1> listds = thService.Search(check);
+//                fillTable(listds);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return;
+//        }
     }//GEN-LAST:event_txtSearchKeyReleased
 
 

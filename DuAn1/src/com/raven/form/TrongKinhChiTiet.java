@@ -14,13 +14,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.GongKinhChiTiet;
-import model.QLGK;
-import model.QLTK;
 import model.ChatLieu;
 import model.Mausac;
+import model.SanPham;
 import model.Thuonghieu;
 import service.GongKinh_Service;
-import service.TrongKinhService;
+import service.SPCT_Service;
 import service.chatLieu_service;
 import service.mausac_service;
 import service.thuonghieu_service;
@@ -39,12 +38,11 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
     Mausac ms = new Mausac();
     ChatLieu cl = new ChatLieu();
     chatLieu_service clsv = new chatLieu_service();
-    Thuonghieu th = new Thuonghieu();
-    thuonghieu_service thsv = new thuonghieu_service();
+    SanPham sp = new SanPham();
+    SPCT_Service spctService = new SPCT_Service();
     String linkAnh = null;
-    model.TrongKinhChiTiet tk = new model.TrongKinhChiTiet();
-    TrongKinhService tksv = new TrongKinhService();
-    int id = Integer.parseInt(QLTKForm.idtk);
+    //model.TrongKinhChiTiet tk = new model.TrongKinhChiTiet();
+    int id = Integer.parseInt(QLTKForm.id);
     int index = -1;
 
     /**
@@ -52,20 +50,20 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
      */
     public TrongKinhChiTiet(String dataControner) {
         initComponents();
-        fillTable(tksv.selectAll(id));
+        fillTable(spctService.selectAll(id));
         CBo_ChatLieu();
         CBo_MauSac();
-        CBo_ThuongHieu();
         showMaAndten();
         name();
         txt_search.setText("Tìm Kiếm");
+        rboDB.enable(true);
     }
 
     private TrongKinhChiTiet() {
     }
 
     void name() {
-        String[] table1 = {"ID", "Chất Liệu", "Màu Sắc", "Thương Hiệu", "Giá Bán", "Độ Cận", "Số Lượng", "Hình Ảnh", "Mô Tả", "Trạng thái"};
+        String[] table1 = {"ID", "Chất Liệu", "Màu Sắc", "Giá Bán", "Số Lượng", "Hình Ảnh", "Mô Tả", "Trạng thái"};
         for (int i = 0; i < table1.length; i++) {
             lblbang.getColumnModel().getColumn(i).setHeaderValue(table1[i]);
         }
@@ -78,13 +76,13 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
             cbo[i] = listmausac.get(i).getTenMauSac();
         }
         cbomausac.setModel(new DefaultComboBoxModel<>(cbo));
-
+        CBO_MS_check.setModel(new DefaultComboBoxModel<>(cbo));
     }
 
     void showMaAndten() {
-        QLTK qltk = tksv.Show(id);
-        String ma = qltk.getMaTK();
-        String ten = qltk.getTenTK();
+        SanPham sp = spctService.Show(id);
+        String ma = sp.getMaSP();
+        String ten = sp.getTenSP();
         String name = ma + "-" + ten.replace("ơ", "o");
         this.lbl_magk.setText(name);
     }
@@ -96,38 +94,25 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
             cbo[i] = listchatlieu.get(i).getTenChatLieu();
         }
         cbochatlieu.setModel(new DefaultComboBoxModel<>(cbo));
-
+        CBO_CL_check.setModel(new DefaultComboBoxModel<>(cbo));
     }
 
-    void CBo_ThuongHieu() {
-        List<Thuonghieu> listthuonghieu = thsv.FILL_TO_CBO_ThuongHieu();
-        String[] cbo = new String[listthuonghieu.size()];
-        for (int i = 0; i < listthuonghieu.size(); i++) {
-            cbo[i] = listthuonghieu.get(i).getTenThuongHieu();
-
-        }
-        cbothuonghieu.setModel(new DefaultComboBoxModel<>(cbo));
-        CBO_TH1_check.setModel(new DefaultComboBoxModel<>(cbo));
-    }
-
-    void fillTable(List<model.TrongKinhChiTiet> list) {
+    void fillTable(List<model.SanPhamChiTiet> list) {
         model = (DefaultTableModel) lblbang.getModel();
         model.setRowCount(0);
-        for (model.TrongKinhChiTiet gongkinh : list) {
-            model.addRow(gongkinh.todata());
+        for (model.SanPhamChiTiet spct : list) {
+            model.addRow(spct.todata());
         }
     }
 
-    void Show(model.TrongKinhChiTiet tk1) {
-        model.TrongKinhChiTiet tk = tk1;
-        TxtSoLuong.setText(String.valueOf(tk.getSoluong()));
-        txt_GiaBan.setText(String.valueOf(tk.getGiathanh()));
-        TxtDoCan.setText(String.valueOf(tk.getDocan()));
-        txt_mota.setText(tk.getMota());
-        cbomausac.setSelectedItem(tk.getColor().getTenMauSac());
-        cbochatlieu.setSelectedItem(tk.getMaterial().getTenChatLieu());
-        cbothuonghieu.setSelectedItem(tk.getBrand().getTenThuongHieu());
-        if (tk.getTrangthai().equals("Đang bán")) {
+    void Show(model.SanPhamChiTiet spct1) {
+        model.SanPhamChiTiet sp = spct1;
+        TxtSoLuong.setText(String.valueOf(sp.getSoluong()));
+        txt_GiaBan.setText(String.valueOf(sp.getGiathanh()));
+        txt_mota.setText(sp.getMota());
+        cbomausac.setSelectedItem(sp.getColor().getTenMauSac());
+        cbochatlieu.setSelectedItem(sp.getMaterial().getTenChatLieu());
+        if (sp.getTrangthai().equals("Đang bán")) {
             rboDB.setSelected(true);
         } else {
             rboNB.setSelected(true);
@@ -135,7 +120,7 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
         lbl_anh.setIcon(null);
         linkAnh = null;
         try {
-            File file = new File(tk.getHinhanh());
+            File file = new File(sp.getHinhanh());
             Image img = ImageIO.read(file);
             int width = lbl_anh.getWidth();
             int height = lbl_anh.getHeight();
@@ -146,19 +131,16 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
         }
     }
 
-    model.TrongKinhChiTiet read() {
-        model.TrongKinhChiTiet tk = new model.TrongKinhChiTiet();
-        tk.setTk(new QLTK(id, null, null));
+    model.SanPhamChiTiet read() {
+        model.SanPhamChiTiet tk = new model.SanPhamChiTiet();
+        tk.setSp(new SanPham(id, null, null, null, null));
         tk.setGiathanh(Double.parseDouble(txt_GiaBan.getText()));
         tk.setMota(txt_mota.getText());
-        tk.setDocan(Double.parseDouble(TxtDoCan.getText()));
         tk.setSoluong(Integer.parseInt(TxtSoLuong.getText()));
         Mausac ms = mssv.tenMauSac(cbomausac.getSelectedItem().toString());
         tk.setColor(ms);
         ChatLieu cl = clsv.tenchatLieu(cbochatlieu.getSelectedItem().toString());
         tk.setMaterial(cl);
-        Thuonghieu th = thsv.tenThuongHieu(cbothuonghieu.getSelectedItem().toString());
-        tk.setBrand(th);
         tk.setHinhanh(linkAnh);
         if (rboDB.isSelected() == true) {
             tk.setTrangthai("Đang bán");
@@ -172,15 +154,14 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
         TxtSoLuong.setText(null);
         txt_GiaBan.setText(null);
         txt_mota.setText(null);
-        TxtDoCan.setText(null);
         lbl_anh.setIcon(null);
         cbochatlieu.setSelectedIndex(0);
-        cbothuonghieu.setSelectedIndex(0);
         cbomausac.setSelectedIndex(0);
-        CBO_TH1_check.setSelectedIndex(0);
+        CBO_CL_check.setSelectedIndex(0);
         lblCheckGiaBan.setText(null);
         lblCheckSoLuong.setText(null);
         lblCheckDoCan.setText(null);
+        fillTable(spctService.selectAll(id));
     }
 
     boolean check() {
@@ -188,7 +169,6 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
         if (TxtSoLuong.getText().trim().isEmpty()) {
             lblCheckSoLuong.setText("Vui lòng nhập số lượng");
             lblCheckSoLuong.setForeground(java.awt.Color.red);
-            
 
         } else {
             lblCheckSoLuong.setText(null);
@@ -198,19 +178,18 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
             if (soLuong <= 0) {
                 lblCheckSoLuong.setText("Số lượng lớn hơn 0");
                 lblCheckSoLuong.setForeground(java.awt.Color.red);
-               
+
             }
         } catch (Exception e) {
             lblCheckSoLuong.setText("Số lượng phải là số nguyên");
             lblCheckSoLuong.setForeground(java.awt.Color.red);
-            
+
         }
 
         //gia
         if (txt_GiaBan.getText().trim().isEmpty()) {
             lblCheckGiaBan.setText("Vui lòng nhập giá thành");
             lblCheckGiaBan.setForeground(java.awt.Color.red);
-            
 
         } else {
             lblCheckGiaBan.setText(null);
@@ -221,37 +200,16 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
             if (soLuong <= 0) {
                 lblCheckGiaBan.setText("Giá bán lớn hơn 0");
                 lblCheckGiaBan.setForeground(java.awt.Color.red);
-                
+
             }
         } catch (Exception e) {
             lblCheckGiaBan.setText("Giá bán phải là số nguyên");
             lblCheckGiaBan.setForeground(java.awt.Color.red);
-            
+
         }
 
         //do can
         //gia
-        if (TxtDoCan.getText().trim().isEmpty()) {
-            lblCheckDoCan.setText("Vui lòng nhập độ cận");
-            lblCheckDoCan.setForeground(java.awt.Color.red);
-            
-
-        } else {
-            lblCheckDoCan.setText(null);
-        }
-
-        try {
-            Double soLuong = Double.parseDouble(TxtDoCan.getText());
-            if (soLuong <= 0) {
-                lblCheckDoCan.setText("Độ cận lớn hơn 0");
-                lblCheckDoCan.setForeground(java.awt.Color.red);
-               
-            }
-        } catch (Exception e) {
-            lblCheckDoCan.setText("Giá bán phải là số thực");
-            lblCheckDoCan.setForeground(java.awt.Color.red);
-            
-        }
         return true;
     }
 
@@ -277,7 +235,6 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
         txt_GiaBan = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         lbl_anh = new javax.swing.JLabel();
         btn_addAnh1 = new javax.swing.JButton();
@@ -288,26 +245,22 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
         lblCheckDoCan = new javax.swing.JLabel();
         lblCheckGiaBan = new javax.swing.JLabel();
         themnhanhmausac1 = new javax.swing.JPanel();
-        cbothuonghieu = new javax.swing.JComboBox<>();
         cbomausac = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         rboDB = new javax.swing.JRadioButton();
         rboNB = new javax.swing.JRadioButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        TxtDoCan = new javax.swing.JTextField();
         lblCheckSoLuong = new javax.swing.JLabel();
         btn_Delete = new javax.swing.JButton();
         btn_reset = new javax.swing.JButton();
-        CBO_TH1_check = new javax.swing.JComboBox<>();
+        CBO_CL_check = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         lblbang = new javax.swing.JTable();
+        CBO_MS_check = new javax.swing.JComboBox<>();
 
         color3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -375,9 +328,6 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
         jLabel18.setText("Chất Liệu");
         form2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 56, 30));
 
-        jLabel19.setText("Thương Hiệu");
-        form2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, -1, 30));
-
         jLabel20.setText("Mô Tả");
         form2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 100, 56, 30));
 
@@ -435,19 +385,6 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
 
         form2.add(themnhanhmausac1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, 230, 0));
 
-        cbothuonghieu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbothuonghieu.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                cbothuonghieuMousePressed(evt);
-            }
-        });
-        cbothuonghieu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbothuonghieuActionPerformed(evt);
-            }
-        });
-        form2.add(cbothuonghieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 260, 193, 30));
-
         cbomausac.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbomausac.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -483,16 +420,6 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
         jLabel3.setText("*");
         form2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 20, 20));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Microsoft-Fluentui-Emoji-Mono-Plus.24.png"))); // NOI18N
-        jButton1.setBorder(null);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
-            }
-        });
-        form2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 260, 30, 30));
-
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Microsoft-Fluentui-Emoji-Mono-Plus.24.png"))); // NOI18N
         jButton2.setBorder(null);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -512,15 +439,6 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
             }
         });
         form2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 160, 30, 30));
-
-        jLabel21.setText("Độ Cận");
-        form2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 50, 60, 20));
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 0, 51));
-        jLabel4.setText("*");
-        form2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, 20, 20));
-        form2.add(TxtDoCan, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 193, 26));
         form2.add(lblCheckSoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 230, 20));
 
         color3.add(form2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 85, 1058, 300));
@@ -541,35 +459,40 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
         });
         color3.add(btn_reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 420, 83, 40));
 
-        CBO_TH1_check.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        CBO_TH1_check.addItemListener(new java.awt.event.ItemListener() {
+        CBO_CL_check.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CBO_CL_check.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                CBO_TH1_checkItemStateChanged(evt);
+                CBO_CL_checkItemStateChanged(evt);
             }
         });
-        CBO_TH1_check.addActionListener(new java.awt.event.ActionListener() {
+        CBO_CL_check.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                CBO_CL_checkMousePressed(evt);
+            }
+        });
+        CBO_CL_check.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CBO_TH1_checkActionPerformed(evt);
+                CBO_CL_checkActionPerformed(evt);
             }
         });
-        color3.add(CBO_TH1_check, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 420, 231, 40));
+        color3.add(CBO_CL_check, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 420, 90, 40));
 
         jPanel3.setBackground(java.awt.Color.white);
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Bảng Sản Phẩm"));
 
         lblbang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "null", "null"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -602,6 +525,27 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
 
         color3.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 474, -1, -1));
 
+        CBO_MS_check.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CBO_MS_check.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                CBO_MS_checkItemStateChanged(evt);
+            }
+        });
+        CBO_MS_check.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CBO_MS_checkMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                CBO_MS_checkMousePressed(evt);
+            }
+        });
+        CBO_MS_check.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CBO_MS_checkActionPerformed(evt);
+            }
+        });
+        color3.add(CBO_MS_check, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 420, 90, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -617,7 +561,7 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
     private void txt_searchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_searchFocusLost
         if (txt_search.getText().isEmpty()) {
             txt_search.setText("Tìm Kiếm");
-            fillTable(tksv.selectAll(id));
+            fillTable(spctService.selectAll(id));
         }
     }//GEN-LAST:event_txt_searchFocusLost
 
@@ -630,32 +574,38 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
     }//GEN-LAST:event_txt_searchActionPerformed
 
     private void txt_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyReleased
-        String search = "%" + txt_search.getText() + "%";
-        List<model.TrongKinhChiTiet> listsearch = tksv.seach(id, search);
-        fillTable(listsearch);
+        try {
+            String search = "%" + txt_search.getText() + "%";
+            if (txt_search.getText().isEmpty()) {
+                fillTable(spctService.selectAll(id));
+            } else {
+                List<model.SanPhamChiTiet> listsearch = spctService.seach(id, search);
+                fillTable(listsearch);
+            }
+        } catch (Exception e) {
+            return;
+        }
     }//GEN-LAST:event_txt_searchKeyReleased
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         if (check()) {
-            model.TrongKinhChiTiet tk = this.read();
-            if (tksv.Insert(tk) > 0) {
-                JOptionPane.showMessageDialog(this, "thanh cong");
-                fillTable(tksv.selectAll(id));
+            model.SanPhamChiTiet sp = this.read();
+            if (spctService.Insert(sp) > 0) {
+                JOptionPane.showMessageDialog(this, "Them thanh cong");
+                fillTable(spctService.selectAll(id));
                 reset();
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Thất bại");
         }
 
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
         if (check()) {
-            model.TrongKinhChiTiet tk = this.read();
+            model.SanPhamChiTiet sp = this.read();
             int b = (int) lblbang.getValueAt(index, 0);
-            if (tksv.update(tk, b) > 0) {
-                JOptionPane.showMessageDialog(this, "thanh cong");
-                fillTable(tksv.selectAll(id));
+            if (spctService.update(sp, b) > 0) {
+                JOptionPane.showMessageDialog(this, "Sua thanh cong");
+                fillTable(spctService.selectAll(id));
                 reset();
             }
         }
@@ -698,10 +648,6 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbochatlieuActionPerformed
 
-    private void cbothuonghieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbothuonghieuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbothuonghieuActionPerformed
-
     private void cbomausacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbomausacActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbomausacActionPerformed
@@ -709,35 +655,38 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
     private void btn_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DeleteActionPerformed
         if (check()) {
             int a = (int) lblbang.getValueAt(index, 0);
-            if (tksv.delete(a) > 0) {
-                JOptionPane.showMessageDialog(this, "thành công");
-                fillTable(tksv.selectAll(id));
+            if (spctService.delete(a) > 0) {
+                JOptionPane.showMessageDialog(this, "Xoa thành công");
+                fillTable(spctService.selectAll(id));
                 reset();
             }
         }
+
     }//GEN-LAST:event_btn_DeleteActionPerformed
 
     private void btn_resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resetActionPerformed
         reset();
     }//GEN-LAST:event_btn_resetActionPerformed
 
-    private void CBO_TH1_checkItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CBO_TH1_checkItemStateChanged
-        String name = CBO_TH1_check.getSelectedItem().toString();
-        if (tksv.check_Cbo(id, name) != null) {
-            List<model.TrongKinhChiTiet> gkcheck = tksv.check_Cbo(id, name);
-            fillTable(gkcheck);
+    private void CBO_CL_checkItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CBO_CL_checkItemStateChanged
+        String name = CBO_CL_check.getSelectedItem().toString();
+        if (spctService.check_Cbo_CL(id, name) != null) {
+            List<model.SanPhamChiTiet> clcheck = spctService.check_Cbo_CL(id, name);
+            fillTable(clcheck);
+        } else {
+            fillTable(spctService.selectAll(id));
         }
-    }//GEN-LAST:event_CBO_TH1_checkItemStateChanged
+    }//GEN-LAST:event_CBO_CL_checkItemStateChanged
 
-    private void CBO_TH1_checkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBO_TH1_checkActionPerformed
+    private void CBO_CL_checkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBO_CL_checkActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_CBO_TH1_checkActionPerformed
+    }//GEN-LAST:event_CBO_CL_checkActionPerformed
 
     private void lblbangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblbangMouseClicked
         index = lblbang.getSelectedRow();
-        int a = (int) lblbang.getValueAt(index, 0);
-        model.TrongKinhChiTiet tk = tksv.selectByID(a);
-        Show(tk);
+        int id = (int) lblbang.getValueAt(index, 0);
+        model.SanPhamChiTiet spct = spctService.selectByID(id);
+        Show(spct);
     }//GEN-LAST:event_lblbangMouseClicked
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
@@ -752,12 +701,6 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
         ql.setVisible(true);
     }//GEN-LAST:event_jButton2MouseClicked
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        // TODO add your handling code here:
-        ThuongHieuForm ql = new ThuongHieuForm();
-        ql.setVisible(true);
-    }//GEN-LAST:event_jButton1MouseClicked
-
     private void cbomausacMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbomausacMousePressed
         // TODO add your handling code here:
         CBo_MauSac();
@@ -768,15 +711,39 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
         CBo_ChatLieu();
     }//GEN-LAST:event_cbochatlieuMousePressed
 
-    private void cbothuonghieuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbothuonghieuMousePressed
+    private void CBO_MS_checkItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CBO_MS_checkItemStateChanged
         // TODO add your handling code here:
-        CBo_ThuongHieu();
-    }//GEN-LAST:event_cbothuonghieuMousePressed
+        String name = CBO_MS_check.getSelectedItem().toString();
+        if (spctService.check_Cbo_MS(id, name) != null) {
+            List<model.SanPhamChiTiet> clcheck = spctService.check_Cbo_MS(id, name);
+            fillTable(clcheck);
+        } else {
+            fillTable(spctService.selectAll(id));
+        }
+    }//GEN-LAST:event_CBO_MS_checkItemStateChanged
+
+    private void CBO_MS_checkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBO_MS_checkActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CBO_MS_checkActionPerformed
+
+    private void CBO_MS_checkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CBO_MS_checkMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CBO_MS_checkMouseClicked
+
+    private void CBO_MS_checkMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CBO_MS_checkMousePressed
+        // TODO add your handling code here:
+        CBo_MauSac();
+    }//GEN-LAST:event_CBO_MS_checkMousePressed
+
+    private void CBO_CL_checkMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CBO_CL_checkMousePressed
+        // TODO add your handling code here:
+        CBo_ChatLieu();
+    }//GEN-LAST:event_CBO_CL_checkMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> CBO_TH1_check;
-    private javax.swing.JTextField TxtDoCan;
+    private javax.swing.JComboBox<String> CBO_CL_check;
+    private javax.swing.JComboBox<String> CBO_MS_check;
     private javax.swing.JTextField TxtSoLuong;
     private javax.swing.JButton btn_Delete;
     private javax.swing.JButton btn_add;
@@ -787,10 +754,8 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbochatlieu;
     private javax.swing.JComboBox<String> cbomausac;
-    private javax.swing.JComboBox<String> cbothuonghieu;
     private com.raven.form.Color color3;
     private javax.swing.JPanel form2;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
@@ -798,12 +763,9 @@ public class TrongKinhChiTiet extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
