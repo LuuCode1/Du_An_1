@@ -194,39 +194,25 @@ VALUES ('TH01', N'Gucci'),
        ('TH05', N'Prada');
 
 
---Bảng gọng kính 
-INSERT INTO gong_kinh(maGongKinh,tenGongKinh)
-VALUES ('GK01', N'Gọng Kính V'),
-       ('GK02', N'GỌNG KÍNH CẬN CLUB MASTER'),
-       ('GK03', N'GỌNG KÍNH GỖ NAM CAO CẤP'),
-       ('GK04', N'GK – 550CN038'),
-       ('GK05', N'GK – 380CK113');
+
+INSERT INTO gong_kinh_chi_tiet(maGongKinh,tenGongKinh,idChatLieu,idMauSac,idThuongHieu,giaThanh,soLuong,hinhanh,moTa,trangThai)
+VALUES ('GK01', N'Gọng Kính V', 2 , 4 , 3 , 333000, 100,null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('GK02', N'GỌNG KÍNH CẬN CLUB MASTER', 5 , 1 , 2 , 733000,170, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('GK03', N'GỌNG KÍNH GỖ NAM CAO CẤP', 2 , 4 , 5 , 883000,201, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('GK04', N'GK – 550CN038', 3 , 5 , 4 , 55000,313, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('GK05', N'GK – 380CK113', 4 , 3 , 5 , 89000, 298,null,N'Sản phẩm thân thiện',N'Đang bán');
 
 
-INSERT INTO gong_kinh_chi_tiet(idGongKinh,idChatLieu,idMauSac,idThuongHieu,giaThanh,soLuong,hinhanh,moTa,trangThai)
-VALUES (1, 2 , 4 , 3 , 333000, 100,null,N'Sản phẩm thân thiện',N'Đang bán'),
-       (1, 5 , 1 , 2 , 733000,170, null,N'Sản phẩm thân thiện',N'Đang bán'),
-       (1, 2 , 4 , 5 , 883000,201, null,N'Sản phẩm thân thiện',N'Đang bán'),
-       (2, 3 , 5 , 4 , 55000,313, null,N'Sản phẩm thân thiện',N'Đang bán'),
-       (2, 4 , 3 , 5 , 89000, 298,null,N'Sản phẩm thân thiện',N'Đang bán');
+
 
 
 --Bảng tròng kính 
-INSERT INTO trong_kinh(maTrongKinh,tenTrongKinh)
-VALUES ('TK01', N'Tròng Kính Chống Ánh Sáng Xanh'),
-       ('TK02', N'Đa Tròng Essilor Smart-Lens'),
-       ('TK03', N'TRÒNG KÍNH ĐỔI MẦU THÁI LAN TRÁNG'),
-       ('TK04', N'TRÒNG KÍNH PHÁP ESSILOR PREVENCIA'),
-       ('TK05', N'TRÒNG KÍNH HÀN QUỐC CHEMI U6 ');
-
-
---Bảng tròng kính 
-INSERT INTO trong_kinh_chi_tiet(idTrongKinh,idChatLieu,idMauSac,idThuongHieu,giaThanh,doCan,soLuong,hinhanh,moTa,trangThai)
-VALUES (1, 2 , 4 , 3 , 333000, 0,100,null,N'Sản phẩm thân thiện',N'Đang bán'),
-       (1, 5 , 1 , 2 , 733000,0,170, null,N'Sản phẩm thân thiện',N'Đang bán'),
-       (1, 2 , 4 , 5 , 883000,1.5,201, null,N'Sản phẩm thân thiện',N'Đang bán'),
-       (2, 3 , 5 , 4 , 55000,2,313, null,N'Sản phẩm thân thiện',N'Đang bán'),
-       (2, 4 , 3 , 5 , 89000,1.75, 298,null,N'Sản phẩm thân thiện',N'Đang bán');
+INSERT INTO trong_kinh_chi_tiet(maTrongKinh,tenTrongKinh,idChatLieu,idMauSac,idThuongHieu,giaThanh,doCan,soLuong,hinhanh,moTa,trangThai)
+VALUES ('TK01', N'Tròng Kính Chống Ánh Sáng Xanh', 2 , 4 , 3 , 333000, 0,100,null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('TK02', N'Đa Tròng Essilor Smart-Lens', 5 , 1 , 2 , 733000,0,170, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('TK03', N'TRÒNG KÍNH ĐỔI MẦU THÁI LAN TRÁNG', 2 , 4 , 5 , 883000,1.5,201, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('TK04', N'TRÒNG KÍNH PHÁP ESSILOR PREVENCIA', 3 , 5 , 4 , 55000,2,313, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       ('TK05', N'TRÒNG KÍNH HÀN QUỐC CHEMI U6 ', 4 , 3 , 5 , 89000,1.75, 298,null,N'Sản phẩm thân thiện',N'Đang bán');
 
 
 
@@ -284,20 +270,20 @@ VALUES ('BH01',1,N'Bảo hành 1', '4-15-2023', '4-15-2024', 8760 , N'Còn hiệ
        ('BH04',4,N'Bảo hành 6', '8-4-2023', '8-4-2024', 8760 , N'Còn hiệu lực'),
        ('BH05',5,N'Bảo hành 9', '7-19-2023', '7-19-2024', 8760 , N'Còn hiệu lực');
 
+SELECT * FROM trong_kinh_chi_tiet
+SELECT * FROM gong_kinh_chi_tiet
+SELECT * FROM thuong_hieu
+SELECT * FROM mau_sac
+SELECT * FROM chat_lieu
 
 SELECT * FROM hoa_don
-SELECT * FROM chat_lieu
 SELECT * FROM khach_hang
 SELECT * FROM vouchers
 SELECT * FROM nhan_vien
 SELECT * FROM bao_hanh
 SELECT * FROM hoa_don_chi_tiet
-SELECT * FROM trong_kinh
-SELECT * FROM gong_kinh
-SELECT * FROM trong_kinh_chi_tiet
-SELECT * FROM gong_kinh_chi_tiet
-SELECT * FROM thuong_hieu
-SELECT * FROM mau_sac
+
+
 SELECT     chat_lieu.tenChatLieu,mau_sac.tenMauSac, thuong_hieu.tenThuongHieu, gong_kinh_chi_tiet.giaThanh, gong_kinh_chi_tiet.soLuong, gong_kinh_chi_tiet.hinhanh, gong_kinh_chi_tiet.moTa, 
                       gong_kinh_chi_tiet.trangThai
 FROM         gong_kinh INNER JOIN
@@ -309,5 +295,12 @@ FROM         gong_kinh INNER JOIN
 SELECT    maGongKinh, tenGongKinh
 FROM         gong_kinh where idGongKinh = 1
 
-
+SELECT  trong_kinh_chi_tiet.idTrongKinhCT,trong_kinh_chi_tiet.ma,trong_kinh_chi_tiet.,
+               chat_lieu.tenChatLieu,mau_sac.tenMauSac, thuong_hieu.tenThuongHieu, trong_kinh_chi_tiet.giaThanh,"
+                trong_kinh_chi_tiet.doCan ,trong_kinh_chi_tiet.soLuong, trong_kinh_chi_tiet.hinhanh, trong_kinh_chi_tiet.moTa, \n"
+                trong_kinh_chi_tiet.trangThai\n"
+                FROM  trong_kinh_chi_tiet INNER JOIN\n"
+                      chat_lieu ON trong_kinh_chi_tiet.idChatLieu = chat_lieu.idChatLieu INNER JOIN\n"
+                      thuong_hieu ON trong_kinh_chi_tiet.idThuongHieu = thuong_hieu.idThuongHieu INNER JOIN\n"
+                      mau_sac ON trong_kinh_chi_tiet.idMauSac = mau_sac.idMauSac
 
