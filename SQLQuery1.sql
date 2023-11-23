@@ -28,18 +28,10 @@ CREATE TABLE thuong_hieu (
 );
 
 
--- Thêm tên gọng kính
--- Sửa ảnh về Null
-CREATE TABLE gong_kinh (
-  idGongKinh INT NOT NULL IDENTITY(1,1),
-  maGongKinh  NVARCHAR(50) NOT NULL,
-  tenGongKinh  NVARCHAR(50) NOT NULL,
-   PRIMARY KEY (idGongKinh),
-);
-
 CREATE TABLE gong_kinh_chi_tiet (
   idGongKinhCT INT NOT NULL IDENTITY(1,1),
-  idGongKinh INT NOT NULL ,
+  maGongKinh  NVARCHAR(50) NOT NULL,
+  tenGongKinh  NVARCHAR(50) NOT NULL,
   idChatLieu INT NOT NULL,
   idMauSac INT NOT NULL,
   idThuongHieu INT NOT NULL,
@@ -49,28 +41,17 @@ CREATE TABLE gong_kinh_chi_tiet (
   moTa NVARCHAR(50) NOT NULL,
   trangThai NVARCHAR(50),
   PRIMARY KEY (idGongKinhCT),
-  FOREIGN KEY (idGongKinh) REFERENCES gong_kinh (idGongKinh),
   FOREIGN KEY (idChatLieu) REFERENCES chat_lieu (idChatLieu),
   FOREIGN KEY (idMauSac) REFERENCES mau_sac (idMauSac),
   FOREIGN KEY (idThuongHieu) REFERENCES thuong_hieu (idThuongHieu),
   
 );
 
--- Thêm tên tròng kính
--- Sửa ảnh về Null
--- Thêm giá thành
-CREATE TABLE trong_kinh (
-  idTrongKinh INT NOT NULL IDENTITY(1,1),
-  maTrongKinh VARCHAR(50) NOT NULL,
-  tenTrongKinh  NVARCHAR(50) NOT NULL,
-  
-  PRIMARY KEY (idTrongKinh),
-);
-
 
 CREATE TABLE trong_kinh_chi_tiet (
   idTrongKinhCT INT NOT NULL IDENTITY(1,1),
-  idTrongKinh INT NOT NULL ,
+  maTrongKinh VARCHAR(50) NOT NULL,
+  tenTrongKinh  NVARCHAR(50) NOT NULL,
   idChatLieu INT NOT NULL,
   idMauSac INT NOT NULL,
   idThuongHieu INT NOT NULL,
@@ -81,29 +62,30 @@ CREATE TABLE trong_kinh_chi_tiet (
   moTa NVARCHAR(50) NOT NULL,
   trangThai NVARCHAR(50),
   PRIMARY KEY (idTrongKinhCT),
-  FOREIGN KEY (idTrongKinh) REFERENCES trong_kinh (idTrongKinh),
   FOREIGN KEY (idChatLieu) REFERENCES chat_lieu (idChatLieu),
   FOREIGN KEY (idMauSac) REFERENCES mau_sac (idMauSac),
-  FOREIGN KEY (idThuongHieu) REFERENCES thuong_hieu (idThuongHieu),
-  
+  FOREIGN KEY (idThuongHieu) REFERENCES thuong_hieu (idThuongHieu), 
 );
 
+CREATE TABLE san_pham(
+  idkinh        INT NOT NULL IDENTITY(1,1), 
+  makinh        VARCHAR(50) NOT NULL,
+  tenkinh       NVARCHAR(50) NOT NULL,
+  PRIMARY KEY  (idkinh),
+)
 
-
--- Chuyển idGongKinh và idTrongKinh từ NOT NULL thành NULL
-CREATE TABLE hoa_don_chi_tiet (
-  idHoaDonChiTiet  INT NOT NULL IDENTITY(1,1),
-  maHoaDonChiTiet  VARCHAR(50) NOT NULL,
-  idGongKinhCT INT  NULL,
-  idTrongKinhCT INT  NULL,
-  soluongGongKinh  INT NOT NULL,
-  soluongTrongKinh  INT NOT NULL,
-  dongiaGongKinh   FLOAT NOT NULL,
-  dongiaTrongKinh   FLOAT NOT NULL,
-  PRIMARY KEY (idHoaDonChiTiet),
+CREATE TABLE san_pham_chi_tiet(
+  idkinh_chi_tiet        INT NOT NULL IDENTITY(1,1), 
+  idkinh                 INT NULL, 
+  idGongKinhCT           INT  NULL,
+  idTrongKinhCT          INT  NULL,
+  soLuong                INT NOT NULL,
+  giaThanh               FLOAT NOT NULL,
+  PRIMARY KEY (idkinh_chi_tiet),
+  FOREIGN KEY (idkinh) REFERENCES san_pham (idkinh),
   FOREIGN KEY (idGongKinhCT) REFERENCES gong_kinh_chi_tiet (idGongKinhCT),
   FOREIGN KEY (idTrongKinhCT) REFERENCES trong_kinh_chi_tiet (idTrongKinhCT),
-);
+)
 
 CREATE TABLE nhan_vien (
   idNhanVien INT NOT NULL IDENTITY(1,1),
@@ -127,7 +109,6 @@ CREATE TABLE khach_hang (
   PRIMARY KEY (idKhachHang),
 );
 
-
 CREATE TABLE vouchers (
   idVouchers INT NOT NULL IDENTITY(1,1),
   maVouchers VARCHAR(50) NOT NULL,
@@ -146,7 +127,6 @@ CREATE TABLE hoa_don (
   idVouchers INT NULL ,
   idKhachHang INT NOT NULL ,
   idNhanVien INT NOT NULL ,
-  idHoaDonChiTiet  INT NOT NULL ,
   ngayban   DATETIME DEFAULT GETDATE(),
   tongtien  FLOAT NOT NULL,
   trangthai NVARCHAR(50)  NOT NULL, 
@@ -154,7 +134,20 @@ CREATE TABLE hoa_don (
   FOREIGN KEY (idVouchers) REFERENCES vouchers (idVouchers),
   FOREIGN KEY (idKhachHang) REFERENCES khach_hang (idKhachHang),
   FOREIGN KEY (idNhanVien) REFERENCES nhan_vien (idNhanVien),
-  FOREIGN KEY (idHoaDonChiTiet) REFERENCES hoa_don_chi_tiet (idHoaDonChiTiet),
+);
+
+
+-- Chuyển idGongKinh và idTrongKinh từ NOT NULL thành NULL
+CREATE TABLE hoa_don_chi_tiet (
+  idHoaDonChiTiet  INT NOT NULL IDENTITY(1,1),
+  maHoaDonChiTiet  VARCHAR(50) NOT NULL,
+  idkinh_chi_tiet  INT NOT NULL,
+  idHoaDon         INT NOT NULL,
+  soluong          INT NOT NULL,
+  dongia           FLOAT NOT NULL,
+  PRIMARY KEY (idHoaDonChiTiet),
+  FOREIGN KEY (idkinh_chi_tiet) REFERENCES san_pham_chi_tiet(idkinh_chi_tiet),
+  FOREIGN KEY (idHoaDon) REFERENCES hoa_don(idHoaDon),
 );
 
 CREATE TABLE bao_hanh (
