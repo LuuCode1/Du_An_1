@@ -261,5 +261,30 @@ SELECT * FROM bao_hanh
 SELECT * FROM hoa_don_chi_tiet
 
 
+SELECT idsp,masp,tensp,lsp.idloai_sp,lsp.tenloai_sp,th.idThuongHieu,th.tenThuongHieu
+from san_pham sp INNER JOIN
+loai_sp lsp ON lsp.idloai_sp = sp.idloai_sp INNER JOIN
+thuong_hieu th ON th.idThuongHieu = sp.idThuongHieu 
+
+UPDATE san_pham SET masp = ?,tensp = ?,idloai_sp = ?,idThuongHieu = ?
+WHERE idsp = ?
 
 
+SELECT idsp,masp,tensp,lsp.idloai_sp,lsp.tenloai_sp,th.idThuongHieu,th.tenThuongHieu
+from san_pham sp INNER JOIN
+loai_sp lsp ON lsp.idloai_sp = sp.idloai_sp INNER JOIN
+thuong_hieu th ON th.idThuongHieu = sp.idThuongHieu 
+
+SELECT sp.idsp,sp.masp,sp.tensp,lsp.tenloai_sp,th.tenThuongHieu
+from san_pham sp INNER JOIN
+loai_sp lsp ON lsp.idloai_sp = sp.idloai_sp INNER JOIN
+thuong_hieu th ON th.idThuongHieu = sp.idThuongHieu
+ where sp.masp like 'SP01'
+
+
+SELECT spct.id_sp_chi_tiet,cl.tenChatLieu,ms.tenMauSac,spct.giaThanh,spct.soLuong,spct.hinhanh,spct.moTa,spct.trangThai
+from san_pham_chi_tiet spct INNER JOIN
+san_pham sp ON sp.idsp = spct.idsp INNER JOIN
+chat_lieu cl ON cl.idChatLieu = spct.idChatLieu INNER JOIN
+mau_sac ms ON ms.idMauSac = spct.idMauSac
+ where sp.idsp = 1
