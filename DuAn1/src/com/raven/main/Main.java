@@ -8,13 +8,11 @@ import com.raven.event.EventShowPopupMenu;
 import com.raven.form.Form_Home;
 
 import com.raven.form.MainForm;
-import com.raven.form.GKCT;
 
 import com.raven.form.KhachHangForm;
 import com.raven.form.MainForm;
-import com.raven.form.QLGKForm;
 
-import com.raven.form.QLTKForm;
+import com.raven.form.SanPhamForm;
 import com.raven.swing.MenuItem;
 import com.raven.swing.PopupMenu;
 import com.raven.swing.icon.GoogleMaterialDesignIcons;
@@ -52,9 +50,7 @@ public class Main extends javax.swing.JFrame {
                 System.out.println("Menu Index : " + menuIndex + " SubMenu Index " + subMenuIndex);
                 if (menuIndex == 1) {
                     if (subMenuIndex == 0) {
-                        main.showForm(new QLGKForm(main));
-                    }else if (subMenuIndex==1) {
-                        main.showForm(new QLTKForm(main));
+                        main.showForm(new SanPhamForm(main));
                     }
                 }
             }
