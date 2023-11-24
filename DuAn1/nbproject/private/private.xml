@@ -2,14 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/Du_An_1/DuAn1/src/model/SanPhamChiTiet.java</file>
-            <file>file:/D:/Du_An_1/DuAn1/src/service/SPCT_Service.java</file>
-            <file>file:/D:/Du_An_1/DuAn1/src/service/SP_Service.java</file>
-            <file>file:/D:/Du_An_1/DuAn1/src/com/raven/main/Main.java</file>
-            <file>file:/D:/Du_An_1/DuAn1/src/service/GongKinh_Service.java</file>
-            <file>file:/D:/Du_An_1/DuAn1/src/com/raven/form/TrongKinhChiTiet.java</file>
-            <file>file:/D:/Du_An_1/DuAn1/src/com/raven/form/QLTKForm.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

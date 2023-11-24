@@ -592,11 +592,19 @@ public class SanPhamCTForm extends javax.swing.JPanel {
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         if (check()) {
+            ChatLieu cl = clsv.tenchatLieu(cbochatlieu.getSelectedItem().toString());
+            int chatlieu = cl.getIdChatLieu();
+            Mausac ms = mssv.tenMauSac(cbomausac.getSelectedItem().toString());
+            int mausac = ms.getIdMauSac();
             model.SanPhamChiTiet sp = this.read();
-            if (spctService.Insert(sp) > 0) {
-                JOptionPane.showMessageDialog(this, "Them thanh cong");
-                fillTable(spctService.selectAll(id));
-                reset();
+            if (spctService.check(chatlieu, mausac) != null) {
+                JOptionPane.showMessageDialog(this, "Trùng màu sắc và chất liệu");
+            } else {
+                if (spctService.Insert(sp) > 0) {
+                    JOptionPane.showMessageDialog(this, "Them thanh cong");
+                    fillTable(spctService.selectAll(id));
+                    reset();
+                }
             }
         }
 
@@ -740,7 +748,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
 
     private void CBO_CL_checkMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CBO_CL_checkMousePressed
         // TODO add your handling code here:
-       // CBo_ChatLieu();
+        // CBo_ChatLieu();
     }//GEN-LAST:event_CBO_CL_checkMousePressed
 
     private void cbomausacMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbomausacMouseEntered

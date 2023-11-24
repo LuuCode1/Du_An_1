@@ -215,6 +215,27 @@ public class SPCT_Service {
             return null;
         }
     }
+    public SanPhamChiTiet check(int chatlieu, int mausac){
+        sql="SELECT * from san_pham_chi_tiet where idChatLieu =?  and idMauSac =?";
+        try {
+           con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, chatlieu);
+            ps.setObject(2, mausac);
+            rs = ps.executeQuery();
+            while (rs.next()) {                
+                 ChatLieu cl = new ChatLieu(null, rs.getString(2));
+                Mausac ms = new Mausac(null, rs.getString(3));
+                SanPhamChiTiet spct = new SanPhamChiTiet(null, rs.getInt(1), ms, cl, rs.getDouble(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8));
+                return spct;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+           
+        }
+         return null;
+    }
+    
     
     public List<SanPhamChiTiet> seach(int id, String a) {
         List<SanPhamChiTiet> list = new ArrayList<>();
@@ -243,5 +264,6 @@ public class SPCT_Service {
             return null;
         }
     }
+    
 
 }

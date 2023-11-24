@@ -98,13 +98,12 @@ CREATE TABLE vouchers (
 
 CREATE TABLE hoa_don (
   idHoaDon  INT NOT NULL IDENTITY(1,1),
-  maHoaDon  VARCHAR(50) NOT NULL,
   idVouchers INT NULL ,
-  idKhachHang INT NOT NULL ,
-  idNhanVien INT NOT NULL ,
+  idKhachHang INT  NULL ,
+  idNhanVien INT  NULL ,
   ngayban   DATETIME DEFAULT GETDATE(),
-  tongtien  FLOAT NOT NULL,
-  trangthai NVARCHAR(50)  NOT NULL, 
+  tongtien  FLOAT NULL,
+  trangthai bit  NOT NULL, 
   PRIMARY KEY (idHoaDon),
   FOREIGN KEY (idVouchers) REFERENCES vouchers (idVouchers),
   FOREIGN KEY (idKhachHang) REFERENCES khach_hang (idKhachHang),
