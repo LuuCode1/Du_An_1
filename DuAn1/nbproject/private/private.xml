@@ -3,14 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/com/raven/form/Quan_ly_tong_hop.java</file>
-            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/com/raven/form/TrongKinhChiTiet.java</file>
-            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/model/Mausac.java</file>
-            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/model/ChatLieu.java</file>
-            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/model/Thuonghieu.java</file>
-            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/service/DBconnect.java</file>
-            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/com/raven/main/Main.java</file>
-            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/service/chatLieu_service.java</file>
+            <file>file:/D:/Du_An_1/DuAn1/src/model/TrongKinh.java</file>
+            <file>file:/D:/Du_An_1/DuAn1/src/model/ChatLieu.java</file>
+            <file>file:/D:/Du_An_1/DuAn1/src/service/GongKinh_Service.java</file>
+            <file>file:/D:/Du_An_1/DuAn1/src/service/TrongKinhService.java</file>
         </group>
     </open-files>
 </project-private>
