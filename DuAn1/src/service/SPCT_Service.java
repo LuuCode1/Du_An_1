@@ -212,7 +212,8 @@ public class SPCT_Service {
             return null;
         }
     }
-
+  
+    
     public List<SanPhamChiTiet> seach(int id, String a) {
         List<SanPhamChiTiet> list = new ArrayList<>();
         sql = "SELECT spct.id_sp_chi_tiet,cl.tenChatLieu,ms.tenMauSac,spct.giaThanh,spct.soLuong,spct.hinhanh,spct.moTa,spct.trangThai\n"
@@ -240,7 +241,7 @@ public class SPCT_Service {
             return null;
         }
     }
-
+    
     public SanPhamChiTiet findByID(int id, int idcl, int idms) {
         Connection conn = null;
         Statement sttm = null;
