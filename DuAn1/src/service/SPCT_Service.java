@@ -176,7 +176,7 @@ public class SPCT_Service {
             while (rs.next()) {
                 ChatLieu cl = new ChatLieu(null, rs.getString(2));
                 Mausac ms = new Mausac(null, rs.getString(3));
-                SanPhamChiTiet spct = new SanPhamChiTiet(null, rs.getInt(1), ms, cl, rs.getDouble(4), rs.getDouble(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9));
+                SanPhamChiTiet spct = new SanPhamChiTiet(null, rs.getInt(1), ms, cl, rs.getDouble(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8));
                 list.add(spct);
             }
             return list;
