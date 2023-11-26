@@ -36,6 +36,7 @@ public class SanPhamForm extends javax.swing.JPanel {
     thuonghieu_service Brandservice = new thuonghieu_service();
     Thuonghieu th = new Thuonghieu();
     public static String id;
+    public static String tenTheLoai;
     int index = -1;
 
     public SanPhamForm(MainForm main) {
@@ -452,11 +453,23 @@ public class SanPhamForm extends javax.swing.JPanel {
 
     private void btnSPChiTietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSPChiTietActionPerformed
         if (CheckValidate()) {
+//            try {
+//                id = lbl_id.getText();
+//                mainForm.showForm(new SanPhamCTForm1(lbl_id.getText()));
+//            } catch (Exception e) {
+//                System.out.println(e.toString());
+//            }
             try {
                 id = lbl_id.getText();
-                mainForm.showForm(new SanPhamCTForm(lbl_id.getText()));
+                tenTheLoai = (String) cbo_loaiSP.getSelectedItem().toString();
+                //name = tenTheLoai;
+                if (tenTheLoai.equals("Gong Kinh")) {
+                    mainForm.showForm(new SanPhamCTForm((lbl_id.getText())));
+                } else {
+                    mainForm.showForm(new SanPhamCTForm1((lbl_id.getText())));
+                }
             } catch (Exception e) {
-                System.out.println(e.toString());
+                System.out.println(e);
             }
         }
     }//GEN-LAST:event_btnSPChiTietActionPerformed

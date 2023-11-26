@@ -10,26 +10,24 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import model.GongKinhChiTiet;
-import model.SanPhamChiTiet;
 import model.ChatLieu;
 import model.Mausac;
 import model.SanPham;
-import model.Thuonghieu;
+import model.SanPhamChiTiet;
 
 /**
  *
  * @author leduc
  */
-public class SPCT_Service {
-
+public class SPCT1_Service {
+    
     Connection con = null;
     PreparedStatement ps = null;
     String sql = null;
     ResultSet rs = null;
 
     public List<SanPhamChiTiet> selectAll(int id) {
-        sql = "SELECT spct.id_sp_chi_tiet,cl.tenChatLieu,ms.tenMauSac,spct.giaThanh,spct.soLuong,spct.hinhanh,spct.moTa,spct.trangThai\n"
+        sql = "SELECT spct.id_sp_chi_tiet,cl.tenChatLieu,ms.tenMauSac,spct.doCan,spct.giaThanh,spct.soLuong,spct.hinhanh,spct.moTa,spct.trangThai\n"
                 + "from san_pham_chi_tiet spct INNER JOIN\n"
                 + "san_pham sp ON sp.idsp = spct.idsp INNER JOIN\n"
                 + "chat_lieu cl ON cl.idChatLieu = spct.idChatLieu INNER JOIN\n"
@@ -44,7 +42,7 @@ public class SPCT_Service {
             while (rs.next()) {
                 ChatLieu cl = new ChatLieu(null, rs.getString(2));
                 Mausac ms = new Mausac(null, rs.getString(3));
-                SanPhamChiTiet spct = new SanPhamChiTiet(null, rs.getInt(1), ms, cl, rs.getDouble(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8));
+                SanPhamChiTiet spct = new SanPhamChiTiet(null, rs.getInt(1), ms, cl,rs.getDouble(4) ,rs.getDouble(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9));
                 list.add(spct);
             }
             return list;
@@ -77,7 +75,7 @@ public class SPCT_Service {
     }
 
     public SanPhamChiTiet selectByID(int id) {
-        sql = "SELECT spct.id_sp_chi_tiet,cl.tenChatLieu,ms.tenMauSac,spct.giaThanh,spct.soLuong,spct.hinhanh,spct.moTa,spct.trangThai\n"
+        sql = "SELECT spct.id_sp_chi_tiet,cl.tenChatLieu,ms.tenMauSac,spct.doCan,spct.giaThanh,spct.soLuong,spct.hinhanh,spct.moTa,spct.trangThai\n"
                 + "from san_pham_chi_tiet spct INNER JOIN\n"
                 + "san_pham sp ON sp.idsp = spct.idsp INNER JOIN\n"
                 + "chat_lieu cl ON cl.idChatLieu = spct.idChatLieu INNER JOIN\n"
@@ -91,7 +89,7 @@ public class SPCT_Service {
             while (rs.next()) {
                 ChatLieu cl = new ChatLieu(null, rs.getString(2));
                 Mausac ms = new Mausac(null, rs.getString(3));
-                SanPhamChiTiet spct = new SanPhamChiTiet(null, rs.getInt(1), ms, cl, rs.getDouble(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8));
+                SanPhamChiTiet spct = new SanPhamChiTiet(null, rs.getInt(1), ms, cl, rs.getDouble(4),rs.getDouble(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9));
                 return spct;
             }
         } catch (Exception e) {
@@ -100,6 +98,8 @@ public class SPCT_Service {
         }
         return null;
     }
+    
+    
 
     public int Insert(SanPhamChiTiet spct) {
         sql = "INSERT INTO san_pham_chi_tiet(idsp,idChatLieu,idMauSac,doCan,giaThanh,soLuong,hinhanh,moTa,trangThai)\n"
@@ -110,7 +110,7 @@ public class SPCT_Service {
             ps.setObject(1, spct.getSp().getIdSP());
             ps.setObject(2, spct.getMaterial().getIdChatLieu());
             ps.setObject(3, spct.getColor().getIdMauSac());
-            ps.setObject(4, null);
+            ps.setObject(4, spct.getDoCan());
             ps.setObject(5, spct.getGiathanh());
             ps.setObject(6, spct.getSoluong());
             ps.setObject(7, spct.getHinhanh());
@@ -122,7 +122,8 @@ public class SPCT_Service {
             return 0;
         }
     }
-
+    
+    
     public int delete(int id) {
         sql = "Delete from san_pham_chi_tiet where id_sp_chi_tiet =?";
         try {
@@ -136,31 +137,32 @@ public class SPCT_Service {
             return 0;
         }
     }
-
+    
     public int update(SanPhamChiTiet spct, int ma) {
         sql = "UPDATE san_pham_chi_tiet SET  idChatLieu = ?, idMauSac = ?, "
-                + "giaThanh = ?, soLuong = ?, hinhanh = ?, moTa = ? ,trangThai = ? "
+                + "doCan = ?,giaThanh = ?, soLuong = ?, hinhanh = ?, moTa = ? ,trangThai = ? "
                 + "WHERE san_pham_chi_tiet.id_sp_chi_tiet = ?";
         try {
             con = DBconnect.getConnection();
             ps = con.prepareStatement(sql);
             ps.setObject(1, spct.getMaterial().getIdChatLieu());
             ps.setObject(2, spct.getColor().getIdMauSac());
-            ps.setObject(3, spct.getGiathanh());
-            ps.setObject(4, spct.getSoluong());
-            ps.setObject(5, spct.getHinhanh());
-            ps.setObject(6, spct.getMota());
-            ps.setObject(7, spct.getTrangthai());
-            ps.setObject(8, ma);
+            ps.setObject(3, spct.getDoCan());
+            ps.setObject(4, spct.getGiathanh());
+            ps.setObject(5, spct.getSoluong());
+            ps.setObject(6, spct.getHinhanh());
+            ps.setObject(7, spct.getMota());
+            ps.setObject(8, spct.getTrangthai());
+            ps.setObject(9, ma);
             return ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
     }
-
+    
     public List<SanPhamChiTiet> check_Cbo_CL(int ma, String chatlieu) {
-        sql = "SELECT spct.id_sp_chi_tiet,cl.tenChatLieu,ms.tenMauSac,spct.giaThanh,spct.soLuong,spct.hinhanh,spct.moTa,spct.trangThai\n"
+        sql = "SELECT spct.id_sp_chi_tiet,cl.tenChatLieu,ms.tenMauSac,spct.doCan,spct.giaThanh,spct.soLuong,spct.hinhanh,spct.moTa,spct.trangThai\n"
                 + "from san_pham_chi_tiet spct INNER JOIN\n"
                 + "san_pham sp ON sp.idsp = spct.idsp INNER JOIN\n"
                 + "chat_lieu cl ON cl.idChatLieu = spct.idChatLieu INNER JOIN\n"
@@ -176,7 +178,7 @@ public class SPCT_Service {
             while (rs.next()) {
                 ChatLieu cl = new ChatLieu(null, rs.getString(2));
                 Mausac ms = new Mausac(null, rs.getString(3));
-                SanPhamChiTiet spct = new SanPhamChiTiet(null, rs.getInt(1), ms, cl, rs.getDouble(4), rs.getDouble(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9));
+                SanPhamChiTiet spct = new SanPhamChiTiet(null, rs.getInt(1), ms, cl, rs.getDouble(4),rs.getDouble(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9));
                 list.add(spct);
             }
             return list;
@@ -185,9 +187,10 @@ public class SPCT_Service {
             return null;
         }
     }
-
+    
+    
     public List<SanPhamChiTiet> check_Cbo_MS(int ma, String chatlieu) {
-        sql = "SELECT spct.id_sp_chi_tiet,cl.tenChatLieu,ms.tenMauSac,spct.giaThanh,spct.soLuong,spct.hinhanh,spct.moTa,spct.trangThai\n"
+        sql = "SELECT spct.id_sp_chi_tiet,cl.tenChatLieu,ms.tenMauSac,spct.doCan,spct.giaThanh,spct.soLuong,spct.hinhanh,spct.moTa,spct.trangThai\n"
                 + "from san_pham_chi_tiet spct INNER JOIN\n"
                 + "san_pham sp ON sp.idsp = spct.idsp INNER JOIN\n"
                 + "chat_lieu cl ON cl.idChatLieu = spct.idChatLieu INNER JOIN\n"
@@ -203,7 +206,7 @@ public class SPCT_Service {
             while (rs.next()) {
                 ChatLieu cl = new ChatLieu(null, rs.getString(2));
                 Mausac ms = new Mausac(null, rs.getString(3));
-                SanPhamChiTiet spct = new SanPhamChiTiet(null, rs.getInt(1), ms, cl, rs.getDouble(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8));
+                SanPhamChiTiet spct = new SanPhamChiTiet(null, rs.getInt(1), ms, cl, rs.getDouble(4),rs.getDouble(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9));
                 list.add(spct);
             }
             return list;
@@ -212,10 +215,10 @@ public class SPCT_Service {
             return null;
         }
     }
-
+    
     public List<SanPhamChiTiet> seach(int id, String a) {
         List<SanPhamChiTiet> list = new ArrayList<>();
-        sql = "SELECT spct.id_sp_chi_tiet,cl.tenChatLieu,ms.tenMauSac,spct.giaThanh,spct.soLuong,spct.hinhanh,spct.moTa,spct.trangThai\n"
+        sql = "SELECT spct.id_sp_chi_tiet,cl.tenChatLieu,ms.tenMauSac,spct.doCan,spct.giaThanh,spct.soLuong,spct.hinhanh,spct.moTa,spct.trangThai\n"
                 + "from san_pham_chi_tiet spct INNER JOIN\n"
                 + "san_pham sp ON sp.idsp = spct.idsp INNER JOIN\n"
                 + "chat_lieu cl ON cl.idChatLieu = spct.idChatLieu INNER JOIN\n"
@@ -231,7 +234,7 @@ public class SPCT_Service {
             while (rs.next()) {
                 ChatLieu cl = new ChatLieu(null, rs.getString(2));
                 Mausac ms = new Mausac(null, rs.getString(3));
-                SanPhamChiTiet spct = new SanPhamChiTiet(null, rs.getInt(1), ms, cl, rs.getDouble(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8));
+                SanPhamChiTiet spct = new SanPhamChiTiet(null, rs.getInt(1), ms, cl, rs.getDouble(4),rs.getDouble(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9));
                 list.add(spct);
             }
             return list;
@@ -240,23 +243,23 @@ public class SPCT_Service {
             return null;
         }
     }
-
-    public SanPhamChiTiet findByID(int id, int idcl, int idms) {
+    
+    public SanPhamChiTiet findByID(int id, int idcl, int idms,Double doCan) {
         Connection conn = null;
         Statement sttm = null;
         ResultSet rs = null;
         try {
-            String sSQL = "SELECT spct.id_sp_chi_tiet,spct.idChatLieu,spct.idMauSac,spct.giaThanh,spct.soLuong,spct.hinhanh,spct.moTa,spct.trangThai\n"
+            String sSQL = "SELECT spct.id_sp_chi_tiet,spct.idChatLieu,spct.idMauSac,spct.doCan,spct.giaThanh,spct.soLuong,spct.hinhanh,spct.moTa,spct.trangThai\n"
                     + "from san_pham_chi_tiet spct INNER JOIN \n"
                     + "san_pham sp ON spct.idsp = sp.idsp\n"
-                    + "where sp.idsp = '" + id + "' and (spct.idChatLieu = '" + idcl + "' and spct.idMauSac = '" + idms + "')";
+                    + "where sp.idsp = '" + id + "' and (spct.idChatLieu = '" + idcl + "' and spct.idMauSac = '" + idms + "' and spct.doCan = '" + doCan + "')";
             conn = DBconnect.getConnection();
             sttm = conn.createStatement();
             rs = sttm.executeQuery(sSQL);
             while (rs.next()) {
-                ChatLieu cl = new ChatLieu(rs.getInt(2),null,null);
-                Mausac ms = new Mausac(rs.getInt(3),null,null);
-                SanPhamChiTiet spct = new SanPhamChiTiet(null, rs.getInt(1), ms, cl, rs.getDouble(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8));
+                ChatLieu cl = new ChatLieu(null, rs.getString(2));
+                Mausac ms = new Mausac(null, rs.getString(3));
+                SanPhamChiTiet spct = new SanPhamChiTiet(null, rs.getInt(1), ms, cl, rs.getDouble(4),rs.getDouble(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9));
                 return spct;
             }
         } catch (Exception e) {
@@ -271,5 +274,4 @@ public class SPCT_Service {
         }
         return null;
     }
-
 }

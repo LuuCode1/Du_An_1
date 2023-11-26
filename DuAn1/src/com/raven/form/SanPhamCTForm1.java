@@ -13,25 +13,21 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.GongKinhChiTiet;
 import model.ChatLieu;
 import model.Mausac;
 import model.SanPham;
-import model.Thuonghieu;
-import service.GongKinh_Service;
+import service.SPCT1_Service;
 import service.SPCT_Service;
 import service.chatLieu_service;
 import service.mausac_service;
-import service.thuonghieu_service;
 import view.ChatLieuForm;
 import view.MauSacForm;
-import view.ThuongHieuForm;
 
 /**
  *
  * @author leduc
  */
-public class SanPhamCTForm extends javax.swing.JPanel {
+public class SanPhamCTForm1 extends javax.swing.JPanel {
 
     DefaultTableModel model;
     mausac_service mssv = new mausac_service();
@@ -39,16 +35,17 @@ public class SanPhamCTForm extends javax.swing.JPanel {
     ChatLieu cl = new ChatLieu();
     chatLieu_service clsv = new chatLieu_service();
     SanPham sp = new SanPham();
-    SPCT_Service spctService = new SPCT_Service();
+    SPCT1_Service spctService = new SPCT1_Service();
     String linkAnh = null;
+    //model.TrongKinhChiTiet tk = new model.TrongKinhChiTiet();
     int id = Integer.parseInt(SanPhamForm.id);
     String tenTheLoai = String.valueOf(SanPhamForm.tenTheLoai);
     int index = -1;
 
     /**
-     * Creates new form TrongKinhChiTiet
+     * Creates new form SanPhamCTForm1
      */
-    public SanPhamCTForm(String dataControner) {
+    public SanPhamCTForm1(String dataControner) {
         initComponents();
         fillTable(spctService.selectAll(id));
         CBo_ChatLieu();
@@ -58,12 +55,12 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         txt_search.setText("Tìm Kiếm");
         rboDB.enable(true);
     }
-
-    private SanPhamCTForm() {
+    
+    private SanPhamCTForm1() {
     }
 
     void name() {
-        String[] table1 = {"ID", "Chất Liệu", "Màu Sắc", "Giá Bán", "Số Lượng", "Hình Ảnh", "Mô Tả", "Trạng thái"};
+        String[] table1 = {"ID", "Chất Liệu", "Màu Sắc","Độ Cận","Giá Bán", "Số Lượng", "Hình Ảnh", "Mô Tả", "Trạng thái"};
         for (int i = 0; i < table1.length; i++) {
             lblbang.getColumnModel().getColumn(i).setHeaderValue(table1[i]);
         }
@@ -101,12 +98,13 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         model = (DefaultTableModel) lblbang.getModel();
         model.setRowCount(0);
         for (model.SanPhamChiTiet spct : list) {
-            model.addRow(spct.todata());
+            model.addRow(spct.todata1());
         }
     }
 
     void Show(model.SanPhamChiTiet spct1) {
         model.SanPhamChiTiet sp = spct1;
+        txt_DoCan.setText(String.valueOf(sp.getDoCan()));
         TxtSoLuong.setText(String.valueOf(sp.getSoluong()));
         txt_GiaBan.setText(String.valueOf(sp.getGiathanh()));
         txt_mota.setText(sp.getMota());
@@ -134,6 +132,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
     model.SanPhamChiTiet read() {
         model.SanPhamChiTiet tk = new model.SanPhamChiTiet();
         tk.setSp(new SanPham(id, null, null, null, null));
+        tk.setDoCan(Double.parseDouble(txt_DoCan.getText()));
         tk.setGiathanh(Double.parseDouble(txt_GiaBan.getText()));
         tk.setMota(txt_mota.getText());
         tk.setSoluong(Integer.parseInt(TxtSoLuong.getText()));
@@ -154,13 +153,14 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         TxtSoLuong.setText(null);
         txt_GiaBan.setText(null);
         txt_mota.setText(null);
+        txt_DoCan.setText(null);
         lbl_anh.setIcon(null);
         cbochatlieu.setSelectedIndex(0);
         cbomausac.setSelectedIndex(0);
         CBO_CL_check.setSelectedIndex(0);
         lblCheckGiaBan.setText(null);
         lblCheckSoLuong.setText(null);
-        lblCheckDoCan.setText(null);
+        lblCheckDoCan1.setText(null);
         fillTable(spctService.selectAll(id));
     }
 
@@ -209,7 +209,25 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         }
 
         //do can
-        //gia
+        if (txt_DoCan.getText().trim().isEmpty()) {
+            lblCheckDoCan1.setText("Vui lòng nhập độ cận");
+            lblCheckDoCan1.setForeground(java.awt.Color.red);
+
+        } else {
+            lblCheckDoCan1.setText(null);
+        }
+        try {
+            Double soLuong = Double.parseDouble(txt_DoCan.getText());
+            if (soLuong <= 0) {
+                lblCheckDoCan1.setText("Độ cận lớn hơn 0");
+                lblCheckDoCan1.setForeground(java.awt.Color.red);
+
+            }
+        } catch (Exception e) {
+            lblCheckDoCan1.setText("Số lượng phải là số thực");
+            lblCheckDoCan1.setForeground(java.awt.Color.red);
+
+        }
         return true;
     }
 
@@ -243,7 +261,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         txt_mota = new javax.swing.JTextArea();
         lblCheckDoCan = new javax.swing.JLabel();
-        lblCheckGiaBan = new javax.swing.JLabel();
+        lblCheckDoCan1 = new javax.swing.JLabel();
         themnhanhmausac1 = new javax.swing.JPanel();
         cbomausac = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
@@ -254,6 +272,9 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         lblCheckSoLuong = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        txt_DoCan = new javax.swing.JTextField();
+        lblCheckGiaBan = new javax.swing.JLabel();
         btn_Delete = new javax.swing.JButton();
         btn_reset = new javax.swing.JButton();
         CBO_CL_check = new javax.swing.JComboBox<>();
@@ -323,10 +344,10 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         form2.add(txt_GiaBan, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 193, 26));
 
         jLabel17.setText("Màu Sắc");
-        form2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 56, 30));
+        form2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, 56, 30));
 
         jLabel18.setText("Chất Liệu");
-        form2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 56, 30));
+        form2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 56, 30));
 
         jLabel20.setText("Mô Tả");
         form2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, 56, 30));
@@ -361,7 +382,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
                 cbochatlieuActionPerformed(evt);
             }
         });
-        form2.add(cbochatlieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 193, 30));
+        form2.add(cbochatlieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, 193, 30));
 
         txt_mota.setColumns(20);
         txt_mota.setRows(3);
@@ -370,7 +391,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
 
         form2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 210, 140));
         form2.add(lblCheckDoCan, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, 230, 20));
-        form2.add(lblCheckGiaBan, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 230, 20));
+        form2.add(lblCheckDoCan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, 230, 20));
 
         javax.swing.GroupLayout themnhanhmausac1Layout = new javax.swing.GroupLayout(themnhanhmausac1);
         themnhanhmausac1.setLayout(themnhanhmausac1Layout);
@@ -399,7 +420,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
                 cbomausacActionPerformed(evt);
             }
         });
-        form2.add(cbomausac, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 193, 30));
+        form2.add(cbomausac, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 193, 30));
 
         jLabel1.setText("Trạng Thái");
         form2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 200, 60, 20));
@@ -431,7 +452,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
                 jButton2MouseClicked(evt);
             }
         });
-        form2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, 30, 30));
+        form2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 250, 30, 30));
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Microsoft-Fluentui-Emoji-Mono-Plus.24.png"))); // NOI18N
         jButton3.setBorder(null);
@@ -441,8 +462,13 @@ public class SanPhamCTForm extends javax.swing.JPanel {
                 jButton3MouseClicked(evt);
             }
         });
-        form2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 160, 30, 30));
+        form2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 200, 30, 30));
         form2.add(lblCheckSoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 230, 20));
+
+        jLabel19.setText("Độ Cận");
+        form2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 56, 26));
+        form2.add(txt_DoCan, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 193, 26));
+        form2.add(lblCheckGiaBan, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 230, 20));
 
         color3.add(form2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 85, 1058, 300));
 
@@ -485,17 +511,17 @@ public class SanPhamCTForm extends javax.swing.JPanel {
 
         lblbang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -557,7 +583,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(color3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(color3, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -595,7 +621,8 @@ public class SanPhamCTForm extends javax.swing.JPanel {
             model.SanPhamChiTiet sp = this.read();
             Integer idcl = sp.getMaterial().getIdChatLieu();
             Integer idms = sp.getColor().getIdMauSac();
-            if(spctService.findByID(id, idcl, idms) != null){
+            Double doCan = sp.getDoCan();
+            if(spctService.findByID(id, idcl, idms,doCan) != null){
                 JOptionPane.showMessageDialog(this, "Sản phẩm này đã tồn tại!");
             }else{
                 if (spctService.Insert(sp) > 0) {
@@ -603,7 +630,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
                 fillTable(spctService.selectAll(id));
                 reset();
             }
-            }         
+            }
         }
     }//GEN-LAST:event_btn_addActionPerformed
 
@@ -617,7 +644,6 @@ public class SanPhamCTForm extends javax.swing.JPanel {
                 reset();
             }
         }
-
     }//GEN-LAST:event_btn_updateActionPerformed
 
     private void btn_addAnh1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addAnh1ActionPerformed
@@ -652,13 +678,40 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btn_deleteAnh1ActionPerformed
 
+    private void cbochatlieuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbochatlieuMousePressed
+        // TODO add your handling code here:
+        CBo_ChatLieu();
+    }//GEN-LAST:event_cbochatlieuMousePressed
+
     private void cbochatlieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbochatlieuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbochatlieuActionPerformed
 
+    private void cbomausacMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbomausacMouseEntered
+        // TODO add your handling code here:
+        CBo_MauSac();
+    }//GEN-LAST:event_cbomausacMouseEntered
+
+    private void cbomausacMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbomausacMousePressed
+        // TODO add your handling code here:
+        CBo_MauSac();
+    }//GEN-LAST:event_cbomausacMousePressed
+
     private void cbomausacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbomausacActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbomausacActionPerformed
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+        ChatLieuForm ql = new ChatLieuForm();
+        ql.setVisible(true);
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        // TODO add your handling code here:
+        MauSacForm ql = new MauSacForm();
+        ql.setVisible(true);
+    }//GEN-LAST:event_jButton3MouseClicked
 
     private void btn_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DeleteActionPerformed
         if (check()) {
@@ -669,7 +722,6 @@ public class SanPhamCTForm extends javax.swing.JPanel {
                 reset();
             }
         }
-
     }//GEN-LAST:event_btn_DeleteActionPerformed
 
     private void btn_resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resetActionPerformed
@@ -686,6 +738,11 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_CBO_CL_checkItemStateChanged
 
+    private void CBO_CL_checkMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CBO_CL_checkMousePressed
+        // TODO add your handling code here:
+        // CBo_ChatLieu();
+    }//GEN-LAST:event_CBO_CL_checkMousePressed
+
     private void CBO_CL_checkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBO_CL_checkActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CBO_CL_checkActionPerformed
@@ -696,28 +753,6 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         model.SanPhamChiTiet spct = spctService.selectByID(id);
         Show(spct);
     }//GEN-LAST:event_lblbangMouseClicked
-
-    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        // TODO add your handling code here:
-        MauSacForm ql = new MauSacForm();
-        ql.setVisible(true);
-    }//GEN-LAST:event_jButton3MouseClicked
-
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        // TODO add your handling code here:
-        ChatLieuForm ql = new ChatLieuForm();
-        ql.setVisible(true);
-    }//GEN-LAST:event_jButton2MouseClicked
-
-    private void cbomausacMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbomausacMousePressed
-        // TODO add your handling code here:
-        CBo_MauSac();
-    }//GEN-LAST:event_cbomausacMousePressed
-
-    private void cbochatlieuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbochatlieuMousePressed
-        // TODO add your handling code here:
-        CBo_ChatLieu();
-    }//GEN-LAST:event_cbochatlieuMousePressed
 
     private void CBO_MS_checkItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CBO_MS_checkItemStateChanged
         // TODO add your handling code here:
@@ -730,10 +765,6 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_CBO_MS_checkItemStateChanged
 
-    private void CBO_MS_checkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBO_MS_checkActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CBO_MS_checkActionPerformed
-
     private void CBO_MS_checkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CBO_MS_checkMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_CBO_MS_checkMouseClicked
@@ -743,15 +774,9 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         //CBo_MauSac();
     }//GEN-LAST:event_CBO_MS_checkMousePressed
 
-    private void CBO_CL_checkMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CBO_CL_checkMousePressed
+    private void CBO_MS_checkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBO_MS_checkActionPerformed
         // TODO add your handling code here:
-       // CBo_ChatLieu();
-    }//GEN-LAST:event_CBO_CL_checkMousePressed
-
-    private void cbomausacMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbomausacMouseEntered
-        // TODO add your handling code here:
-        CBo_MauSac();
-    }//GEN-LAST:event_cbomausacMouseEntered
+    }//GEN-LAST:event_CBO_MS_checkActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -776,6 +801,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
@@ -783,6 +809,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblCheckDoCan;
+    private javax.swing.JLabel lblCheckDoCan1;
     private javax.swing.JLabel lblCheckGiaBan;
     private javax.swing.JLabel lblCheckSoLuong;
     private javax.swing.JLabel lbl_anh;
@@ -791,6 +818,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
     private javax.swing.JRadioButton rboDB;
     private javax.swing.JRadioButton rboNB;
     private javax.swing.JPanel themnhanhmausac1;
+    private javax.swing.JTextField txt_DoCan;
     private javax.swing.JTextField txt_GiaBan;
     private javax.swing.JTextArea txt_mota;
     private javax.swing.JTextField txt_search;

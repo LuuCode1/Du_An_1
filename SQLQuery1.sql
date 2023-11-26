@@ -98,13 +98,13 @@ CREATE TABLE vouchers (
 
 CREATE TABLE hoa_don (
   idHoaDon  INT NOT NULL IDENTITY(1,1),
-  maHoaDon  VARCHAR(50) NOT NULL,
+  maHoaDon  VARCHAR(50)  NULL,
   idVouchers INT NULL ,
-  idKhachHang INT NOT NULL ,
-  idNhanVien INT NOT NULL ,
+  idKhachHang INT NULL ,
+  idNhanVien INT  NULL ,
   ngayban   DATETIME DEFAULT GETDATE(),
-  tongtien  FLOAT NOT NULL,
-  trangthai NVARCHAR(50)  NOT NULL, 
+  tongtien  FLOAT NULL,
+  trangthai NVARCHAR(50) NULL, 
   PRIMARY KEY (idHoaDon),
   FOREIGN KEY (idVouchers) REFERENCES vouchers (idVouchers),
   FOREIGN KEY (idKhachHang) REFERENCES khach_hang (idKhachHang),
@@ -116,12 +116,12 @@ CREATE TABLE hoa_don (
 CREATE TABLE hoa_don_chi_tiet (
   idHoaDonChiTiet  INT NOT NULL IDENTITY(1,1),
   maHoaDonChiTiet  VARCHAR(50) NOT NULL,
-  idkinh_chi_tiet  INT NOT NULL,
+  id_sp_chi_tiet   INT NOT NULL,
   idHoaDon         INT NOT NULL,
   soluong          INT NOT NULL,
   dongia           FLOAT NOT NULL,
   PRIMARY KEY (idHoaDonChiTiet),
-  FOREIGN KEY (idkinh_chi_tiet) REFERENCES san_pham_chi_tiet(idkinh_chi_tiet),
+  FOREIGN KEY (id_sp_chi_tiet) REFERENCES san_pham_chi_tiet(id_sp_chi_tiet),
   FOREIGN KEY (idHoaDon) REFERENCES hoa_don(idHoaDon),
 );
 
@@ -191,6 +191,11 @@ VALUES (1, 2 , 4 ,333000,100,null,N'Sản phẩm thân thiện',N'Đang bán'),
        (2, 4 , 3 ,89000,298,null,N'Sản phẩm thân thiện',N'Đang bán');
 
 
+-- Bảng Hóa Đơn
+INSERT INTO hoa_don(maHoaDon,idVouchers,idKhachHang,idNhanVien,ngayban,tongtien,trangthai)
+VALUES ( null , null , null , null , null , null , N' bán');
+
+
 
 --Bảng Hóa Đơn Chi Tiết 
 INSERT INTO hoa_don_chi_tiet(maHoaDonChiTiet, idGongKinhCT,idTrongKinhCT,soluong,dongia,tonggia)
@@ -229,13 +234,7 @@ VALUES ('KH01',N'Lê Đức A',N'Hà Nội',   '0348596964'),
 
 
 
--- Bảng Hóa Đơn
-INSERT INTO hoa_don(maHoaDon, idVouchers, idKhachHang,idNhanVien,idHoaDonChiTiet,ngayban,tongtien,trangthai)
-VALUES ('HD01',null, 1 , 5 , 2 , GETDATE() , 10000000 , N'Đã bán'),
-       ('HD02',null, 2, 2 , 3 , GETDATE() , 10876600 , N'Đã bán'),
-       ('HD03',4, 3 , 1 , 3 , GETDATE() , 1546000 , N'Đã bán'),
-       ('HD04',3, 4 , 4 , 4 , GETDATE() , 18676000 , N'Chưa bán'),
-       ('HD05',5, 5 , 3 , 1 , GETDATE() , 1004546460 , N'Chưa bán');
+
 
 
 -- Bảng bảo hành
