@@ -41,8 +41,8 @@ public class SanPhamCTForm extends javax.swing.JPanel {
     SanPham sp = new SanPham();
     SPCT_Service spctService = new SPCT_Service();
     String linkAnh = null;
-    //model.TrongKinhChiTiet tk = new model.TrongKinhChiTiet();
     int id = Integer.parseInt(SanPhamForm.id);
+    String tenTheLoai = String.valueOf(SanPhamForm.tenTheLoai);
     int index = -1;
 
     /**
@@ -593,13 +593,18 @@ public class SanPhamCTForm extends javax.swing.JPanel {
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         if (check()) {
             model.SanPhamChiTiet sp = this.read();
-            if (spctService.Insert(sp) > 0) {
+            Integer idcl = sp.getMaterial().getIdChatLieu();
+            Integer idms = sp.getColor().getIdMauSac();
+            if(spctService.findByID(id, idcl, idms) != null){
+                JOptionPane.showMessageDialog(this, "Sản phẩm này đã tồn tại!");
+            }else{
+                if (spctService.Insert(sp) > 0) {
                 JOptionPane.showMessageDialog(this, "Them thanh cong");
                 fillTable(spctService.selectAll(id));
-                reset();
+                reset();                
+        }
             }
         }
-
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
@@ -740,7 +745,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
 
     private void CBO_CL_checkMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CBO_CL_checkMousePressed
         // TODO add your handling code here:
-       // CBo_ChatLieu();
+        // CBo_ChatLieu();
     }//GEN-LAST:event_CBO_CL_checkMousePressed
 
     private void cbomausacMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbomausacMouseEntered

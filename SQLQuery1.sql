@@ -51,6 +51,7 @@ CREATE TABLE san_pham_chi_tiet(
   idsp                   INT NULL, 
   idChatLieu             INT NOT NULL,
   idMauSac               INT NOT NULL,
+  doCan                  FLOAT NULL,
   giaThanh               FLOAT NOT NULL,
   soLuong                INT NOT NULL,
   hinhanh                NVARCHAR(max) NULL,
@@ -98,13 +99,13 @@ CREATE TABLE vouchers (
 
 CREATE TABLE hoa_don (
   idHoaDon  INT NOT NULL IDENTITY(1,1),
-  maHoaDon  VARCHAR(50) NOT NULL,
+  maHoaDon  VARCHAR(50)  NULL,
   idVouchers INT NULL ,
-  idKhachHang INT NOT NULL ,
-  idNhanVien INT NOT NULL ,
+  idKhachHang INT NULL ,
+  idNhanVien INT  NULL ,
   ngayban   DATETIME DEFAULT GETDATE(),
-  tongtien  FLOAT NOT NULL,
-  trangthai NVARCHAR(50)  NOT NULL, 
+  tongtien  FLOAT NULL,
+  trangthai NVARCHAR(50) NULL, 
   PRIMARY KEY (idHoaDon),
   FOREIGN KEY (idVouchers) REFERENCES vouchers (idVouchers),
   FOREIGN KEY (idKhachHang) REFERENCES khach_hang (idKhachHang),
@@ -116,12 +117,12 @@ CREATE TABLE hoa_don (
 CREATE TABLE hoa_don_chi_tiet (
   idHoaDonChiTiet  INT NOT NULL IDENTITY(1,1),
   maHoaDonChiTiet  VARCHAR(50) NOT NULL,
-  idkinh_chi_tiet  INT NOT NULL,
+  id_sp_chi_tiet   INT NOT NULL,
   idHoaDon         INT NOT NULL,
   soluong          INT NOT NULL,
   dongia           FLOAT NOT NULL,
   PRIMARY KEY (idHoaDonChiTiet),
-  FOREIGN KEY (idkinh_chi_tiet) REFERENCES san_pham_chi_tiet(idkinh_chi_tiet),
+  FOREIGN KEY (id_sp_chi_tiet) REFERENCES san_pham_chi_tiet(id_sp_chi_tiet),
   FOREIGN KEY (idHoaDon) REFERENCES hoa_don(idHoaDon),
 );
 
@@ -183,12 +184,17 @@ VALUES ('SP01', N'Tròng Kính Chống Ánh Sáng Xanh', 2 , 4 ),
 
 
 --Bảng tròng kính 
-INSERT INTO san_pham_chi_tiet(idsp,idChatLieu,idMauSac,giaThanh,soLuong,hinhanh,moTa,trangThai)
-VALUES (1, 2 , 4 ,333000,100,null,N'Sản phẩm thân thiện',N'Đang bán'),
-       (1, 5 , 1 ,733000,170, null,N'Sản phẩm thân thiện',N'Đang bán'),
-       (1, 2 , 4 ,883000,201, null,N'Sản phẩm thân thiện',N'Đang bán'),
-       (2, 3 , 5 ,55000,313, null,N'Sản phẩm thân thiện',N'Đang bán'),
-       (2, 4 , 3 ,89000,298,null,N'Sản phẩm thân thiện',N'Đang bán');
+INSERT INTO san_pham_chi_tiet(idsp,idChatLieu,idMauSac,doCan,giaThanh,soLuong,hinhanh,moTa,trangThai)
+VALUES (1, 2 , 4 ,0.5,333000,100,null,N'Sản phẩm thân thiện',N'Đang bán'),
+       (1, 5 , 1 ,1.5,733000,170, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       (1, 2 , 4 ,0.4,883000,201, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       (2, 3 , 5 ,1.1,55000,313, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       (3, 4 , 3 ,null,89000,298,null,N'Sản phẩm thân thiện',N'Đang bán');
+
+
+-- Bảng Hóa Đơn
+INSERT INTO hoa_don(maHoaDon,idVouchers,idKhachHang,idNhanVien,ngayban,tongtien,trangthai)
+VALUES ( null , null , null , null , null , null , N' bán');
 
 
 
@@ -229,13 +235,7 @@ VALUES ('KH01',N'Lê Đức A',N'Hà Nội',   '0348596964'),
 
 
 
--- Bảng Hóa Đơn
-INSERT INTO hoa_don(maHoaDon, idVouchers, idKhachHang,idNhanVien,idHoaDonChiTiet,ngayban,tongtien,trangthai)
-VALUES ('HD01',null, 1 , 5 , 2 , GETDATE() , 10000000 , N'Đã bán'),
-       ('HD02',null, 2, 2 , 3 , GETDATE() , 10876600 , N'Đã bán'),
-       ('HD03',4, 3 , 1 , 3 , GETDATE() , 1546000 , N'Đã bán'),
-       ('HD04',3, 4 , 4 , 4 , GETDATE() , 18676000 , N'Chưa bán'),
-       ('HD05',5, 5 , 3 , 1 , GETDATE() , 1004546460 , N'Chưa bán');
+
 
 
 -- Bảng bảo hành
@@ -282,9 +282,10 @@ thuong_hieu th ON th.idThuongHieu = sp.idThuongHieu
  where sp.masp like 'SP01'
 
 
-SELECT spct.id_sp_chi_tiet,cl.tenChatLieu,ms.tenMauSac,spct.giaThanh,spct.soLuong,spct.hinhanh,spct.moTa,spct.trangThai
-from san_pham_chi_tiet spct INNER JOIN
-san_pham sp ON sp.idsp = spct.idsp INNER JOIN
-chat_lieu cl ON cl.idChatLieu = spct.idChatLieu INNER JOIN
-mau_sac ms ON ms.idMauSac = spct.idMauSac
- where sp.idsp = 1
+SELECT spct.id_sp_chi_tiet,spct.idChatLieu,spct.idMauSac,spct.doCan,spct.giaThanh,spct.soLuong,spct.hinhanh,spct.moTa,spct.trangThai
+from san_pham_chi_tiet spct INNER JOIN 
+san_pham sp ON spct.idsp = sp.idsp
+where sp.idsp = 1 and (spct.idChatLieu = 2 and spct.idMauSac = 4)
+
+
+

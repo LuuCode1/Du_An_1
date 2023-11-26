@@ -13,6 +13,7 @@ public class SanPhamChiTiet {
     private int    idSPChiTiet;
     private Mausac color;
     private ChatLieu material;
+    private double doCan;
     private double giathanh;
     private Integer soluong;
     private String hinhanh;
@@ -44,8 +45,42 @@ public class SanPhamChiTiet {
         this.mota = mota;
         this.trangthai = trangthai;
     }
+
+    public SanPhamChiTiet(SanPham sp, int idSPChiTiet, Mausac color, ChatLieu material, double doCan, double giathanh, Integer soluong, String hinhanh, String mota, String trangthai) {
+        this.sp = sp;
+        this.idSPChiTiet = idSPChiTiet;
+        this.color = color;
+        this.material = material;
+        this.doCan = doCan;
+        this.giathanh = giathanh;
+        this.soluong = soluong;
+        this.hinhanh = hinhanh;
+        this.mota = mota;
+        this.trangthai = trangthai;
+    }
+
+    public SanPhamChiTiet(int idSPChiTiet, Mausac color, ChatLieu material, double doCan, double giathanh, Integer soluong, String hinhanh, String mota, String trangthai) {
+        this.idSPChiTiet = idSPChiTiet;
+        this.color = color;
+        this.material = material;
+        this.doCan = doCan;
+        this.giathanh = giathanh;
+        this.soluong = soluong;
+        this.hinhanh = hinhanh;
+        this.mota = mota;
+        this.trangthai = trangthai;
+    }
     
     
+    
+
+    public double getDoCan() {
+        return doCan;
+    }
+
+    public void setDoCan(double doCan) {
+        this.doCan = doCan;
+    }
 
     public SanPham getSp() {
         return sp;
@@ -124,6 +159,11 @@ public class SanPhamChiTiet {
     public Object[] todata(){
         return new Object[]{this.idSPChiTiet,
             this.material.getTenChatLieu(),this.color.getTenMauSac(),this.giathanh,this.soluong,this.hinhanh,this.mota,this.trangthai};
+    }
+    
+    public Object[] todata1(){
+        return new Object[]{this.idSPChiTiet,
+            this.material.getTenChatLieu(),this.color.getTenMauSac(),this.doCan,this.giathanh,this.soluong,this.hinhanh,this.mota,this.trangthai};
     }
     
 }
