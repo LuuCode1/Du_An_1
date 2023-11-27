@@ -3,11 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/com/raven/form/SanPhamForm.java</file>
-            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/com/raven/form/SanPhamCTForm.java</file>
-            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/model/chatLieu.java</file>
-            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/service/DBconnect.java</file>
             <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/com/raven/main/Main.java</file>
+            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/service/DBconnect.java</file>
+            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/model/LoaiSP.java</file>
+            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/model/Mausac.java</file>
+            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/model/SanPham.java</file>
+            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/service/SP_Service.java</file>
+            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/com/raven/form/SanPhamCTForm.java</file>
+            <file>file:/D:/HocTap/gitHub/Du_An_1/DuAn1/src/com/raven/form/SanPhamForm.java</file>
         </group>
     </open-files>
 </project-private>
