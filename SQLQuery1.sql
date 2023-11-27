@@ -63,16 +63,16 @@ CREATE TABLE san_pham_chi_tiet(
   FOREIGN KEY (idMauSac) REFERENCES mau_sac (idMauSac),
 )
 
-CREATE TABLE nhan_vien (
-  idNhanVien INT NOT NULL IDENTITY(1,1),
-  maNhanVien VARCHAR(50) NOT NULL,
-  tenNhanVien  NVARCHAR(50) NOT NULL,
-  ngaysinh  DATETIME ,
+CREATE TABLE Nguoi_dung (
+  idnguoi_dung INT NOT NULL IDENTITY(1,1),
+  tenNguoi_dung  NVARCHAR(50) NOT NULL,
+  ngaysinh  DATE,
+  matKhau VARCHAR(18) NOT NULL,
   sdt   VARCHAR(11)  NOT NULL,
   gioitinh  BIT  NOT NULL,
   email  VARCHAR(30)  NOT NULL,
   trangthai  NVARCHAR(50)  NOT NULL,
-  PRIMARY KEY (idNhanVien),
+  PRIMARY KEY (idnguoi_dung),
 );
 
 
@@ -208,12 +208,12 @@ VALUES ('HDCT01', 1,null,2,666000,660000),
 
 
 -- Bảng Nhân viên
-INSERT INTO nhan_vien(maNhanVien, tenNhanVien, ngaysinh, sdt, gioitinh, email,trangthai)
-VALUES ('NV01',N'Nguyễn Văn A', '4-15-2005', '0365796964', 1 ,'nguyena@gmail.com', N'Đang làm việc'),
-       ('NV02',N'Nguyễn Văn B', '7-7-1999',  '0348123364', 1 ,'nguyenb@gmail.com', N'Nghỉ làm'),
-       ('NV03',N'Nguyễn Văn C', '4-4-2007',  '0335345964', 0 ,'nguyenc@gmail.com', N'Đang làm việc'),
-       ('NV04',N'Nguyễn Văn D', '8-4-1998',  '0348556496', 0 ,'nguyend@gmail.com', N'Đang làm việc'),
-       ('NV05',N'Nguyễn Văn E', '7-19-2003', '0348358657', 0 ,'nguyene@gmail.com', N'Đang làm việc');
+INSERT INTO Nguoi_dung( tenNguoi_dung, ngaysinh,matKhau, sdt, gioitinh, email,trangthai)
+VALUES (N'Nguyễn Văn A', '4-15-2005','000','0365796964', 1 ,'nguyena@gmail.com', N'Đang làm việc'),
+       (N'Nguyễn Văn B', '7-7-1999','001' , '0348123364', 1 ,'nguyenb@gmail.com', N'Nghỉ làm'),
+       (N'Nguyễn Văn C', '4-4-2007','002' , '0335345964', 0 ,'nguyenc@gmail.com', N'Đang làm việc'),
+       (N'Nguyễn Văn D', '8-4-1998','003' , '0348556496', 0 ,'nguyend@gmail.com', N'Đang làm việc'),
+       (N'Nguyễn Văn E', '7-19-2003','009', '0348358657', 0 ,'nguyene@gmail.com', N'Đang làm việc');
 
 
 -- Bảng Vouchers
@@ -256,7 +256,7 @@ SELECT * FROM san_pham_chi_tiet
 SELECT * FROM hoa_don
 SELECT * FROM khach_hang
 SELECT * FROM vouchers
-SELECT * FROM nhan_vien
+SELECT * FROM Nguoi_dung
 SELECT * FROM bao_hanh
 SELECT * FROM hoa_don_chi_tiet
 
@@ -288,4 +288,5 @@ san_pham sp ON spct.idsp = sp.idsp
 where sp.idsp = 1 and (spct.idChatLieu = 2 and spct.idMauSac = 4)
 
 
-
+SELECT    email, matKhau
+FROM         Nguoi_dung
