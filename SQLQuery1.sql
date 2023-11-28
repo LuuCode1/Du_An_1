@@ -111,11 +111,9 @@ CREATE TABLE hoa_don (
   FOREIGN KEY (idnguoi_dung) REFERENCES Nguoi_dung (idnguoi_dung),
 );
 
-
 -- Chuyển idGongKinh và idTrongKinh từ NOT NULL thành NULL
 CREATE TABLE hoa_don_chi_tiet (
   idHoaDonChiTiet  INT NOT NULL IDENTITY(1,1),
-  maHoaDonChiTiet  VARCHAR(50) NOT NULL,
   id_sp_chi_tiet   INT NOT NULL,
   idHoaDon         INT NOT NULL,
   soluong          INT NOT NULL,
@@ -147,8 +145,6 @@ VALUES ('CT01', N'Sắt'),
        ('CT04', N'Nhựa'),
        ('CT05', N'Nhưa dẻo');
 
-
-
 --Bảng màu sắc
 INSERT INTO mau_sac(maMauSac, tenMauSac)
 VALUES ('M01', N'Đỏ'),
@@ -156,9 +152,6 @@ VALUES ('M01', N'Đỏ'),
        ('M03', N'Trắng'),
        ('M04', N'Đen'),
        ('M05', N'Xanh lục');
-
-
-
 
 --Bảng thương hiệu
 INSERT INTO thuong_hieu(maThuongHieu, tenThuongHieu)
@@ -193,20 +186,21 @@ VALUES (1, 2 , 4 ,0.5,333000,100,null,N'Sản phẩm thân thiện',N'Đang bán
 
 -- Bảng Hóa Đơn
 INSERT INTO hoa_don(maHoaDon,idKhachHang,idnguoi_dung,tongtien,trangthai)
-VALUES ( null , null, null, null ,0),
-( 'HD002' , 2 , 3, null ,0),
+VALUES ( 'HD002' , 2 , 3, null ,0),
 ( 'HD003' , 3 , 3  , null ,0),
-( 'HD004' , 2 , 2 , null ,0)
-
-
+( 'HD004' , 2 , 2 , null ,0),
+( 'HD123' , null , 3 , null , 1),
+( 'HD111' , null , 5 ,null , 1)
+select * from hoa_don
 
 --Bảng Hóa Đơn Chi Tiết 
-INSERT INTO hoa_don_chi_tiet(maHoaDonChiTiet, idGongKinhCT,idTrongKinhCT,soluong,dongia,tonggia)
-VALUES ('HDCT01', 1,null,2,666000,660000),
-       ('HDCT02', 1,2,1,1066000,1060000),
-       ('HDCT03', null,5,3,267000,250000),
-       ('HDCT04', null,3,1,883000,880000),
-       ('HDCT05', 4,null,7,385000,380000);
+INSERT INTO hoa_don_chi_tiet(id_sp_chi_tiet, idHoaDon, soluong, dongia)
+VALUES (4, 2, 2, 55000),
+       (5, 2, 1, 89000),
+       (1, 3, 1, 333000),
+       (2, 5, 1, 733000),
+       (3, 6, 1, 883000);
+	   select * from hoa_don_chi_tiet
 
 
 -- Bảng Nhân viên
