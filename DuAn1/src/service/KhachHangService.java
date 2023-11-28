@@ -7,12 +7,18 @@ package service;
 import java.sql.*;
 import java.util.ArrayList;
 import model.KhachHang;
+import model.NguoiDung;
 
 /**
  *
  * @author Dat
  */
 public class KhachHangService {
+
+    Connection con = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    String sql = null;
 
     public ArrayList<KhachHang> getAllKhachHang() {
         ArrayList<KhachHang> list = new ArrayList<>();
@@ -117,5 +123,27 @@ public class KhachHangService {
             System.out.println(e);
         }
         return list;
+    }
+
+    public KhachHang Check_ma(int ma) {
+        sql = "SELECT * FROM khach_hang where idKhachHang like ?";
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, ma);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                KhachHang kh = new KhachHang();
+                kh.setMaKH(rs.getString("maKhachHang"));
+                kh.setTenKH(rs.getString("tenKhachHang"));
+                kh.setDiaChi(rs.getString("diaChi"));
+                kh.setSdt(rs.getString("sdt"));
+                return kh;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

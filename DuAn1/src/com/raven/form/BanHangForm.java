@@ -4,18 +4,30 @@
  */
 package com.raven.form;
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import model.HoaDon;
+import service.HoaDon_Service;
+
 /**
  *
  * @author Lenovo
  */
 public class BanHangForm extends javax.swing.JFrame {
 
+    HoaDon hd = new HoaDon();
+    HoaDon_Service HDSV = new HoaDon_Service();
+    DefaultTableModel model;
+    int index = -1;
+
     /**
      * Creates new form BanHangForm
      */
     public BanHangForm() {
         initComponents();
+        fillTable(HDSV.Select());
         initTable();
+
     }
 
     void initTable() {
@@ -32,6 +44,18 @@ public class BanHangForm extends javax.swing.JFrame {
             tbl_sanpham.getColumnModel().getColumn(i).setHeaderValue(table4[i]);
         }
     }
+
+    void fillTable(List<HoaDon> list) {
+//        int trangthai = hd.getTrangThai();
+//        if (trangthai == 0) {
+        model = (DefaultTableModel) tblHoaDon.getModel();
+        model.setNumRows(0);
+        for (HoaDon hoaDon : list) {
+            model.addRow(hoaDon.todata_HD());
+        }
+//        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
