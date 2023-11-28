@@ -89,36 +89,36 @@ public class NhanVienForm extends javax.swing.JPanel {
 
     }
 
-    boolean check() {
-        if (txtMaNV.getText().trim().isEmpty()) {
-            checkma.setText("Vui lòng nhập số lượng");
-            checkma.setForeground(java.awt.Color.red);
-
-        } else {
-            checkma.setText(null);
-        }
-        if (txtTenNV.getText().trim().isEmpty()) {
-            checkten.setText("Vui lòng nhập số lượng");
-            checkten.setForeground(java.awt.Color.red);
-
-        } else {
-            checkten.setText(null);
-        }
-        if (txtMaNV.getText().trim().isEmpty()) {
-            checkma.setText("Vui lòng nhập số lượng");
-            checkma.setForeground(java.awt.Color.red);
-
-        } else {
-            checkma.setText(null);
-        }
-        if (txtMaNV.getText().trim().isEmpty()) {
-            checkma.setText("Vui lòng nhập số lượng");
-            checkma.setForeground(java.awt.Color.red);
-
-        } else {
-            checkma.setText(null);
-        }
-    }
+//    boolean check() {
+//        if (txtMaNV.getText().trim().isEmpty()) {
+//            checkma.setText("Vui lòng nhập số lượng");
+//            checkma.setForeground(java.awt.Color.red);
+//
+//        } else {
+//            checkma.setText(null);
+//        }
+//        if (txtTenNV.getText().trim().isEmpty()) {
+//            checkten.setText("Vui lòng nhập số lượng");
+//            checkten.setForeground(java.awt.Color.red);
+//
+//        } else {
+//            checkten.setText(null);
+//        }
+//        if (txtMaNV.getText().trim().isEmpty()) {
+//            checkma.setText("Vui lòng nhập số lượng");
+//            checkma.setForeground(java.awt.Color.red);
+//
+//        } else {
+//            checkma.setText(null);
+//        }
+//        if (txtMaNV.getText().trim().isEmpty()) {
+//            checkma.setText("Vui lòng nhập số lượng");
+//            checkma.setForeground(java.awt.Color.red);
+//
+//        } else {
+//            checkma.setText(null);
+//        }
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -241,7 +241,7 @@ public class NhanVienForm extends javax.swing.JPanel {
 
         jLabel9.setText("Mã số");
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
-        jPanel2.add(Date_ngaysinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 300, -1));
+        jPanel2.add(Date_ngaysinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 340, -1));
         jPanel2.add(checkemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 160, 300, 20));
         jPanel2.add(checkma, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 300, 20));
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 300, 20));

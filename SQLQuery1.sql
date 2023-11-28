@@ -192,11 +192,11 @@ VALUES (1, 2 , 4 ,0.5,333000,100,null,N'Sản phẩm thân thiện',N'Đang bán
 
 
 -- Bảng Hóa Đơn
-INSERT INTO hoa_don(maHoaDon,idKhachHang,idnguoi_dung,ngayban,tongtien,trangthai)
-VALUES ( 'HD001' , null , null , null , null ,0),
-( 'HD002' , null , null , null , null ,0),
-( 'HD003' , null , null , null , null ,0),
-( 'HD004' , null , null , null , null ,0)
+INSERT INTO hoa_don(maHoaDon,idKhachHang,idnguoi_dung,tongtien,trangthai)
+VALUES ( null , null, null, null ,0),
+( 'HD002' , 2 , 3, null ,0),
+( 'HD003' , 3 , 3  , null ,0),
+( 'HD004' , 2 , 2 , null ,0)
 
 
 
@@ -302,3 +302,7 @@ FROM         hoa_don INNER JOIN
 SELECT    maHoaDon, idKhachHang, idnguoi_dung, ngayban, trangthai
 FROM         hoa_don
 SELECT    maHoaDon, idKhachHang, idnguoi_dung, ngayban,trangthai FROM hoa_don
+SELECT    hoa_don.idHoaDon, hoa_don.maHoaDon, Nguoi_dung.maNguoiDung, khach_hang.maKhachHang, hoa_don.ngayban, hoa_don.trangthai
+FROM         hoa_don LEFT  JOIN
+                      Nguoi_dung ON hoa_don.idnguoi_dung = Nguoi_dung.idnguoi_dung LEFT  JOIN
+                      khach_hang ON hoa_don.idKhachHang = khach_hang.idKhachHang

@@ -4,9 +4,14 @@
  */
 package com.raven.form;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import javax.swing.table.DefaultTableModel;
 import model.HoaDon;
+import model.KhachHang;
+import model.NguoiDung;
 import service.HoaDon_Service;
 
 /**
@@ -19,14 +24,18 @@ public class BanHangForm extends javax.swing.JFrame {
     HoaDon_Service HDSV = new HoaDon_Service();
     DefaultTableModel model;
     int index = -1;
+    int trangthai = 0;
+    double tongtien = 0;
+    int KhachHang = 0;
+    int NguoiDung = 0;
 
     /**
      * Creates new form BanHangForm
      */
     public BanHangForm() {
         initComponents();
-        fillTable(HDSV.Select());
         initTable();
+        fillTable(HDSV.Select());
 
     }
 
@@ -46,14 +55,43 @@ public class BanHangForm extends javax.swing.JFrame {
     }
 
     void fillTable(List<HoaDon> list) {
-//        int trangthai = hd.getTrangThai();
-//        if (trangthai == 0) {
-        model = (DefaultTableModel) tblHoaDon.getModel();
-        model.setNumRows(0);
-        for (HoaDon hoaDon : list) {
-            model.addRow(hoaDon.todata_HD());
+        if (hd.getTrangThai() == 0) {
+            model = (DefaultTableModel) tblHoaDon.getModel();
+            model.setRowCount(0);
+            for (HoaDon hoaDon : list) {
+                model.addRow(hoaDon.todata_HD());
+            }
         }
-//        }
+
+    }
+
+    HoaDon Read() {
+        Random random = new Random();
+        HashSet<Character> charSet = new HashSet<>();
+        StringBuilder sb = new StringBuilder();
+
+        while (charSet.size() < 5) {
+            int choice = random.nextInt(2);
+            char c;
+            if (choice == 0) {
+                // Ký tự in hoa 
+                c = (char) (random.nextInt(26) + 'A');
+            } else {
+                // Chữ số
+                c = (char) (random.nextInt(10) + '0');
+            }
+
+            if (!charSet.contains(c)) {
+                charSet.add(c);
+                sb.append(c);
+            }
+        }
+
+        String randomString = sb.toString();
+        HoaDon hd = new HoaDon();
+        hd.setMahD(randomString);
+        hd.setTrangThai(0);
+        return hd;
     }
 
     @SuppressWarnings("unchecked")
@@ -367,7 +405,15 @@ public class BanHangForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_TongTienActionPerformed
 
     private void btn_HoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_HoaDonActionPerformed
-        // TODO add your handling code here:
+        try {
+            HoaDon hd1 = Read();
+            if (HDSV.Insert(hd1) > 0) {
+                System.out.println("thanh cong");
+                fillTable(HDSV.Select());
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }//GEN-LAST:event_btn_HoaDonActionPerformed
 
     private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked

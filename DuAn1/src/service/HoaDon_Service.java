@@ -26,25 +26,40 @@ public class HoaDon_Service {
 
     public List<HoaDon> Select() {
         List<HoaDon> list = new ArrayList<>();
-        sql = "SELECT    maHoaDon, idKhachHang, idnguoi_dung, ngayban,trangthai FROM hoa_don";
+        sql = "SELECT    hoa_don.idHoaDon, hoa_don.maHoaDon, Nguoi_dung.maNguoiDung, khach_hang.maKhachHang, hoa_don.ngayban, hoa_don.trangthai\n"
+                + "FROM         hoa_don LEFT  JOIN\n"
+                + "                      Nguoi_dung ON hoa_don.idnguoi_dung = Nguoi_dung.idnguoi_dung LEFT  JOIN\n"
+                + "                      khach_hang ON hoa_don.idKhachHang = khach_hang.idKhachHang ";
         try {
             con = DBconnect.getConnection();
             ps = con.prepareStatement(sql);
 //            ps.setObject(1, tt);
             rs = ps.executeQuery();
             while (rs.next()) {
-               HoaDon hd = new HoaDon();
-               hd.setIdHD(rs.getInt("id"));
-               hd.setMahD(rs.getString("maHoaDon"));
-               hd.setKH(khsv.Check_ma(rs.getInt("idKhachHang")));
-               hd.setNG(ndsv.Check_ma(rs.getInt("idnguoi_dung")));
-               hd.setNgayban(rs.getDate("ngayban"));
-               hd.setTrangThai(rs.getInt("trangthai"));
+                KhachHang kh = new KhachHang(null, rs.getString(4), null, null);
+                NguoiDung nd = new NguoiDung(null, rs.getString(3), null, null, null, 0, null, 0);
+                HoaDon hd = new HoaDon();
+                hd = new HoaDon(rs.getInt(1), rs.getString(2), kh, nd, rs.getDate(5), 0, 0);
                 list.add(hd);
             }
             return list;
         } catch (Exception e) {
         }
         return null;
+    }
+
+    public int Insert(HoaDon hd) {
+        sql = "INSERT INTO hoa_don(maHoaDon,trangthai)\n"
+                + "VALUES ( ?,?)";
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, hd.getMahD());
+            ps.setObject(2, hd.getTrangThai());
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }
