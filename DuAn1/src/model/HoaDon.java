@@ -97,7 +97,7 @@
             this.TrangThai = TrangThai;
         }
           public Object[] todata_HD(){
-              return new Object[]{this.idHD,this.mahD,this.NG.getTenND(),this.KH.getTenKH(),this.ngayban};
+              return new Object[]{this.mahD,this.NG.getTenND(),this.ngayban,this.KH.getTenKH()};
           }
 
     }
