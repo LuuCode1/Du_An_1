@@ -82,6 +82,6 @@ public class SanPham {
     }
     
     public Object[] todata(){
-        return new Object[]{this.maSP,this.tenSP,this.loaisp.getTenLoaiSP(),this.brand.getTenThuongHieu()};
+        return new Object[]{this.idSP,this.maSP,this.tenSP,this.loaisp.getTenLoaiSP(),this.brand.getTenThuongHieu()};
     }
 }

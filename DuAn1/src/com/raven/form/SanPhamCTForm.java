@@ -6,6 +6,8 @@ package com.raven.form;
 
 import java.awt.Image;
 import java.io.File;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
@@ -18,6 +20,7 @@ import model.ChatLieu;
 import model.Mausac;
 import model.SanPham;
 import model.Thuonghieu;
+import service.DBconnect;
 import service.GongKinh_Service;
 import service.SPCT_Service;
 import service.chatLieu_service;
@@ -26,6 +29,8 @@ import service.thuonghieu_service;
 import view.ChatLieuForm;
 import view.MauSacForm;
 import view.ThuongHieuForm;
+import java.sql.*;
+import java.util.Vector;
 
 /**
  *
@@ -44,28 +49,105 @@ public class SanPhamCTForm extends javax.swing.JPanel {
     int id = Integer.parseInt(SanPhamForm.id);
     String tenTheLoai = String.valueOf(SanPhamForm.tenTheLoai);
     int index = -1;
+    Connection conn;
+    PreparedStatement ps;
+    String sql;
+    ResultSet rs;
+    long count, soTrang, trang = 1;
 
     /**
      * Creates new form TrongKinhChiTiet
      */
     public SanPhamCTForm(String dataControner) {
         initComponents();
-        fillTable(spctService.selectAll(id));
+        //fillTable(spctService.selectAll(id));
         CBo_ChatLieu();
         CBo_MauSac();
         showMaAndten();
         name();
         txt_search.setText("Tìm Kiếm");
         rboDB.enable(true);
+        CountDB(id);
+        if (count % 5 == 0) {
+            soTrang = count / 5;
+        } else {
+            soTrang = count / 5 + 1;
+        }
+        lbl_soTrang.setText("1/" + soTrang);
+        loadData(id, 1);
+    }
+
+    public void CountDB(int id) {
+        try {
+            String query = "Select count(*) from san_pham_chi_tiet spct\n"
+                    + "INNER JOIN san_pham sp ON sp.idsp = spct.idsp\n"
+                    + "WHERE sp.idsp = " + id + "";
+            conn = DBconnect.getConnection();
+            Statement st = conn.createStatement();
+            //ps.setObject(1, id);
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                count = rs.getLong(1);
+            }
+            rs.close();
+            st.close();
+            conn.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     private SanPhamCTForm() {
     }
 
     void name() {
-        String[] table1 = {"ID", "Chất Liệu", "Màu Sắc", "Giá Bán", "Số Lượng", "Hình Ảnh", "Mô Tả", "Trạng thái"};
-        for (int i = 0; i < table1.length; i++) {
-            lblbang.getColumnModel().getColumn(i).setHeaderValue(table1[i]);
+        model = (DefaultTableModel) lblbang.getModel();
+        String[] row = new String[]{
+            "ID", "Chất Liệu", "Màu Sắc", "Giá Bán", "Số Lượng", "Hình Ảnh", "Mô Tả", "Trạng thái"
+        };
+        model.setColumnIdentifiers(row);
+    }
+
+    public void loadData(int id, long trang) {
+        name();
+        model.getDataVector().removeAllElements();
+        try {
+            String query = "SELECT top 5 spct.id_sp_chi_tiet,cl.tenChatLieu,ms.tenMauSac,spct.giaThanh,spct.soLuong,\n"
+                    + "spct.hinhanh,spct.moTa,spct.trangThai\n"
+                    + "from san_pham_chi_tiet spct INNER JOIN\n"
+                    + "chat_lieu cl ON cl.idChatLieu = spct.idChatLieu INNER JOIN\n"
+                    + "mau_sac ms ON ms.idMauSac = spct.idMauSac\n"
+                    + "where spct.id_sp_chi_tiet not in "
+                    + "(Select top "+(trang * 5 - 5)+" id_sp_chi_tiet from san_pham_chi_tiet where idsp = "+id+") AND idsp = "+id+"";
+            conn = DBconnect.getConnection();
+            Statement st = conn.createStatement();
+            //ps.setObject(1, id);
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                Vector v = new Vector();
+                Integer idspct = rs.getInt(1);
+                String tencl = rs.getString(2);
+                String tenms = rs.getString(3);
+                Double giathanh = rs.getDouble(4);
+                Integer soluong = rs.getInt(5);
+                String hinhanh = rs.getString(6);
+                String mota = rs.getString(7);
+                String trangthai = rs.getString(8);
+                v.add(idspct);
+                v.add(tencl);
+                v.add(tenms);
+                v.add(giathanh);
+                v.add(soluong);
+                v.add(hinhanh);
+                v.add(mota);
+                v.add(trangthai);
+                model.addRow(v);
+            }
+            rs.close();
+            st.close();
+            conn.close();
+        } catch (Exception e) {
+            System.out.println("");
         }
     }
 
@@ -161,7 +243,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         lblCheckGiaBan.setText(null);
         lblCheckSoLuong.setText(null);
         lblCheckDoCan.setText(null);
-        fillTable(spctService.selectAll(id));
+        loadData(id, 1);
     }
 
     boolean check() {
@@ -169,7 +251,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         if (TxtSoLuong.getText().trim().isEmpty()) {
             lblCheckSoLuong.setText("Vui lòng nhập số lượng");
             lblCheckSoLuong.setForeground(java.awt.Color.red);
-
+            return false;
         } else {
             lblCheckSoLuong.setText(null);
         }
@@ -178,19 +260,19 @@ public class SanPhamCTForm extends javax.swing.JPanel {
             if (soLuong <= 0) {
                 lblCheckSoLuong.setText("Số lượng lớn hơn 0");
                 lblCheckSoLuong.setForeground(java.awt.Color.red);
-
+                return false;
             }
         } catch (Exception e) {
             lblCheckSoLuong.setText("Số lượng phải là số nguyên");
             lblCheckSoLuong.setForeground(java.awt.Color.red);
-
+            return false;
         }
 
         //gia
         if (txt_GiaBan.getText().trim().isEmpty()) {
             lblCheckGiaBan.setText("Vui lòng nhập giá thành");
             lblCheckGiaBan.setForeground(java.awt.Color.red);
-
+            return false;
         } else {
             lblCheckGiaBan.setText(null);
         }
@@ -200,12 +282,12 @@ public class SanPhamCTForm extends javax.swing.JPanel {
             if (soLuong <= 0) {
                 lblCheckGiaBan.setText("Giá bán lớn hơn 0");
                 lblCheckGiaBan.setForeground(java.awt.Color.red);
-
+                return false;
             }
         } catch (Exception e) {
             lblCheckGiaBan.setText("Giá bán phải là số nguyên");
             lblCheckGiaBan.setForeground(java.awt.Color.red);
-
+            return false;
         }
 
         //do can
@@ -260,6 +342,9 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         lblbang = new javax.swing.JTable();
+        jButton4 = new javax.swing.JButton();
+        lbl_soTrang = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
         CBO_MS_check = new javax.swing.JComboBox<>();
 
         color3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -509,6 +594,22 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         });
         jScrollPane3.setViewportView(lblbang);
 
+        jButton4.setText("<");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        lbl_soTrang.setText("jLabel7");
+
+        jButton5.setText(">");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -517,16 +618,30 @@ public class SanPhamCTForm extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1036, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton4)
+                .addGap(17, 17, 17)
+                .addComponent(lbl_soTrang)
+                .addGap(18, 18, 18)
+                .addComponent(jButton5)
+                .addGap(452, 452, 452))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton4)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lbl_soTrang)
+                        .addComponent(jButton5)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
-        color3.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 474, -1, -1));
+        color3.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 474, -1, 230));
 
         CBO_MS_check.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         CBO_MS_check.addItemListener(new java.awt.event.ItemListener() {
@@ -564,7 +679,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
     private void txt_searchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_searchFocusLost
         if (txt_search.getText().isEmpty()) {
             txt_search.setText("Tìm Kiếm");
-            fillTable(spctService.selectAll(id));
+            loadData(id, 1);
         }
     }//GEN-LAST:event_txt_searchFocusLost
 
@@ -580,7 +695,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         try {
             String search = "%" + txt_search.getText() + "%";
             if (txt_search.getText().isEmpty()) {
-                fillTable(spctService.selectAll(id));
+                loadData(id, 1);
             } else {
                 List<model.SanPhamChiTiet> listsearch = spctService.seach(id, search);
                 fillTable(listsearch);
@@ -595,14 +710,20 @@ public class SanPhamCTForm extends javax.swing.JPanel {
             model.SanPhamChiTiet sp = this.read();
             Integer idcl = sp.getMaterial().getIdChatLieu();
             Integer idms = sp.getColor().getIdMauSac();
-            if(spctService.findByID(id, idcl, idms) != null){
+            if (spctService.findByID(id, idcl, idms) != null) {
                 JOptionPane.showMessageDialog(this, "Sản phẩm này đã tồn tại!");
-            }else{
+            } else {
                 if (spctService.Insert(sp) > 0) {
-                JOptionPane.showMessageDialog(this, "Them thanh cong");
-                fillTable(spctService.selectAll(id));
-                reset();                
-        }
+                    JOptionPane.showMessageDialog(this, "Them thanh cong");
+                    CountDB(id);
+                    if (count % 5 == 0) {
+                        soTrang = count / 5;
+                    } else {
+                        soTrang = count / 5 + 1;
+                    }
+                    lbl_soTrang.setText("1/" + soTrang);
+                    reset();
+                }
             }
         }
     }//GEN-LAST:event_btn_addActionPerformed
@@ -613,7 +734,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
             int b = (int) lblbang.getValueAt(index, 0);
             if (spctService.update(sp, b) > 0) {
                 JOptionPane.showMessageDialog(this, "Sua thanh cong");
-                fillTable(spctService.selectAll(id));
+                loadData(id, 1);
                 reset();
             }
         }
@@ -665,7 +786,13 @@ public class SanPhamCTForm extends javax.swing.JPanel {
             int a = (int) lblbang.getValueAt(index, 0);
             if (spctService.delete(a) > 0) {
                 JOptionPane.showMessageDialog(this, "Xoa thành công");
-                fillTable(spctService.selectAll(id));
+                CountDB(id);
+                if (count % 5 == 0) {
+                    soTrang = count / 5;
+                } else {
+                    soTrang = count / 5 + 1;
+                }
+                lbl_soTrang.setText("1/" + soTrang);
                 reset();
             }
         }
@@ -682,7 +809,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
             List<model.SanPhamChiTiet> clcheck = spctService.check_Cbo_CL(id, name);
             fillTable(clcheck);
         } else {
-            fillTable(spctService.selectAll(id));
+            loadData(id, 1);
         }
     }//GEN-LAST:event_CBO_CL_checkItemStateChanged
 
@@ -711,12 +838,12 @@ public class SanPhamCTForm extends javax.swing.JPanel {
 
     private void cbomausacMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbomausacMousePressed
         // TODO add your handling code here:
-        CBo_MauSac();
+        //CBo_MauSac();
     }//GEN-LAST:event_cbomausacMousePressed
 
     private void cbochatlieuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbochatlieuMousePressed
         // TODO add your handling code here:
-        CBo_ChatLieu();
+        //CBo_ChatLieu();
     }//GEN-LAST:event_cbochatlieuMousePressed
 
     private void CBO_MS_checkItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CBO_MS_checkItemStateChanged
@@ -726,7 +853,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
             List<model.SanPhamChiTiet> clcheck = spctService.check_Cbo_MS(id, name);
             fillTable(clcheck);
         } else {
-            fillTable(spctService.selectAll(id));
+            loadData(id, 1);
         }
     }//GEN-LAST:event_CBO_MS_checkItemStateChanged
 
@@ -750,8 +877,26 @@ public class SanPhamCTForm extends javax.swing.JPanel {
 
     private void cbomausacMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbomausacMouseEntered
         // TODO add your handling code here:
-        CBo_MauSac();
+        //CBo_MauSac();
     }//GEN-LAST:event_cbomausacMouseEntered
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        if (trang > 1) {
+            trang--;
+            loadData(id, trang);
+            lbl_soTrang.setText(trang + "/" + soTrang);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        if (trang < soTrang) {
+            trang++;
+            loadData(id, trang);
+            lbl_soTrang.setText(trang + "/" + soTrang);
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -771,6 +916,8 @@ public class SanPhamCTForm extends javax.swing.JPanel {
     private javax.swing.JPanel form2;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -787,6 +934,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
     private javax.swing.JLabel lblCheckSoLuong;
     private javax.swing.JLabel lbl_anh;
     private javax.swing.JLabel lbl_magk;
+    private javax.swing.JLabel lbl_soTrang;
     private javax.swing.JTable lblbang;
     private javax.swing.JRadioButton rboDB;
     private javax.swing.JRadioButton rboNB;

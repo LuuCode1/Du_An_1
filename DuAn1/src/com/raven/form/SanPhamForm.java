@@ -19,6 +19,8 @@ import service.SP_Service;
 import service.loaisp_service;
 import service.thuonghieu_service;
 import view.ThuongHieuForm;
+import java.sql.*;
+import java.util.Vector;
 
 /**
  *
@@ -28,7 +30,6 @@ public class SanPhamForm extends javax.swing.JPanel {
 
     DefaultTableModel tbl_Model;
     private MainForm mainForm;
-    DefaultTableModel tblModel;
     SP_Service spSerVice = new SP_Service();
     SanPham sp = new SanPham();
     loaisp_service lspSerVice = new loaisp_service();
@@ -38,6 +39,11 @@ public class SanPhamForm extends javax.swing.JPanel {
     public static String id;
     public static String tenTheLoai;
     int index = -1;
+    Connection conn ;
+    PreparedStatement ps;
+    String sql;
+    ResultSet rs;
+    long count, soTrang ,trang = 1;
 
     public SanPhamForm(MainForm main) {
         this.mainForm = main;
@@ -46,15 +52,74 @@ public class SanPhamForm extends javax.swing.JPanel {
         CBo_LoaiSP();
         CBo_ThuongHieu();
         txt_search.setText("Tìm kiếm");
-        fillTable(spSerVice.getAllSP());
+        //fillTable(spSerVice.getAllSP());
+        CountDB();
+        if (count % 5 == 0) {
+            soTrang = count / 5;
+        } else {
+            soTrang = count / 5 + 1;
+        }
+        lbl_soTrang.setText("1/" + soTrang);
+        loadData(1);
+    }
+
+    public void CountDB() {
+        try {
+            String query = "Select count(*) from san_pham";
+            conn = DBconnect.getConnection();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                count = rs.getLong(1);
+            }
+            rs.close();
+            st.close();
+            conn.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public void initTable_QL_TK() {
         tbl_Model = (DefaultTableModel) tbl_sp.getModel();
         String[] row = new String[]{
-            "Mã San Pham", "Tên San Pham", "Loai San Pham", "Thương Hiệu"
+            "ID", "Mã San Pham", "Tên San Pham", "Loai San Pham", "Thương Hiệu"
         };
         tbl_Model.setColumnIdentifiers(row);
+    }
+
+    public void loadData(long trang) {
+        initTable_QL_TK();
+        tbl_Model.getDataVector().removeAllElements();
+        try {
+            String query = "SELECT top 5 idsp,masp,tensp,lsp.tenloai_sp,th.tenThuongHieu\n"
+                    + "from san_pham sp INNER JOIN\n"
+                    + "loai_sp lsp ON lsp.idloai_sp = sp.idloai_sp INNER JOIN\n"
+                    + "thuong_hieu th ON th.idThuongHieu = sp.idThuongHieu \n"
+                    + "where tensp not in (Select top "+(trang * 5 - 5)+" tensp from san_pham)";
+            conn = DBconnect.getConnection();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                Vector v = new Vector();
+                Integer id = rs.getInt(1);
+                String masp = rs.getString(2);
+                String tensp = rs.getString(3);
+                String tenloaisp = rs.getString(4);
+                String tenth = rs.getString(5);
+                v.add(id);
+                v.add(masp);
+                v.add(tensp);
+                v.add(tenloaisp);
+                v.add(tenth);
+                tbl_Model.addRow(v);
+            }
+            rs.close();
+            st.close();
+            conn.close();
+        } catch (Exception e) {
+            System.out.println("");
+        }
     }
 
     void CBo_LoaiSP() {
@@ -82,7 +147,6 @@ public class SanPhamForm extends javax.swing.JPanel {
         for (SanPham sp : list) {
             tbl_Model.addRow(sp.todata());
         }
-
     }
 
     public SanPham getModel_SP() {
@@ -112,6 +176,7 @@ public class SanPhamForm extends javax.swing.JPanel {
         lbl_id.setText("");
         cbo_loaiSP.setSelectedIndex(0);
         cbo_thuonghieu.setSelectedIndex(0);
+        loadData(1);
     }
 
     public boolean CheckValidate() {
@@ -153,6 +218,9 @@ public class SanPhamForm extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_sp = new javax.swing.JTable();
         txt_search = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        lbl_soTrang = new javax.swing.JLabel();
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -316,21 +384,36 @@ public class SanPhamForm extends javax.swing.JPanel {
 
         tbl_sp.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "null"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tbl_sp.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbl_spMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tbl_sp);
+        if (tbl_sp.getColumnModel().getColumnCount() > 0) {
+            tbl_sp.getColumnModel().getColumn(0).setResizable(false);
+            tbl_sp.getColumnModel().getColumn(1).setResizable(false);
+            tbl_sp.getColumnModel().getColumn(2).setResizable(false);
+            tbl_sp.getColumnModel().getColumn(3).setResizable(false);
+            tbl_sp.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         txt_search.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -351,6 +434,22 @@ public class SanPhamForm extends javax.swing.JPanel {
             }
         });
 
+        jButton3.setText("<");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText(">");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        lbl_soTrang.setText("jLabel7");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -360,9 +459,17 @@ public class SanPhamForm extends javax.swing.JPanel {
                 .addComponent(jScrollPane1)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(190, Short.MAX_VALUE)
                 .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(187, 187, 187))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(396, 396, 396)
+                .addComponent(jButton3)
+                .addGap(18, 18, 18)
+                .addComponent(lbl_soTrang)
+                .addGap(30, 30, 30)
+                .addComponent(jButton4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -370,8 +477,13 @@ public class SanPhamForm extends javax.swing.JPanel {
                 .addGap(23, 23, 23)
                 .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4)
+                    .addComponent(lbl_soTrang))
+                .addGap(47, 47, 47))
         );
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 326, 1047, -1));
@@ -401,7 +513,7 @@ public class SanPhamForm extends javax.swing.JPanel {
     private void txt_searchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_searchFocusLost
         if (txt_search.getText().isEmpty()) {
             txt_search.setText("Tìm Kiếm");
-            fillTable(spSerVice.getAllSP());
+            loadData(1);
         }
     }//GEN-LAST:event_txt_searchFocusLost
 
@@ -420,7 +532,7 @@ public class SanPhamForm extends javax.swing.JPanel {
                 SanPham sp = getModel_SP();
                 if (spSerVice.addSP(sp) > 0) {
                     JOptionPane.showMessageDialog(this, "Thêm thành công");
-                    fillTable(spSerVice.getAllSP());
+                    loadData(1);
                     Reset();
                 }
             } catch (Exception e) {
@@ -434,7 +546,7 @@ public class SanPhamForm extends javax.swing.JPanel {
             SanPham sp = getModel_SP();
             if (spSerVice.updateSP(sp) > 0) {
                 JOptionPane.showMessageDialog(this, "Cap nhat thành công");
-                fillTable(spSerVice.getAllSP());
+                loadData(1);
                 Reset();
             }
         }
@@ -445,7 +557,7 @@ public class SanPhamForm extends javax.swing.JPanel {
         if (CheckValidate()) {
             spSerVice.DeleteSP(txt_ma.getText());
             JOptionPane.showMessageDialog(this, "Đã xóa thành công");
-            fillTable(spSerVice.getAllSP());
+            loadData(1);
             Reset();
         }
 
@@ -503,6 +615,24 @@ public class SanPhamForm extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_searchFocusGained
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if(trang > 1){
+            trang--;
+            loadData(trang);
+            lbl_soTrang.setText(trang +"/"+soTrang);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        if(trang < soTrang){
+            trang++;
+            loadData(trang);
+            lbl_soTrang.setText(trang +"/"+soTrang);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLuu;
@@ -513,6 +643,8 @@ public class SanPhamForm extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cbo_thuonghieu;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -524,6 +656,7 @@ public class SanPhamForm extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_id;
+    private javax.swing.JLabel lbl_soTrang;
     private javax.swing.JTable tbl_sp;
     private javax.swing.JTextField txt_ma;
     private javax.swing.JTextField txt_search;
