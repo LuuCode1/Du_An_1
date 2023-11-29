@@ -16,6 +16,7 @@ public class SanPhamChiTiet {
     private ChatLieu material;
     private double doCan;
     private double giathanh;
+    private double giaNhap;
     private Integer soluong;
     private String hinhanh;
     private String mota;
@@ -24,53 +25,67 @@ public class SanPhamChiTiet {
     public SanPhamChiTiet() {
     }
 
-    public SanPhamChiTiet(SanPham sp, int idSPChiTiet, Mausac color, ChatLieu material, double giathanh, Integer soluong, String hinhanh, String mota, String trangthai) {
+    public SanPhamChiTiet(SanPham sp, int idSPChiTiet, Mausac color, ChatLieu material, double giathanh, double giaNhap, Integer soluong, String hinhanh, String mota, String trangthai) {
         this.sp = sp;
         this.idSPChiTiet = idSPChiTiet;
         this.color = color;
         this.material = material;
         this.giathanh = giathanh;
+        this.giaNhap = giaNhap;
         this.soluong = soluong;
         this.hinhanh = hinhanh;
         this.mota = mota;
         this.trangthai = trangthai;
     }
 
-    public SanPhamChiTiet(int idSPChiTiet, Mausac color, ChatLieu material, double giathanh, Integer soluong, String hinhanh, String mota, String trangthai) {
-        this.idSPChiTiet = idSPChiTiet;
-        this.color = color;
-        this.material = material;
-        this.giathanh = giathanh;
-        this.soluong = soluong;
-        this.hinhanh = hinhanh;
-        this.mota = mota;
-        this.trangthai = trangthai;
-    }
-
-    public SanPhamChiTiet(SanPham sp, int idSPChiTiet, Mausac color, ChatLieu material, double doCan, double giathanh, Integer soluong, String hinhanh, String mota, String trangthai) {
+    public SanPhamChiTiet(SanPham sp, int idSPChiTiet, Mausac color, ChatLieu material, double doCan, double giathanh, double giaNhap, Integer soluong, String hinhanh, String mota, String trangthai) {
         this.sp = sp;
         this.idSPChiTiet = idSPChiTiet;
         this.color = color;
         this.material = material;
         this.doCan = doCan;
         this.giathanh = giathanh;
+        this.giaNhap = giaNhap;
         this.soluong = soluong;
         this.hinhanh = hinhanh;
         this.mota = mota;
         this.trangthai = trangthai;
     }
 
-    public SanPhamChiTiet(int idSPChiTiet, Mausac color, ChatLieu material, double doCan, double giathanh, Integer soluong, String hinhanh, String mota, String trangthai) {
-        this.idSPChiTiet = idSPChiTiet;
+    public SanPhamChiTiet(SanPham sp, Mausac color, ChatLieu material, double doCan, double giathanh, double giaNhap, Integer soluong, String hinhanh, String mota, String trangthai) {
+        this.sp = sp;
         this.color = color;
         this.material = material;
         this.doCan = doCan;
         this.giathanh = giathanh;
+        this.giaNhap = giaNhap;
         this.soluong = soluong;
         this.hinhanh = hinhanh;
         this.mota = mota;
         this.trangthai = trangthai;
     }
+
+    public SanPhamChiTiet(SanPham sp, Mausac color, ChatLieu material, double giathanh, double giaNhap, Integer soluong, String hinhanh, String mota, String trangthai) {
+        this.sp = sp;
+        this.color = color;
+        this.material = material;
+        this.giathanh = giathanh;
+        this.giaNhap = giaNhap;
+        this.soluong = soluong;
+        this.hinhanh = hinhanh;
+        this.mota = mota;
+        this.trangthai = trangthai;
+    }
+
+    public double getGiaNhap() {
+        return giaNhap;
+    }
+
+    public void setGiaNhap(double giaNhap) {
+        this.giaNhap = giaNhap;
+    }
+
+
 
     public double getDoCan() {
         return doCan;
@@ -154,12 +169,12 @@ public class SanPhamChiTiet {
 
     public Object[] todata() {
         return new Object[]{this.idSPChiTiet,
-            this.material.getTenChatLieu(), this.color.getTenMauSac(), this.giathanh, this.soluong, this.hinhanh, this.mota, this.trangthai};
+            this.material.getTenChatLieu(), this.color.getTenMauSac(), this.giathanh,this.giaNhap, this.soluong, this.hinhanh, this.mota, this.trangthai};
     }
 
     public Object[] todata1() {
         return new Object[]{this.idSPChiTiet,
-            this.material.getTenChatLieu(), this.color.getTenMauSac(), this.doCan, this.giathanh, this.soluong, this.hinhanh, this.mota, this.trangthai};
+            this.material.getTenChatLieu(), this.color.getTenMauSac(), this.doCan,this.giaNhap, this.giathanh, this.soluong, this.hinhanh, this.mota, this.trangthai};
     }
 
     public Object[] todata_SPB() {

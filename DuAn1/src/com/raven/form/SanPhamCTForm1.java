@@ -24,6 +24,7 @@ import view.ChatLieuForm;
 import view.MauSacForm;
 import java.sql.*;
 import java.util.Vector;
+import model.SanPhamChiTiet;
 import service.DBconnect;
 
 /**
@@ -98,7 +99,7 @@ public class SanPhamCTForm1 extends javax.swing.JPanel {
     void name() {
         model = (DefaultTableModel) lblbang.getModel();
         String[] row = new String[]{
-            "ID", "Chất Liệu", "Màu Sắc", "Độ Cận", "Giá Bán", "Số Lượng", "Hình Ảnh", "Mô Tả", "Trạng thái"
+            "ID", "Chất Liệu", "Màu Sắc", "Độ Cận", "Giá Bán", "Giá Nhập", "Số Lượng", "Hình Ảnh", "Mô Tả", "Trạng thái"
         };
         model.setColumnIdentifiers(row);
     }
@@ -108,7 +109,7 @@ public class SanPhamCTForm1 extends javax.swing.JPanel {
         model.getDataVector().removeAllElements();
         try {
             String query = "SELECT top 5 spct.id_sp_chi_tiet,cl.tenChatLieu,ms.tenMauSac,spct.doCan,"
-                    + "spct.giaThanh,spct.soLuong,"
+                    + "spct.giaThanh,spct.giaNhap,spct.soLuong,"
                     + "spct.hinhanh,spct.moTa,spct.trangThai\n"
                     + "from san_pham_chi_tiet spct INNER JOIN\n"
                     + "chat_lieu cl ON cl.idChatLieu = spct.idChatLieu INNER JOIN\n"
@@ -126,15 +127,17 @@ public class SanPhamCTForm1 extends javax.swing.JPanel {
                 String tenms = rs.getString(3);
                 Double doCan = rs.getDouble(4);
                 Double giathanh = rs.getDouble(5);
-                Integer soluong = rs.getInt(6);
-                String hinhanh = rs.getString(7);
-                String mota = rs.getString(8);
-                String trangthai = rs.getString(9);
+                Double giaNhap = rs.getDouble(6);
+                Integer soluong = rs.getInt(7);
+                String hinhanh = rs.getString(8);
+                String mota = rs.getString(9);
+                String trangthai = rs.getString(10);
                 v.add(idspct);
                 v.add(tencl);
                 v.add(tenms);
                 v.add(doCan);
                 v.add(giathanh);
+                v.add(giaNhap);
                 v.add(soluong);
                 v.add(hinhanh);
                 v.add(mota);
@@ -186,9 +189,10 @@ public class SanPhamCTForm1 extends javax.swing.JPanel {
     }
 
     void Show(model.SanPhamChiTiet spct1) {
-        model.SanPhamChiTiet sp = spct1;
+        SanPhamChiTiet sp = spct1;
         txt_DoCan.setText(String.valueOf(sp.getDoCan()));
         TxtSoLuong.setText(String.valueOf(sp.getSoluong()));
+        TxtGiaNhap.setText(String.valueOf(sp.getGiaNhap()));
         txt_GiaBan.setText(String.valueOf(sp.getGiathanh()));
         txt_mota.setText(sp.getMota());
         cbomausac.setSelectedItem(sp.getColor().getTenMauSac());
@@ -217,6 +221,7 @@ public class SanPhamCTForm1 extends javax.swing.JPanel {
         tk.setSp(new SanPham(id, null, null, null, null));
         tk.setDoCan(Double.parseDouble(txt_DoCan.getText()));
         tk.setGiathanh(Double.parseDouble(txt_GiaBan.getText()));
+        tk.setGiaNhap(Double.parseDouble(TxtGiaNhap.getText()));
         tk.setMota(txt_mota.getText());
         tk.setSoluong(Integer.parseInt(TxtSoLuong.getText()));
         Mausac ms = mssv.tenMauSac(cbomausac.getSelectedItem().toString());
@@ -343,7 +348,7 @@ public class SanPhamCTForm1 extends javax.swing.JPanel {
         cbochatlieu = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         txt_mota = new javax.swing.JTextArea();
-        lblCheckDoCan = new javax.swing.JLabel();
+        lblCheckgianhap = new javax.swing.JLabel();
         lblCheckDoCan1 = new javax.swing.JLabel();
         themnhanhmausac1 = new javax.swing.JPanel();
         cbomausac = new javax.swing.JComboBox<>();
@@ -358,6 +363,10 @@ public class SanPhamCTForm1 extends javax.swing.JPanel {
         jLabel19 = new javax.swing.JLabel();
         txt_DoCan = new javax.swing.JTextField();
         lblCheckGiaBan = new javax.swing.JLabel();
+        lblCheckSoLuong1 = new javax.swing.JLabel();
+        TxtGiaNhap = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         btn_Delete = new javax.swing.JButton();
         btn_reset = new javax.swing.JButton();
         CBO_CL_check = new javax.swing.JComboBox<>();
@@ -436,7 +445,7 @@ public class SanPhamCTForm1 extends javax.swing.JPanel {
         form2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 56, 30));
 
         jLabel20.setText("Mô Tả");
-        form2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, 56, 30));
+        form2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 100, 56, 30));
 
         lbl_anh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         form2.add(lbl_anh, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 20, 310, 220));
@@ -475,8 +484,8 @@ public class SanPhamCTForm1 extends javax.swing.JPanel {
         txt_mota.setTabSize(1);
         jScrollPane2.setViewportView(txt_mota);
 
-        form2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 210, 140));
-        form2.add(lblCheckDoCan, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, 230, 20));
+        form2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 100, 210, 140));
+        form2.add(lblCheckgianhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 60, 230, 20));
         form2.add(lblCheckDoCan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, 230, 20));
 
         javax.swing.GroupLayout themnhanhmausac1Layout = new javax.swing.GroupLayout(themnhanhmausac1);
@@ -509,16 +518,16 @@ public class SanPhamCTForm1 extends javax.swing.JPanel {
         form2.add(cbomausac, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 193, 30));
 
         jLabel1.setText("Trạng Thái");
-        form2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 200, 60, 20));
+        form2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 260, 60, 20));
 
         buttonGroup1.add(rboDB);
         rboDB.setSelected(true);
         rboDB.setText("Đang bán");
-        form2.add(rboDB, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 200, -1, -1));
+        form2.add(rboDB, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 260, -1, -1));
 
         buttonGroup1.add(rboNB);
         rboNB.setText("Ngưng bán");
-        form2.add(rboNB, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 200, -1, -1));
+        form2.add(rboNB, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 260, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 0, 51));
@@ -555,6 +564,16 @@ public class SanPhamCTForm1 extends javax.swing.JPanel {
         form2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 56, 26));
         form2.add(txt_DoCan, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 193, 26));
         form2.add(lblCheckGiaBan, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 230, 20));
+        form2.add(lblCheckSoLuong1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 60, 230, 20));
+        form2.add(TxtGiaNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 30, 193, 26));
+
+        jLabel21.setText("Giá Nhập");
+        form2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 40, 60, 20));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 0, 51));
+        jLabel4.setText("*");
+        form2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 30, 20, 20));
 
         color3.add(form2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 85, 1058, 300));
 
@@ -597,17 +616,17 @@ public class SanPhamCTForm1 extends javax.swing.JPanel {
 
         lblbang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9", "null"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -620,6 +639,18 @@ public class SanPhamCTForm1 extends javax.swing.JPanel {
             }
         });
         jScrollPane3.setViewportView(lblbang);
+        if (lblbang.getColumnModel().getColumnCount() > 0) {
+            lblbang.getColumnModel().getColumn(0).setResizable(false);
+            lblbang.getColumnModel().getColumn(1).setResizable(false);
+            lblbang.getColumnModel().getColumn(2).setResizable(false);
+            lblbang.getColumnModel().getColumn(3).setResizable(false);
+            lblbang.getColumnModel().getColumn(4).setResizable(false);
+            lblbang.getColumnModel().getColumn(5).setResizable(false);
+            lblbang.getColumnModel().getColumn(6).setResizable(false);
+            lblbang.getColumnModel().getColumn(7).setResizable(false);
+            lblbang.getColumnModel().getColumn(8).setResizable(false);
+            lblbang.getColumnModel().getColumn(9).setResizable(false);
+        }
 
         jButton4.setText("<");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -929,6 +960,7 @@ public class SanPhamCTForm1 extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CBO_CL_check;
     private javax.swing.JComboBox<String> CBO_MS_check;
+    private javax.swing.JTextField TxtGiaNhap;
     private javax.swing.JTextField TxtSoLuong;
     private javax.swing.JButton btn_Delete;
     private javax.swing.JButton btn_add;
@@ -953,14 +985,17 @@ public class SanPhamCTForm1 extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JLabel lblCheckDoCan;
     private javax.swing.JLabel lblCheckDoCan1;
     private javax.swing.JLabel lblCheckGiaBan;
     private javax.swing.JLabel lblCheckSoLuong;
+    private javax.swing.JLabel lblCheckSoLuong1;
+    private javax.swing.JLabel lblCheckgianhap;
     private javax.swing.JLabel lbl_anh;
     private javax.swing.JLabel lbl_magk;
     private javax.swing.JLabel lbl_soTrang;

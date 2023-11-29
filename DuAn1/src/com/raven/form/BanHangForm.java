@@ -33,6 +33,7 @@ public class BanHangForm extends javax.swing.JFrame {
     private List<GioHang> listGioHang = new ArrayList<>();
     SanPhamService spSer = new SanPhamService();
     DefaultTableModel model;
+    SPChiTiet spct1 = new SPChiTiet();
     int index = -1;
     int trangthai = 0;
     double tongtien = 0;
@@ -615,6 +616,45 @@ public class BanHangForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         int row = tbl_sanpham.getSelectedRow();
         int rowHD = tblHoaDon.getSelectedRow();
+        SPChiTiet sp = spSer.IDSP(row);
+        int SoLuong = Integer.parseInt(tbl_sanpham.getValueAt(row, 8).toString());
+        System.out.println(SoLuong);
+        
+
+//        try {
+//            int slMua = Integer.parseInt(txt_sl_mua.getText());
+//            String MaSP = tbl_sanpham.getValueAt(row, 1).toString();
+//            String TenSP = tbl_sanpham.getValueAt(row, 2).toString();
+//            int SoLuong = Integer.parseInt(tbl_sanpham.getValueAt(row, 9).toString());
+//            Double DonGia = Double.parseDouble(tbl_sanpham.getValueAt(row, 8).toString());
+//            List<HoaDonChiTiet> listh = hdSer.getListHoaDonChiTiet(tblHoaDon.getValueAt(rowHD, 1).toString());
+//            if (SoLuong >= slMua) {
+//                for (HoaDonChiTiet x : listh) {
+//                    if (x.getSanPham().getSp().getMaSP().equals(MaSP)) {
+//                        JOptionPane.showMessageDialog(this, "Sản Phẩm Đã Có Trên Giỏ Hàng");
+//                        return;
+//                    }
+//                }
+//                getListGioHang();
+//                int kq = SoLuong - slMua;
+////                spSer.updateSoLuongSP(MaSP, kq);
+//                List<SPChiTiet> list = spSer.getListSPCT("Đang bán");
+//                list.clear();
+//                getListSP();
+////                
+//            } else if (SoLuong < slMua) {
+//                JOptionPane.showMessageDialog(this, "Sản phẩm không đủ ");
+//                return;
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+    }//GEN-LAST:event_tbl_sanphamMouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+
+        int row = tbl_sanpham.getSelectedRow();
+        int rowHD = tblHoaDon.getSelectedRow();
         if (row < 0) {
             JOptionPane.showMessageDialog(this, "Bạn cần chọn sản phẩm để thêm giỏ hàng");
             return;
@@ -627,38 +667,6 @@ public class BanHangForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Bạn cần nhập số lượng muốn mua");
             return;
         }
-        try {
-            int slMua = Integer.parseInt(txt_sl_mua.getText());
-            String MaSP = tbl_sanpham.getValueAt(row, 1).toString();
-            String TenSP = tbl_sanpham.getValueAt(row, 2).toString();
-            int SoLuong = Integer.parseInt(tbl_sanpham.getValueAt(row, 9).toString());
-            Double DonGia = Double.parseDouble(tbl_sanpham.getValueAt(row, 8).toString());
-            List<HoaDonChiTiet> listh = hdSer.getListHoaDonChiTiet(tblHoaDon.getValueAt(rowHD, 1).toString());
-            if (SoLuong >= slMua) {
-                for (HoaDonChiTiet x : listh) {
-                    if (x.getSanPham().getSp().getMaSP().equals(MaSP)) {
-                        JOptionPane.showMessageDialog(this, "Sản Phẩm Đã Có Trên Giỏ Hàng");
-                        return;
-                    }
-                }
-                getListGioHang();
-                int kq = SoLuong - slMua;
-//                spSer.updateSoLuongSP(MaSP, kq);
-                List<SPChiTiet> list = spSer.getListSPCT("Đang bán");
-                list.clear();
-                getListSP();
-//                
-            } else if (SoLuong < slMua) {
-                JOptionPane.showMessageDialog(this, "Sản phẩm không đủ ");
-                return;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_tbl_sanphamMouseClicked
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**

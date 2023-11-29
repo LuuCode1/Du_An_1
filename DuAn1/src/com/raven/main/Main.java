@@ -2,6 +2,7 @@ package com.raven.main;
 
 import com.raven.component.Header;
 import com.raven.component.Menu;
+import com.raven.dialog.Message;
 import com.raven.event.EventMenuSelected;
 import com.raven.event.EventShowPopupMenu;
 import com.raven.form.BanHangForm;
@@ -15,13 +16,18 @@ import com.raven.form.MainForm;
 import com.raven.form.NhanVienForm;
 
 import com.raven.form.SanPhamForm;
+import com.raven.login.DangNhap;
 import com.raven.swing.MenuItem;
 import com.raven.swing.PopupMenu;
 import com.raven.swing.icon.GoogleMaterialDesignIcons;
 import com.raven.swing.icon.IconFontSwing;
+import com.sun.mail.handlers.message_rfc822;
 import java.awt.Component;
+import java.awt.JobAttributes;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
+import model.NguoiDung;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
@@ -29,15 +35,17 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 public class Main extends javax.swing.JFrame {
 
+    NguoiDung nd = new NguoiDung();
     private MigLayout layout;
     private Menu menu;
     private Header header;
     private MainForm main;
     private Animator animator;
-
+String manv = DangNhap.mand;
     public Main() {
         initComponents();
         init();
+        System.out.println(manv);
     }
 
     private void init() {
@@ -52,7 +60,12 @@ public class Main extends javax.swing.JFrame {
                 System.out.println("Menu Index : " + menuIndex + " SubMenu Index " + subMenuIndex);
                 if (menuIndex == 1) {
                     if (subMenuIndex == 0) {
-                        main.showForm(new SanPhamForm(main));
+                        if (nd.getVaiTro()==0) {
+                            main.showForm(new SanPhamForm(main));
+                        }else{
+                            JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
+                        }
+
                     }
                 }
                 if (menuIndex == 2) {

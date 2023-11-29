@@ -242,5 +242,17 @@ public class NguoiDung_Service {
         }
         return null;
     }
-
+    public int update_matKhau(NguoiDung nd ,String email){
+        sql ="Update Nguoi_dung set matKhau =? where email =?";
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, nd.getMatKhau());
+            ps.setObject(2, email);
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

@@ -53,6 +53,7 @@ CREATE TABLE san_pham_chi_tiet(
   idMauSac               INT NOT NULL,
   doCan                  FLOAT NULL,
   giaThanh               FLOAT NOT NULL,
+  giaNhap				 FLOAT NOT NULL,
   soLuong                INT NOT NULL,
   hinhanh                NVARCHAR(max) NULL,
   moTa                   NVARCHAR(50) NOT NULL,
@@ -176,12 +177,11 @@ VALUES ('SP01', N'Tròng Kính Chống Ánh Sáng Xanh', 2 , 4 ),
 
 
 --Bảng tròng kính 
-INSERT INTO san_pham_chi_tiet(idsp,idChatLieu,idMauSac,doCan,giaThanh,soLuong,hinhanh,moTa,trangThai)
-VALUES (1, 2 , 4 ,0.5,333000,100,null,N'Sản phẩm thân thiện',N'Đang bán'),
-       (1, 5 , 1 ,1.5,733000,170, null,N'Sản phẩm thân thiện',N'Đang bán'),
-       (1, 2 , 4 ,0.4,883000,201, null,N'Sản phẩm thân thiện',N'Đang bán'),
-       (2, 3 , 5 ,1.1,55000,313, null,N'Sản phẩm thân thiện',N'Đang bán'),
-       (3, 4 , 3 ,null,89000,298,null,N'Sản phẩm thân thiện',N'Đang bán');
+INSERT INTO san_pham_chi_tiet(idsp,idChatLieu,idMauSac,doCan,giaThanh,giaNhap,soLuong,hinhanh,moTa,trangThai)
+VALUES (1, 2 , 4 ,0.5,333000,300000,100,null,N'Sản phẩm thân thiện',N'Đang bán'),
+       (1, 2 , 4 ,0.4,883000,300000,201, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       (2, 3 , 5 ,1.1,55000,300000,313, null,N'Sản phẩm thân thiện',N'Đang bán'),
+       (3, 4 , 3 ,null,89000,300000,298,null,N'Sản phẩm thân thiện',N'Đang bán');
 
 
 -- Bảng Hóa Đơn
@@ -196,10 +196,10 @@ select * from hoa_don
 --Bảng Hóa Đơn Chi Tiết 
 INSERT INTO hoa_don_chi_tiet(id_sp_chi_tiet, idHoaDon, soluong, dongia)
 VALUES (4, 2, 2, 55000),
-       (5, 2, 1, 89000),
+       (4, 2, 1, 89000),
        (1, 3, 1, 333000),
        (2, 5, 1, 733000),
-       (3, 6, 1, 883000);
+       (3, 4, 1, 883000);
 	   select * from hoa_don_chi_tiet
 
 

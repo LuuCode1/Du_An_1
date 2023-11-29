@@ -24,25 +24,35 @@ public class DangNhap extends javax.swing.JFrame {
         setUndecorated(true);
         initComponents();
         setLocationRelativeTo(null);
+        txt_email.setText(null);
+        txt_pass.setText(null);
     }
-
+public static  String mand;
     void dangnhap() {
+
         String email = txt_email.getText().trim();
         String matKhau = txt_pass.getText().trim();
         try {
-            if (ndsv.dangNhap_email(email) != null) {
-            if (ndsv.dangNhap(email, matKhau) != null) {
-                JOptionPane.showMessageDialog(this, "Thanh cong ");
-                this.dispose();
 
+            if (ndsv.dangNhap_email(email) != null) {
+                if (ndsv.dangNhap(email, matKhau) != null) {
+                    JOptionPane.showMessageDialog(this, "Thanh cong ");
+                    this.dispose();
+                    Main main = new Main();
+                    main.setVisible(true);
+                    NguoiDung nd = ndsv.dangNhap_email(email);
+                    
+                    mand = nd.getMaND();
+                } else {
+                    JOptionPane.showMessageDialog(this, "mat khau khong dung");
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "mat khau khong dung");
+                JOptionPane.showMessageDialog(this, "Tai khoan khong ton tai");
             }
-        }else{
-            JOptionPane.showMessageDialog(this, "Tai khoan khong ton tai");
-        }
+
         } catch (Exception e) {
         }
+
     }
 
     /**
@@ -61,6 +71,7 @@ public class DangNhap extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txt_pass = new javax.swing.JPasswordField();
         btn_login = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
         Right1 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -97,6 +108,13 @@ public class DangNhap extends javax.swing.JFrame {
             }
         });
 
+        jLabel8.setText("Đổi mật khẩu");
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout LeftLayout = new javax.swing.GroupLayout(Left);
         Left.setLayout(LeftLayout);
         LeftLayout.setHorizontalGroup(
@@ -108,12 +126,14 @@ public class DangNhap extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(LeftLayout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2)
-                            .addComponent(txt_email)
-                            .addComponent(jLabel3)
-                            .addComponent(txt_pass, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
-                            .addComponent(btn_login, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel2)
+                                .addComponent(txt_email)
+                                .addComponent(jLabel3)
+                                .addComponent(txt_pass, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                                .addComponent(btn_login, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
         LeftLayout.setVerticalGroup(
@@ -129,9 +149,11 @@ public class DangNhap extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txt_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(12, 12, 12)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btn_login, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(137, Short.MAX_VALUE))
+                .addContainerGap(123, Short.MAX_VALUE))
         );
 
         getContentPane().add(Left, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 0, -1, -1));
@@ -182,11 +204,19 @@ public class DangNhap extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
-        dangnhap();
-        this.dispose();
-        Main main = new Main();
-        main.setVisible(true);
+        if (txt_email.getText().equals(" ")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng đăng nhập tài khoản");
+        } else {
+            dangnhap();
+        }
     }//GEN-LAST:event_btn_loginActionPerformed
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        DoiMatKHau dmk = new DoiMatKHau();
+        this.dispose();
+        dmk.setVisible(true);
+        dmk.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jLabel8MouseClicked
 
     /**
      * @param args the command line arguments
@@ -233,6 +263,7 @@ public class DangNhap extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField txt_email;
     private javax.swing.JPasswordField txt_pass;
     // End of variables declaration//GEN-END:variables
