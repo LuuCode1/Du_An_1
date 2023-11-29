@@ -9,8 +9,9 @@ package model;
  * @author leduc
  */
 public class SanPhamChiTiet {
+
     private SanPham sp;
-    private int    idSPChiTiet;
+    private int idSPChiTiet;
     private Mausac color;
     private ChatLieu material;
     private double doCan;
@@ -70,9 +71,6 @@ public class SanPhamChiTiet {
         this.mota = mota;
         this.trangthai = trangthai;
     }
-    
-    
-    
 
     public double getDoCan() {
         return doCan;
@@ -154,16 +152,27 @@ public class SanPhamChiTiet {
         this.trangthai = trangthai;
     }
 
-    
-    
-    public Object[] todata(){
+    public Object[] todata() {
         return new Object[]{this.idSPChiTiet,
-            this.material.getTenChatLieu(),this.color.getTenMauSac(),this.giathanh,this.soluong,this.hinhanh,this.mota,this.trangthai};
+            this.material.getTenChatLieu(), this.color.getTenMauSac(), this.giathanh, this.soluong, this.hinhanh, this.mota, this.trangthai};
     }
-    
-    public Object[] todata1(){
+
+    public Object[] todata1() {
         return new Object[]{this.idSPChiTiet,
-            this.material.getTenChatLieu(),this.color.getTenMauSac(),this.doCan,this.giathanh,this.soluong,this.hinhanh,this.mota,this.trangthai};
+            this.material.getTenChatLieu(), this.color.getTenMauSac(), this.doCan, this.giathanh, this.soluong, this.hinhanh, this.mota, this.trangthai};
     }
-    
+
+    public Object[] todata_SPB() {
+        return new Object[]{
+            this.sp.getLoaisp().getTenLoaiSP(),
+            this.sp.getMaSP(),
+            this.sp.getTenSP(),
+            this.color.getTenMauSac(),
+            this.material.getTenChatLieu(),
+            this.sp.getBrand().getTenThuongHieu(),
+            this.giathanh,
+            this.soluong,
+            this.mota
+        };
+    }
 }

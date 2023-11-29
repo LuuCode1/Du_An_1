@@ -300,3 +300,7 @@ SELECT    hoa_don.idHoaDon, hoa_don.maHoaDon, Nguoi_dung.maNguoiDung, khach_hang
 FROM         hoa_don LEFT  JOIN
                       Nguoi_dung ON hoa_don.idnguoi_dung = Nguoi_dung.idnguoi_dung LEFT  JOIN
                       khach_hang ON hoa_don.idKhachHang = khach_hang.idKhachHang
+SELECT    san_pham.idsp, san_pham.idloai_sp, san_pham.idThuongHieu, san_pham_chi_tiet.idChatLieu, san_pham_chi_tiet.idMauSac, san_pham_chi_tiet.doCan, san_pham_chi_tiet.giaThanh, san_pham_chi_tiet.soLuong, 
+                      san_pham_chi_tiet.moTa
+FROM         san_pham INNER JOIN
+                      san_pham_chi_tiet ON san_pham.idsp = san_pham_chi_tiet.idsp
