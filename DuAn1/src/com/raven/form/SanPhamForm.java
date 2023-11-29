@@ -63,6 +63,16 @@ public class SanPhamForm extends javax.swing.JPanel {
         loadData(1);
     }
 
+    
+
+    public void initTable_QL_TK() {
+        tbl_Model = (DefaultTableModel) tbl_sp.getModel();
+        String[] row = new String[]{
+            "ID", "Mã San Pham", "Tên San Pham", "Loai San Pham", "Thương Hiệu"
+        };
+        tbl_Model.setColumnIdentifiers(row);
+    }
+    
     public void CountDB() {
         try {
             String query = "Select count(*) from san_pham";
@@ -78,14 +88,6 @@ public class SanPhamForm extends javax.swing.JPanel {
         } catch (Exception e) {
             System.out.println(e);
         }
-    }
-
-    public void initTable_QL_TK() {
-        tbl_Model = (DefaultTableModel) tbl_sp.getModel();
-        String[] row = new String[]{
-            "ID", "Mã San Pham", "Tên San Pham", "Loai San Pham", "Thương Hiệu"
-        };
-        tbl_Model.setColumnIdentifiers(row);
     }
 
     public void loadData(long trang) {
