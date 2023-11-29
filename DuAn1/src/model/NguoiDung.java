@@ -4,42 +4,47 @@
  */
 package model;
 
+import java.util.Date;
+
 /**
  *
  * @author Asus
  */
 public class NguoiDung {
     private int idND;
+    private String maND;
     private String tenND;
-    private String ngaySinh;
+    private Date ngaySinh;
     private String matKhau;
-    private int SDT;
+    private String SDT;
     private int GioiTinh;
     private String email;
-    private String trangThai;
+    private int vaiTro;
 
     public NguoiDung() {
     }
 
-    public NguoiDung(int idND, String tenND, String ngaySinh, String matKhau, int SDT, int GioiTinh, String email, String trangThai) {
+    public NguoiDung(int idND, String maND, String tenND, Date ngaySinh, String matKhau, String SDT, int GioiTinh, String email, int vaiTro) {
         this.idND = idND;
+        this.maND = maND;
         this.tenND = tenND;
         this.ngaySinh = ngaySinh;
         this.matKhau = matKhau;
         this.SDT = SDT;
         this.GioiTinh = GioiTinh;
         this.email = email;
-        this.trangThai = trangThai;
+        this.vaiTro = vaiTro;
     }
 
-    public NguoiDung(String tenND, String ngaySinh, String matKhau, int SDT, int GioiTinh, String email, String trangThai) {
+    public NguoiDung(String maND, String tenND, Date ngaySinh, String matKhau, String SDT, int GioiTinh, String email, int vaiTro) {
+        this.maND = maND;
         this.tenND = tenND;
         this.ngaySinh = ngaySinh;
         this.matKhau = matKhau;
         this.SDT = SDT;
         this.GioiTinh = GioiTinh;
         this.email = email;
-        this.trangThai = trangThai;
+        this.vaiTro = vaiTro;
     }
 
     public int getIdND() {
@@ -50,6 +55,14 @@ public class NguoiDung {
         this.idND = idND;
     }
 
+    public String getMaND() {
+        return maND;
+    }
+
+    public void setMaND(String maND) {
+        this.maND = maND;
+    }
+
     public String getTenND() {
         return tenND;
     }
@@ -58,11 +71,11 @@ public class NguoiDung {
         this.tenND = tenND;
     }
 
-    public String getNgaySinh() {
+    public Date getNgaySinh() {
         return ngaySinh;
     }
 
-    public void setNgaySinh(String ngaySinh) {
+    public void setNgaySinh(Date ngaySinh) {
         this.ngaySinh = ngaySinh;
     }
 
@@ -74,11 +87,11 @@ public class NguoiDung {
         this.matKhau = matKhau;
     }
 
-    public int getSDT() {
+    public String getSDT() {
         return SDT;
     }
 
-    public void setSDT(int SDT) {
+    public void setSDT(String SDT) {
         this.SDT = SDT;
     }
 
@@ -98,14 +111,31 @@ public class NguoiDung {
         this.email = email;
     }
 
-    public String getTrangThai() {
-        return trangThai;
+    public int getVaiTro() {
+        return vaiTro;
     }
 
-    public void setTrangThai(String trangThai) {
-        this.trangThai = trangThai;
+    public void setVaiTro(int vaiTro) {
+        this.vaiTro = vaiTro;
     }
 
     
-     
+
+        public String getGT(){
+        if (GioiTinh==0) {
+            return "Nam";
+        }else{
+            return "Nữ";
+        }
+    }
+    public String getVT(){
+        if (vaiTro==0) {
+            return "Quản Lý";
+        }else{
+            return "Nhân Viên";
+        }
+    }
+     public Object[] todata_NguoiDung(){
+         return new Object[]{this.maND,this.tenND,this.ngaySinh,this.matKhau,this.SDT,this.getGT(),this.email,this.getVT()};
+     }
 }

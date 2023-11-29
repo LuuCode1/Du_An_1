@@ -4,6 +4,7 @@ import com.raven.component.Header;
 import com.raven.component.Menu;
 import com.raven.event.EventMenuSelected;
 import com.raven.event.EventShowPopupMenu;
+import com.raven.form.BanHangForm;
 
 import com.raven.form.Form_Home;
 
@@ -11,6 +12,7 @@ import com.raven.form.MainForm;
 
 import com.raven.form.KhachHangForm;
 import com.raven.form.MainForm;
+import com.raven.form.NhanVienForm;
 
 import com.raven.form.SanPhamForm;
 import com.raven.swing.MenuItem;
@@ -51,6 +53,16 @@ public class Main extends javax.swing.JFrame {
                 if (menuIndex == 1) {
                     if (subMenuIndex == 0) {
                         main.showForm(new SanPhamForm(main));
+                    }
+                }
+                if (menuIndex == 2) {
+                    if (subMenuIndex == 0) {
+                        main.showForm(new BanHangForm());
+                    }
+                }
+                if (menuIndex == 3) {
+                    if (subMenuIndex == 0) {
+                        main.showForm(new NhanVienForm());
                     }
                 }
             }

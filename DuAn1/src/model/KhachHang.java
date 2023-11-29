@@ -9,6 +9,7 @@ package model;
  * @author Dat
  */
 public class KhachHang {
+    private int idKH;
     private String maKH;
     private String tenKH;
     private String diaChi;
@@ -17,11 +18,27 @@ public class KhachHang {
     public KhachHang() {
     }
 
+    public KhachHang(int idKH, String maKH, String tenKH, String diaChi, String sdt) {
+        this.idKH = idKH;
+        this.maKH = maKH;
+        this.tenKH = tenKH;
+        this.diaChi = diaChi;
+        this.sdt = sdt;
+    }
+
     public KhachHang(String maKH, String tenKH, String diaChi, String sdt) {
         this.maKH = maKH;
         this.tenKH = tenKH;
         this.diaChi = diaChi;
         this.sdt = sdt;
+    }
+
+    public int getIdKH() {
+        return idKH;
+    }
+
+    public void setIdKH(int idKH) {
+        this.idKH = idKH;
     }
 
     public String getMaKH() {
@@ -56,10 +73,6 @@ public class KhachHang {
         this.sdt = sdt;
     }
 
-    @Override
-    public String toString() {
-        return "KhachHang{" + "maKH=" + maKH + ", tenKH=" + tenKH + ", diaChi=" + diaChi + ", sdt=" + sdt + '}';
-    }
-    
+   
     
 }

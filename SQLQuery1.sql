@@ -65,13 +65,14 @@ CREATE TABLE san_pham_chi_tiet(
 
 CREATE TABLE Nguoi_dung (
   idnguoi_dung INT NOT NULL IDENTITY(1,1),
+  maNguoiDung VARCHAR(100) NOT NULL,
   tenNguoi_dung  NVARCHAR(50) NOT NULL,
   ngaysinh  DATE,
   matKhau VARCHAR(18) NOT NULL,
   sdt   VARCHAR(11)  NOT NULL,
   gioitinh  BIT  NOT NULL,
   email  VARCHAR(30)  NOT NULL,
-  trangthai  NVARCHAR(50)  NOT NULL,
+  vaitro BIT NOT NULL,
   PRIMARY KEY (idnguoi_dung),
 );
 
@@ -100,23 +101,19 @@ CREATE TABLE vouchers (
 CREATE TABLE hoa_don (
   idHoaDon  INT NOT NULL IDENTITY(1,1),
   maHoaDon  VARCHAR(50)  NULL,
-  idVouchers INT NULL ,
   idKhachHang INT NULL ,
-  idNhanVien INT  NULL ,
+  idnguoi_dung INT  NULL ,
   ngayban   DATETIME DEFAULT GETDATE(),
   tongtien  FLOAT NULL,
-  trangthai NVARCHAR(50) NULL, 
+  trangthai BIT NULL, 
   PRIMARY KEY (idHoaDon),
-  FOREIGN KEY (idVouchers) REFERENCES vouchers (idVouchers),
   FOREIGN KEY (idKhachHang) REFERENCES khach_hang (idKhachHang),
-  FOREIGN KEY (idNhanVien) REFERENCES nhan_vien (idNhanVien),
+  FOREIGN KEY (idnguoi_dung) REFERENCES Nguoi_dung (idnguoi_dung),
 );
-
 
 -- Chuyển idGongKinh và idTrongKinh từ NOT NULL thành NULL
 CREATE TABLE hoa_don_chi_tiet (
   idHoaDonChiTiet  INT NOT NULL IDENTITY(1,1),
-  maHoaDonChiTiet  VARCHAR(50) NOT NULL,
   id_sp_chi_tiet   INT NOT NULL,
   idHoaDon         INT NOT NULL,
   soluong          INT NOT NULL,
@@ -148,8 +145,6 @@ VALUES ('CT01', N'Sắt'),
        ('CT04', N'Nhựa'),
        ('CT05', N'Nhưa dẻo');
 
-
-
 --Bảng màu sắc
 INSERT INTO mau_sac(maMauSac, tenMauSac)
 VALUES ('M01', N'Đỏ'),
@@ -157,9 +152,6 @@ VALUES ('M01', N'Đỏ'),
        ('M03', N'Trắng'),
        ('M04', N'Đen'),
        ('M05', N'Xanh lục');
-
-
-
 
 --Bảng thương hiệu
 INSERT INTO thuong_hieu(maThuongHieu, tenThuongHieu)
@@ -193,27 +185,31 @@ VALUES (1, 2 , 4 ,0.5,333000,100,null,N'Sản phẩm thân thiện',N'Đang bán
 
 
 -- Bảng Hóa Đơn
-INSERT INTO hoa_don(maHoaDon,idVouchers,idKhachHang,idNhanVien,ngayban,tongtien,trangthai)
-VALUES ( null , null , null , null , null , null , N' bán');
-
-
+INSERT INTO hoa_don(maHoaDon,idKhachHang,idnguoi_dung,tongtien,trangthai)
+VALUES ( 'HD002' , 2 , 3, null ,0),
+( 'HD003' , 3 , 3  , null ,0),
+( 'HD004' , 2 , 2 , null ,0),
+( 'HD123' , null , 3 , null , 1),
+( 'HD111' , null , 5 ,null , 1)
+select * from hoa_don
 
 --Bảng Hóa Đơn Chi Tiết 
-INSERT INTO hoa_don_chi_tiet(maHoaDonChiTiet, idGongKinhCT,idTrongKinhCT,soluong,dongia,tonggia)
-VALUES ('HDCT01', 1,null,2,666000,660000),
-       ('HDCT02', 1,2,1,1066000,1060000),
-       ('HDCT03', null,5,3,267000,250000),
-       ('HDCT04', null,3,1,883000,880000),
-       ('HDCT05', 4,null,7,385000,380000);
+INSERT INTO hoa_don_chi_tiet(id_sp_chi_tiet, idHoaDon, soluong, dongia)
+VALUES (4, 2, 2, 55000),
+       (5, 2, 1, 89000),
+       (1, 3, 1, 333000),
+       (2, 5, 1, 733000),
+       (3, 6, 1, 883000);
+	   select * from hoa_don_chi_tiet
 
 
 -- Bảng Nhân viên
-INSERT INTO Nguoi_dung( tenNguoi_dung, ngaysinh,matKhau, sdt, gioitinh, email,trangthai)
-VALUES (N'Nguyễn Văn A', '4-15-2005','000','0365796964', 1 ,'nguyena@gmail.com', N'Đang làm việc'),
-       (N'Nguyễn Văn B', '7-7-1999','001' , '0348123364', 1 ,'nguyenb@gmail.com', N'Nghỉ làm'),
-       (N'Nguyễn Văn C', '4-4-2007','002' , '0335345964', 0 ,'nguyenc@gmail.com', N'Đang làm việc'),
-       (N'Nguyễn Văn D', '8-4-1998','003' , '0348556496', 0 ,'nguyend@gmail.com', N'Đang làm việc'),
-       (N'Nguyễn Văn E', '7-19-2003','009', '0348358657', 0 ,'nguyene@gmail.com', N'Đang làm việc');
+INSERT INTO Nguoi_dung(maNguoiDung,tenNguoi_dung, ngaysinh,matKhau, sdt, gioitinh, email,vaitro)
+VALUES (N'NV01',N'Nguyễn Văn A', '4-15-2005','000','0365796964', 1 ,'nguyena@gmail.com',1),
+       (N'NV02',N'Nguyễn Văn B', '7-7-1999','001' , '0348123364', 1 ,'nguyenb@gmail.com',0),
+       (N'NV03',N'Nguyễn Văn C', '4-4-2007','002' , '0335345964', 0 ,'nguyenc@gmail.com',1),
+       (N'NV04',N'Nguyễn Văn D', '8-4-1998','003' , '0348556496', 0 ,'nguyend@gmail.com',0),
+       (N'NV05',N'Nguyễn Văn E', '7-19-2003','009', '0348358657', 0 ,'nguyene@gmail.com',0);
 
 
 -- Bảng Vouchers
@@ -290,3 +286,21 @@ where sp.idsp = 1 and (spct.idChatLieu = 2 and spct.idMauSac = 4)
 
 SELECT    email, matKhau
 FROM         Nguoi_dung
+SELECT    idnguoi_dung, maNguoiDung, tenNguoi_dung, ngaysinh, matKhau, sdt, gioitinh, email, vaitro, trangthai
+FROM         Nguoi_dung
+SELECT    maNguoiDung, tenNguoi_dung, ngaysinh, matKhau, sdt, gioitinh, email, vaitro FROM    Nguoi_dung   Nguoi_dung where maNguoiDung like  or tenNguoi_dung like ? or email like ?
+SELECT    hoa_don.maHoaDon, Nguoi_dung.maNguoiDung, khach_hang.maKhachHang, hoa_don.ngayban
+FROM         hoa_don INNER JOIN
+                      Nguoi_dung ON hoa_don.idnguoi_dung = Nguoi_dung.idnguoi_dung INNER JOIN
+                      khach_hang ON hoa_don.idKhachHang = khach_hang.idKhachHang where hoa_don.trangthai =?
+SELECT    maHoaDon, idKhachHang, idnguoi_dung, ngayban, trangthai
+FROM         hoa_don
+SELECT    maHoaDon, idKhachHang, idnguoi_dung, ngayban,trangthai FROM hoa_don
+SELECT    hoa_don.idHoaDon, hoa_don.maHoaDon, Nguoi_dung.maNguoiDung, khach_hang.maKhachHang, hoa_don.ngayban, hoa_don.trangthai
+FROM         hoa_don LEFT  JOIN
+                      Nguoi_dung ON hoa_don.idnguoi_dung = Nguoi_dung.idnguoi_dung LEFT  JOIN
+                      khach_hang ON hoa_don.idKhachHang = khach_hang.idKhachHang
+SELECT    san_pham.idsp, san_pham.idloai_sp, san_pham.idThuongHieu, san_pham_chi_tiet.idChatLieu, san_pham_chi_tiet.idMauSac, san_pham_chi_tiet.doCan, san_pham_chi_tiet.giaThanh, san_pham_chi_tiet.soLuong, 
+                      san_pham_chi_tiet.moTa
+FROM         san_pham INNER JOIN
+                      san_pham_chi_tiet ON san_pham.idsp = san_pham_chi_tiet.idsp
