@@ -5,7 +5,10 @@
 package com.raven.login;
 
 import com.raven.main.Main;
+import java.awt.Color;
+import java.awt.GradientPaint;
 import javax.swing.JOptionPane;
+import model.Check_user_login;
 import model.NguoiDung;
 import service.NguoiDung_Service;
 
@@ -26,8 +29,9 @@ public class DangNhap extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         txt_email.setText(null);
         txt_pass.setText(null);
+
     }
-public static  String mand;
+
     void dangnhap() {
 
         String email = txt_email.getText().trim();
@@ -37,12 +41,11 @@ public static  String mand;
             if (ndsv.dangNhap_email(email) != null) {
                 if (ndsv.dangNhap(email, matKhau) != null) {
                     JOptionPane.showMessageDialog(this, "Thanh cong ");
-                    this.dispose();
-                    Main main = new Main();
-                    main.setVisible(true);
                     NguoiDung nd = ndsv.dangNhap_email(email);
-                    
-                    mand = nd.getMaND();
+                    Check_user_login.mand = nd.getVaiTro();
+                    System.out.println(Check_user_login.mand);
+                    this.dispose();
+
                 } else {
                     JOptionPane.showMessageDialog(this, "mat khau khong dung");
                 }
@@ -72,6 +75,7 @@ public static  String mand;
         txt_pass = new javax.swing.JPasswordField();
         btn_login = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         Right1 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -82,23 +86,29 @@ public static  String mand;
 
         Left.setBackground(new java.awt.Color(255, 255, 255));
         Left.setMinimumSize(new java.awt.Dimension(400, 500));
+        Left.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel1.setForeground(new java.awt.Color(51, 51, 255));
         jLabel1.setText("LOGIN");
+        Left.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(138, 51, -1, -1));
 
         jLabel2.setBackground(new java.awt.Color(102, 102, 102));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Email");
+        Left.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 139, -1, -1));
 
         txt_email.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txt_email.setForeground(new java.awt.Color(102, 102, 102));
+        Left.add(txt_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 171, 343, 40));
 
         jLabel3.setBackground(new java.awt.Color(102, 102, 102));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Password");
+        Left.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 229, -1, -1));
+        Left.add(txt_pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 261, 343, 40));
 
-        btn_login.setBackground(new java.awt.Color(0, 102, 102));
+        btn_login.setBackground(new java.awt.Color(102, 0, 255));
         btn_login.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btn_login.setForeground(new java.awt.Color(255, 255, 255));
         btn_login.setText("Login");
@@ -107,6 +117,7 @@ public static  String mand;
                 btn_loginActionPerformed(evt);
             }
         });
+        Left.add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 341, 343, 36));
 
         jLabel8.setText("Đổi mật khẩu");
         jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -114,51 +125,20 @@ public static  String mand;
                 jLabel8MouseClicked(evt);
             }
         });
+        Left.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 313, -1, -1));
 
-        javax.swing.GroupLayout LeftLayout = new javax.swing.GroupLayout(Left);
-        Left.setLayout(LeftLayout);
-        LeftLayout.setHorizontalGroup(
-            LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(LeftLayout.createSequentialGroup()
-                .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(LeftLayout.createSequentialGroup()
-                        .addGap(138, 138, 138)
-                        .addComponent(jLabel1))
-                    .addGroup(LeftLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel2)
-                                .addComponent(txt_email)
-                                .addComponent(jLabel3)
-                                .addComponent(txt_pass, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
-                                .addComponent(btn_login, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
-        LeftLayout.setVerticalGroup(
-            LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(LeftLayout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(jLabel1)
-                .addGap(40, 40, 40)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txt_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_login, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(123, Short.MAX_VALUE))
-        );
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Pictogrammers-Material-Logout-variant.24.png"))); // NOI18N
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
+        Left.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 80, 80));
 
-        getContentPane().add(Left, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 0, -1, -1));
+        getContentPane().add(Left, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 0, 400, 500));
 
-        Right1.setBackground(new java.awt.Color(0, 102, 102));
+        Right1.setBackground(new java.awt.Color(102, 51, 255));
         Right1.setPreferredSize(new java.awt.Dimension(400, 500));
 
         jLabel16.setFont(new java.awt.Font("Showcard Gothic", 1, 48)); // NOI18N
@@ -218,6 +198,12 @@ public static  String mand;
         dmk.setLocationRelativeTo(null);
     }//GEN-LAST:event_jLabel8MouseClicked
 
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+
+        this.dispose();
+
+    }//GEN-LAST:event_jLabel4MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -263,6 +249,7 @@ public static  String mand;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField txt_email;
     private javax.swing.JPasswordField txt_pass;

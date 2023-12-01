@@ -8,6 +8,7 @@ import com.raven.event.EventShowPopupMenu;
 import com.raven.form.BanHangForm;
 
 import com.raven.form.Form_Home;
+import com.raven.form.Form_Home_login;
 
 import com.raven.form.MainForm;
 
@@ -27,6 +28,7 @@ import java.awt.JobAttributes;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import model.Check_user_login;
 import model.NguoiDung;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
@@ -41,11 +43,14 @@ public class Main extends javax.swing.JFrame {
     private Header header;
     private MainForm main;
     private Animator animator;
-String manv = DangNhap.mand;
+    int checkUserLogin = -1;
+
     public Main() {
         initComponents();
         init();
-        System.out.println(manv);
+        checkUserLogin = Check_user_login.mand;
+        System.out.println(checkUserLogin);
+
     }
 
     private void init() {
@@ -58,24 +63,40 @@ String manv = DangNhap.mand;
             @Override
             public void menuSelected(int menuIndex, int subMenuIndex) {
                 System.out.println("Menu Index : " + menuIndex + " SubMenu Index " + subMenuIndex);
+                if (menuIndex == 0) {
+                    if (subMenuIndex == -1) {
+                        main.showForm(new Form_Home_login());
+                    }
+                }
                 if (menuIndex == 1) {
                     if (subMenuIndex == 0) {
-                        if (nd.getVaiTro()==0) {
+                        if (checkUserLogin == -1) {
                             main.showForm(new SanPhamForm(main));
-                        }else{
+                        } else {
                             JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
                         }
 
                     }
                 }
-                if (menuIndex == 2) {
-                    if (subMenuIndex == 0) {
-                        main.showForm(new BanHangForm());
+                if (menuIndex == 3) {
+                    if (subMenuIndex == -1) {
+                        if (checkUserLogin == -1) {
+                            main.showForm(new NhanVienForm());
+                        } else {
+                            JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
+                        }
+
                     }
                 }
-                if (menuIndex == 3) {
-                    if (subMenuIndex == 0) {
-                        main.showForm(new NhanVienForm());
+                if (menuIndex == 4) {
+                    if (subMenuIndex == -1) {
+
+                        if (checkUserLogin ==-1) {
+                            main.showForm(new KhachHangForm());
+                        } else {
+                            JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
+                        }
+
                     }
                 }
             }

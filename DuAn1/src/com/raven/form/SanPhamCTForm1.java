@@ -109,7 +109,7 @@ public class SanPhamCTForm1 extends javax.swing.JPanel {
         model.getDataVector().removeAllElements();
         try {
             String query = "SELECT top 5 spct.id_sp_chi_tiet,cl.tenChatLieu,ms.tenMauSac,spct.doCan,"
-                    + "spct.giaThanh,spct.giaNhap,spct.soLuong,"
+                    + "spct.giaNhap,spct.giaThanh,spct.soLuong,"
                     + "spct.hinhanh,spct.moTa,spct.trangThai\n"
                     + "from san_pham_chi_tiet spct INNER JOIN\n"
                     + "chat_lieu cl ON cl.idChatLieu = spct.idChatLieu INNER JOIN\n"
@@ -126,8 +126,8 @@ public class SanPhamCTForm1 extends javax.swing.JPanel {
                 String tencl = rs.getString(2);
                 String tenms = rs.getString(3);
                 Double doCan = rs.getDouble(4);
-                Double giathanh = rs.getDouble(5);
-                Double giaNhap = rs.getDouble(6);
+                Double giaNhap = rs.getDouble(5);
+                Double giathanh = rs.getDouble(6);
                 Integer soluong = rs.getInt(7);
                 String hinhanh = rs.getString(8);
                 String mota = rs.getString(9);
@@ -136,8 +136,8 @@ public class SanPhamCTForm1 extends javax.swing.JPanel {
                 v.add(tencl);
                 v.add(tenms);
                 v.add(doCan);
-                v.add(giathanh);
                 v.add(giaNhap);
+                v.add(giathanh);
                 v.add(soluong);
                 v.add(hinhanh);
                 v.add(mota);

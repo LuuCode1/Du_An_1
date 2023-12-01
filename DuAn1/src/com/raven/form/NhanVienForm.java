@@ -119,7 +119,6 @@ public class NhanVienForm extends javax.swing.JPanel {
 //            checkma.setText(null);
 //        }
 //    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -436,43 +435,46 @@ public class NhanVienForm extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Thành công");
                 fillTable(ndsv.SelectAll());
 
-//            final String username = "hall3baycup@gmail.com";
-//            final String password = "nobita123z";
-//
-//            Properties prop = new Properties();
-//            prop.put("mail.smtp.host", "smtp.gmail.com");
-//            prop.put("mail.smtp.port", "587");
-//            prop.put("mail.smtp.auth", "true");
-//            prop.put("mail.smtp.starttls.enable", "true"); //TLS
-//
-//            Session session = Session.getInstance(prop,
-//                    new javax.mail.Authenticator() {
-//                protected PasswordAuthentication getPasswordAuthentication() {
-//                    return new PasswordAuthentication(username, password);
-//                }
-//            });
-//
-//            try {
-//
-//                Message message = new MimeMessage(session);
-//                message.setFrom(new InternetAddress("hall3baycup@gmail.com"));
-//                message.setRecipients(
-//                        Message.RecipientType.TO,
-//                        InternetAddress.parse(txtEmail.getText())
-//                );
-//                message.setSubject("Chào Mừng : " + txtTenNV.getText());
-//                message.setText("thông tin tài khoản của bạn:\n"
-//                        + "\n"
-//                        + "Tên đăng nhập: " + txtEmail.getText()
-//                        + "Mật khẩu:" + txtMatKhau.getText());
-//
-//                Transport.send(message);
-//
-//                System.out.println("Done");
-//
-//            } catch (MessagingException e) {
-//                e.printStackTrace();
-//            }
+                final String username = "bheos72@gmail.com";
+                final String password = "wpyw xlbb jaiv cvlc";
+
+                Properties prop = new Properties();
+                prop.put("mail.smtp.host", "smtp.gmail.com");
+                prop.put("mail.smtp.port", "587");
+                prop.put("mail.smtp.auth", "true");
+                prop.put("mail.smtp.starttls.enable", "true"); //TLS
+
+                Session session = Session.getInstance(prop,
+                        new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
+
+                try {
+
+                    Message message = new MimeMessage(session);
+                    message.setFrom(new InternetAddress("bheos72@gmail.com"));
+                    message.setRecipients(
+                            Message.RecipientType.TO,
+                            InternetAddress.parse(txtEmail.getText())
+                    );
+                    message.setSubject("Chào mừng " + txtTenNV.getText() + " tham gia hệ thống");
+                    message.setText("Kính chào " + txtTenNV.getText() + ",\n\n"
+                            + "Chúng tôi xin gửi tới bạn thông tin tài khoản để truy cập hệ thống:\n"
+                            + "- Tên đăng nhập: " + txtEmail.getText() + "\n"
+                            + "- Mật khẩu: " + txtMatKhau.getText() + "\n\n"
+                            + "Nếu cần hỗ trợ gì thêm, vui lòng liên hệ với bộ phận hỗ trợ.\n\n"
+                            + "Trân trọng,\n"
+                            + "Ban quản trị hệ thống");
+
+                    Transport.send(message);
+
+                    System.out.println("Done");
+
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
             }
         }
 

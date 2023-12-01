@@ -13,9 +13,10 @@ import java.awt.Color;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-public class Form_Home extends javax.swing.JPanel {
+public class Form_Home_login extends javax.swing.JPanel {
     DangNhap login = new DangNhap();
-    public Form_Home() {
+    public Form_Home_login() {
+        login.setVisible(true);
         initComponents();
         table1.fixTable(jScrollPane1);
         setOpaque(false);
