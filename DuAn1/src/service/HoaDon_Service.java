@@ -4,6 +4,7 @@
  */
 package service;
 
+import java.util.Date;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,30 +23,29 @@ import model.Thuonghieu;
  * @author Asus
  */
 public class HoaDon_Service {
-    
+
     NguoiDung_Service ndsv = new NguoiDung_Service();
     KhachHangService khsv = new KhachHangService();
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
     String sql = null;
-    
-    public List<HoaDon> Select() {
+
+    public List<HoaDon> Select(int trangthai) {
         List<HoaDon> list = new ArrayList<>();
-        sql = "SELECT    hoa_don.idHoaDon, hoa_don.maHoaDon, Nguoi_dung.tenNguoi_dung, khach_hang.tenKhachHang, hoa_don.ngayban, hoa_don.trangthai\n"
-                + "FROM         hoa_don LEFT  JOIN\n"
-                + "                      Nguoi_dung ON hoa_don.idnguoi_dung = Nguoi_dung.idnguoi_dung LEFT  JOIN\n"
-                + "                      khach_hang ON hoa_don.idKhachHang = khach_hang.idKhachHang ";
+        sql = "SELECT    hoa_don.maHoaDon, Nguoi_dung.tenNguoi_dung, khach_hang.tenKhachHang, hoa_don.ngayban\n" +
+"FROM         hoa_don LEFT JOIN\n" +
+"                      Nguoi_dung ON hoa_don.idnguoi_dung = Nguoi_dung.idnguoi_dung LEFT JOIN\n" +
+"                      khach_hang ON hoa_don.idKhachHang = khach_hang.idKhachHang where hoa_don.trangthai=?";
         try {
             con = DBconnect.getConnection();
             ps = con.prepareStatement(sql);
-//            ps.setObject(1, tt);
+            ps.setObject(1, trangthai);
             rs = ps.executeQuery();
             while (rs.next()) {
-                KhachHang kh = new KhachHang(null, rs.getString(4), null, null);
-                NguoiDung nd = new NguoiDung(null, rs.getString(3), null, null, null, 0, null, 0);
-                HoaDon hd = new HoaDon();
-                hd = new HoaDon(rs.getInt(1), rs.getString(2), kh, nd, rs.getDate(5), 0, 0);
+                KhachHang kh = new KhachHang(null, rs.getString(3), null, null);
+                NguoiDung nd = new NguoiDung(null, rs.getString(2), null, null, null, 0, null, 0);
+                HoaDon hd = new HoaDon(rs.getString(1), kh, nd, rs.getDate(4));
                 list.add(hd);
             }
             return list;
@@ -53,7 +53,7 @@ public class HoaDon_Service {
         }
         return null;
     }
-    
+
     public int Insert(HoaDon hd) {
         sql = "INSERT INTO hoa_don(maHoaDon,trangthai)\n"
                 + "VALUES ( ?,?)";
@@ -68,7 +68,7 @@ public class HoaDon_Service {
         }
         return 0;
     }
-    
+
     public List<HoaDonChiTiet> getListHoaDonChiTiet(String MaHD) {
         List<HoaDonChiTiet> getList = new ArrayList<>();
         try {
@@ -100,5 +100,72 @@ public class HoaDon_Service {
             e.printStackTrace();
         }
         return getList;
+    }
+
+    public List<HoaDon> LichSuHoaDon(int a, int b) {
+        List<HoaDon> listhd = new ArrayList<>();
+        sql = """
+             SELECT hoa_don.idHoaDon, hoa_don.maHoaDon, Nguoi_dung.tenNguoi_dung, khach_hang.tenKhachHang, hoa_don.ngayban,hoa_don.tongtien, hoa_don.trangthai
+             FROM hoa_don
+             LEFT JOIN Nguoi_dung ON hoa_don.idnguoi_dung = Nguoi_dung.idnguoi_dung
+             LEFT JOIN khach_hang ON hoa_don.idKhachHang = khach_hang.idKhachHang
+             WHERE hoa_don.trangthai IN (?, ?)
+             """;
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, a);
+            ps.setObject(2, b);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                NguoiDung nd = new NguoiDung(null, rs.getString(3), null, null, null, 0, null, 0);
+                KhachHang kh = new KhachHang(null, rs.getString(4), null, null);
+                HoaDon hd = new HoaDon(rs.getInt(1),
+                        rs.getString(2), kh, nd,
+                        rs.getDate(5),
+                        rs.getDouble(6),
+                        rs.getInt(7));
+                listhd.add(hd);
+            }
+            return listhd;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<HoaDon> LichSuHoaDon_ngaythang(int a, int b, Date n, Date m) {
+        List<HoaDon> listhd = new ArrayList<>();
+        sql = """
+             SELECT hoa_don.idHoaDon, hoa_don.maHoaDon, Nguoi_dung.tenNguoi_dung, khach_hang.tenKhachHang, hoa_don.ngayban, hoa_don.trangthai
+                                   FROM hoa_don
+                                   LEFT JOIN Nguoi_dung ON hoa_don.idnguoi_dung = Nguoi_dung.idnguoi_dung
+                                   LEFT JOIN khach_hang ON hoa_don.idKhachHang = khach_hang.idKhachHang
+                                   WHERE hoa_don.trangthai IN (?, ?)
+                                   AND hoa_don.ngayban BETWEEN ? AND ?;
+             """;
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, a);
+            ps.setObject(2, b);
+            ps.setObject(3, n);
+            ps.setObject(4, m);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                NguoiDung nd = new NguoiDung(null, rs.getString(3), null, null, null, 0, null, 0);
+                KhachHang kh = new KhachHang(null, rs.getString(4), null, null);
+                HoaDon hd = new HoaDon(rs.getInt(1),
+                        rs.getString(2), kh, nd,
+                        rs.getDate(5),
+                        rs.getDouble(6),
+                        rs.getInt(7));
+                listhd.add(hd);
+            }
+            return listhd;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
