@@ -25,6 +25,15 @@ public class SanPhamChiTiet {
     public SanPhamChiTiet() {
     }
 
+    public SanPhamChiTiet(int idSPChiTiet) {
+        this.idSPChiTiet = idSPChiTiet;
+    }
+
+    public SanPhamChiTiet(Integer soluong) {
+        this.soluong = soluong;
+    }
+    
+    
     public SanPhamChiTiet(SanPham sp, int idSPChiTiet, Mausac color, ChatLieu material, double giathanh, double giaNhap, Integer soluong, String hinhanh, String mota, String trangthai) {
         this.sp = sp;
         this.idSPChiTiet = idSPChiTiet;

@@ -146,4 +146,22 @@ public class KhachHangService {
         }
         return null;
     }
+    
+    public KhachHang findBYTenKH(String tenKH) {
+        sql = "SELECT * FROM  khach_hang where tenKhachHang =?";
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, tenKH);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                KhachHang kh = new KhachHang(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+                return kh;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return null;
+    }
 }

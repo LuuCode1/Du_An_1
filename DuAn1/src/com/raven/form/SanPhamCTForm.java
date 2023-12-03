@@ -443,6 +443,11 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         form2.add(btn_deleteAnh1, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 260, -1, -1));
 
         cbochatlieu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbochatlieu.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cbochatlieuFocusGained(evt);
+            }
+        });
         cbochatlieu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 cbochatlieuMousePressed(evt);
@@ -478,6 +483,11 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         form2.add(themnhanhmausac1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, 230, 0));
 
         cbomausac.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbomausac.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cbomausacFocusGained(evt);
+            }
+        });
         cbomausac.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 cbomausacMouseEntered(evt);
@@ -925,6 +935,16 @@ public class SanPhamCTForm extends javax.swing.JPanel {
             lbl_soTrang.setText(trang + "/" + soTrang);
         }
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void cbomausacFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbomausacFocusGained
+        // TODO add your handling code here:
+        CBo_MauSac();
+    }//GEN-LAST:event_cbomausacFocusGained
+
+    private void cbochatlieuFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbochatlieuFocusGained
+        // TODO add your handling code here:
+        CBo_ChatLieu();
+    }//GEN-LAST:event_cbochatlieuFocusGained
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

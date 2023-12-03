@@ -9,31 +9,48 @@ package model;
  * @author Lenovo
  */
 public class HoaDonChiTiet {
-
+    private int id_hdct;
     private int Soluong;
     private Double DonGia;
     private HoaDon hoaDon;
     private SanPhamChiTiet sanPham;
-    private SanPham th;
 
     public HoaDonChiTiet() {
     }
 
-    public HoaDonChiTiet(Integer idHoaDon, Integer idCTSP, int Soluong, Double DonGia, HoaDon hoaDon, SanPhamChiTiet sanPham, SanPham th) {
+    public HoaDonChiTiet(int id_hdct, int Soluong, Double DonGia, HoaDon hoaDon, SanPhamChiTiet sanPham) {
+        this.id_hdct = id_hdct;
         this.Soluong = Soluong;
         this.DonGia = DonGia;
         this.hoaDon = hoaDon;
         this.sanPham = sanPham;
-        this.th = th;
     }
 
-    public HoaDonChiTiet(int Soluong, Double DonGia, HoaDon haDon, SanPhamChiTiet sanPham, SanPham th) {
+    public HoaDonChiTiet(Integer idHoaDon, Integer idCTSP, int Soluong, Double DonGia, HoaDon hoaDon, SanPhamChiTiet sanPham) {
         this.Soluong = Soluong;
         this.DonGia = DonGia;
         this.hoaDon = hoaDon;
         this.sanPham = sanPham;
-        this.th = th;
+       
     }
+
+    public HoaDonChiTiet(int Soluong, Double DonGia, HoaDon haDon, SanPhamChiTiet sanPham) {
+        this.Soluong = Soluong;
+        this.DonGia = DonGia;
+        this.hoaDon = hoaDon;
+        this.sanPham = sanPham;
+   
+    }
+
+    public int getId_hdct() {
+        return id_hdct;
+    }
+
+    public void setId_hdct(int id_hdct) {
+        this.id_hdct = id_hdct;
+    }
+    
+    
 
     public int getSoluong() {
         return Soluong;
@@ -57,14 +74,6 @@ public class HoaDonChiTiet {
 
     public void setHoaDon(HoaDon hoaDon) {
         this.hoaDon = hoaDon;
-    }
-
-    public SanPham getTh() {
-        return th;
-    }
-
-    public void setTh(SanPham th) {
-        this.th = th;
     }
 
     public SanPhamChiTiet getSanPham() {

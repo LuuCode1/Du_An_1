@@ -255,5 +255,23 @@ public class NguoiDung_Service {
         }
         return 0;
     }
+    
+    public NguoiDung findByTenND(String tenND) {
+        sql = "SELECT * FROM  Nguoi_dung where tenNguoi_dung =?";
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, tenND);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                NguoiDung nd = new NguoiDung(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9));
+                return nd;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return null;
+    }
 
 }

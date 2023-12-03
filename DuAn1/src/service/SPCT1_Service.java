@@ -11,6 +11,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import model.ChatLieu;
+import model.HoaDon;
+import model.HoaDonChiTiet;
 import model.Mausac;
 import model.SanPham;
 import model.SanPhamChiTiet;
@@ -32,7 +34,7 @@ public class SPCT1_Service {
                 + "san_pham sp ON sp.idsp = spct.idsp INNER JOIN\n"
                 + "chat_lieu cl ON cl.idChatLieu = spct.idChatLieu INNER JOIN\n"
                 + "mau_sac ms ON ms.idMauSac = spct.idMauSac\n"
-                + " where sp.idsp = ?";
+                + "where sp.idsp = ?";
         List<SanPhamChiTiet> list = new ArrayList<>();
         try {
             con = DBconnect.getConnection();
@@ -76,7 +78,6 @@ public class SPCT1_Service {
 
     public SanPhamChiTiet selectByID(int id) {
         sql = "SELECT spct.id_sp_chi_tiet,cl.tenChatLieu,ms.tenMauSac,spct.doCan,spct.giaThanh,spct.giaNhap,spct.soLuong,spct.hinhanh,spct.moTa,spct.trangThai\n"
-
                 + "from san_pham_chi_tiet spct INNER JOIN\n"
                 + "san_pham sp ON sp.idsp = spct.idsp INNER JOIN\n"
                 + "chat_lieu cl ON cl.idChatLieu = spct.idChatLieu INNER JOIN\n"
@@ -90,7 +91,7 @@ public class SPCT1_Service {
             while (rs.next()) {
                 ChatLieu cl = new ChatLieu(null, rs.getString(2));
                 Mausac ms = new Mausac(null, rs.getString(3));
-SanPhamChiTiet spct = new SanPhamChiTiet(null, rs.getInt(1), ms, cl,rs.getDouble(4) ,rs.getDouble(5) ,rs.getDouble(6), rs.getInt(7), rs.getString(8), rs.getString(9), rs.getString(10));
+                SanPhamChiTiet spct = new SanPhamChiTiet(null, rs.getInt(1), ms, cl,rs.getDouble(4) ,rs.getDouble(5) ,rs.getDouble(6), rs.getInt(7), rs.getString(8), rs.getString(9), rs.getString(10));
                 return spct;
                 
             }
@@ -115,11 +116,8 @@ SanPhamChiTiet spct = new SanPhamChiTiet(null, rs.getInt(1), ms, cl,rs.getDouble
             ps.setObject(2, spct.getMaterial().getIdChatLieu());
             ps.setObject(3, spct.getColor().getIdMauSac());
             ps.setObject(4, spct.getDoCan());
-
-
             ps.setObject(5, spct.getGiathanh());
             ps.setObject(6, spct.getGiaNhap());
-
             ps.setObject(7, spct.getSoluong());
             ps.setObject(8, spct.getHinhanh());
             ps.setObject(9, spct.getMota());
@@ -155,11 +153,8 @@ SanPhamChiTiet spct = new SanPhamChiTiet(null, rs.getInt(1), ms, cl,rs.getDouble
             ps.setObject(1, spct.getMaterial().getIdChatLieu());
             ps.setObject(2, spct.getColor().getIdMauSac());
             ps.setObject(3, spct.getDoCan());
-
-
             ps.setObject(4, spct.getGiathanh());
             ps.setObject(5, spct.getGiaNhap());
-
             ps.setObject(6, spct.getSoluong());
             ps.setObject(7, spct.getHinhanh());
             ps.setObject(8, spct.getMota());
@@ -296,4 +291,19 @@ sql = "SELECT spct.id_sp_chi_tiet,cl.tenChatLieu,ms.tenMauSac,spct.doCan,spct.gi
         }
         return null;
     }
+    
+     public int updateSL(SanPhamChiTiet spct, int idspct) {
+        sql = "UPDATE san_pham_chi_tiet SET soLuong = ? WHERE id_sp_chi_tiet = ?";
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, spct.getSoluong());
+            ps.setObject(2, idspct);
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+     
 }
