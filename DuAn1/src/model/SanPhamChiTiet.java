@@ -25,6 +25,10 @@ public class SanPhamChiTiet {
     public SanPhamChiTiet() {
     }
 
+    public SanPhamChiTiet(SanPham sp) {
+        this.sp = sp;
+    }
+
     public SanPhamChiTiet(SanPham sp, int idSPChiTiet, Mausac color, ChatLieu material, double giathanh, double giaNhap, Integer soluong, String hinhanh, String mota, String trangthai) {
         this.sp = sp;
         this.idSPChiTiet = idSPChiTiet;
@@ -77,6 +81,12 @@ public class SanPhamChiTiet {
         this.trangthai = trangthai;
     }
 
+    public SanPhamChiTiet(SanPham sp, Mausac color, ChatLieu material) {
+        this.sp = sp;
+        this.color = color;
+        this.material = material;
+    }
+
     public double getGiaNhap() {
         return giaNhap;
     }
@@ -84,8 +94,6 @@ public class SanPhamChiTiet {
     public void setGiaNhap(double giaNhap) {
         this.giaNhap = giaNhap;
     }
-
-
 
     public double getDoCan() {
         return doCan;
@@ -169,12 +177,12 @@ public class SanPhamChiTiet {
 
     public Object[] todata() {
         return new Object[]{this.idSPChiTiet,
-            this.material.getTenChatLieu(), this.color.getTenMauSac(), this.giathanh,this.giaNhap, this.soluong, this.hinhanh, this.mota, this.trangthai};
+            this.material.getTenChatLieu(), this.color.getTenMauSac(), this.giathanh, this.giaNhap, this.soluong, this.hinhanh, this.mota, this.trangthai};
     }
 
     public Object[] todata1() {
         return new Object[]{this.idSPChiTiet,
-            this.material.getTenChatLieu(), this.color.getTenMauSac(), this.doCan,this.giaNhap, this.giathanh, this.soluong, this.hinhanh, this.mota, this.trangthai};
+            this.material.getTenChatLieu(), this.color.getTenMauSac(), this.doCan, this.giaNhap, this.giathanh, this.soluong, this.hinhanh, this.mota, this.trangthai};
     }
 
     public Object[] todata_SPB() {

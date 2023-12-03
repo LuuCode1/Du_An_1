@@ -16,6 +16,10 @@ public class Thuonghieu {
     public Thuonghieu() {
     }
 
+    public Thuonghieu(String tenThuongHieu) {
+        this.tenThuongHieu = tenThuongHieu;
+    }
+
     public Thuonghieu(int idThuongHieu, String maThuongHieu, String tenThuongHieu) {
         this.idThuongHieu = idThuongHieu;
         this.maThuongHieu = maThuongHieu;

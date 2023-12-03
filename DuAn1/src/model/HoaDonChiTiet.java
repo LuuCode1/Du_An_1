@@ -9,30 +9,43 @@ package model;
  * @author Lenovo
  */
 public class HoaDonChiTiet {
-
+ private int idHoaDonCHiTiet;
     private int Soluong;
     private Double DonGia;
     private HoaDon hoaDon;
     private SanPhamChiTiet sanPham;
-    private SanPham th;
+    private double thanhtien;
 
     public HoaDonChiTiet() {
     }
 
-    public HoaDonChiTiet(Integer idHoaDon, Integer idCTSP, int Soluong, Double DonGia, HoaDon hoaDon, SanPhamChiTiet sanPham, SanPham th) {
+    public HoaDonChiTiet(int Soluong, Double DonGia, HoaDon hoaDon, SanPhamChiTiet sanPham) {
         this.Soluong = Soluong;
         this.DonGia = DonGia;
         this.hoaDon = hoaDon;
         this.sanPham = sanPham;
-        this.th = th;
     }
 
-    public HoaDonChiTiet(int Soluong, Double DonGia, HoaDon haDon, SanPhamChiTiet sanPham, SanPham th) {
+    public HoaDonChiTiet(int Soluong, Double DonGia, SanPhamChiTiet sanPham) {
         this.Soluong = Soluong;
         this.DonGia = DonGia;
-        this.hoaDon = hoaDon;
         this.sanPham = sanPham;
-        this.th = th;
+    }
+
+    public double getThanhtien() {
+        return thanhtien;
+    }
+
+    public void setThanhtien(double thanhtien) {
+        this.thanhtien = thanhtien;
+    }
+
+    public int getIdHoaDonCHiTiet() {
+        return idHoaDonCHiTiet;
+    }
+
+    public void setIdHoaDonCHiTiet(int idHoaDonCHiTiet) {
+        this.idHoaDonCHiTiet = idHoaDonCHiTiet;
     }
 
     public int getSoluong() {
@@ -59,14 +72,6 @@ public class HoaDonChiTiet {
         this.hoaDon = hoaDon;
     }
 
-    public SanPham getTh() {
-        return th;
-    }
-
-    public void setTh(SanPham th) {
-        this.th = th;
-    }
-
     public SanPhamChiTiet getSanPham() {
         return sanPham;
     }
@@ -75,7 +80,28 @@ public class HoaDonChiTiet {
         this.sanPham = sanPham;
     }
 
-    public double getThanhTien() {
-        return DonGia * Soluong;
+    public HoaDonChiTiet(int Soluong, Double DonGia, SanPhamChiTiet sanPham, double thanhtien) {
+        this.Soluong = Soluong;
+        this.DonGia = DonGia;
+        this.sanPham = sanPham;
+        this.thanhtien = thanhtien;
+    }
+
+  
+
+    public Object[] todata_hdct() {
+        return new Object[]{this.hoaDon.getMahD(), this.sanPham.getSp().getTenSP(), this.Soluong, this.DonGia};
+    }
+
+    public Object[] todata_giohang() {
+        return new Object[]{
+            this.sanPham.getSp().getMaSP(),
+            this.sanPham.getSp().getTenSP(),
+            this.sanPham.getMaterial().getTenChatLieu(),
+            this.sanPham.getColor().getTenMauSac(),
+            this.sanPham.getSp().getBrand().getTenThuongHieu(),
+            this.Soluong,
+            this.DonGia
+        };
     }
 }

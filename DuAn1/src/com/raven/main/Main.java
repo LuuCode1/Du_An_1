@@ -13,6 +13,7 @@ import com.raven.form.Form_Home_login;
 import com.raven.form.MainForm;
 
 import com.raven.form.KhachHangForm;
+import com.raven.form.Lich_Su_Hoa_Don;
 import com.raven.form.MainForm;
 import com.raven.form.NhanVienForm;
 
@@ -93,6 +94,17 @@ public class Main extends javax.swing.JFrame {
 
                         if (checkUserLogin ==-1) {
                             main.showForm(new KhachHangForm());
+                        } else {
+                            JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
+                        }
+
+                    }
+                }
+                if (menuIndex == 6) {
+                    if (subMenuIndex == -1) {
+
+                        if (checkUserLogin ==-1) {
+                            main.showForm(new Lich_Su_Hoa_Don());
                         } else {
                             JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
                         }
