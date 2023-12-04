@@ -124,7 +124,6 @@ public class QuanLyThuocTinhSanPham extends javax.swing.JPanel {
         txt_ma = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -169,9 +168,9 @@ public class QuanLyThuocTinhSanPham extends javax.swing.JPanel {
                 rbo_thMouseClicked(evt);
             }
         });
-        jPanel2.add(rbo_th, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 130, -1, -1));
+        jPanel2.add(rbo_th, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 130, 110, -1));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 30, 150, 200));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 30, 190, 200));
         jPanel1.add(txt_ten, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 321, 42));
         jPanel1.add(txt_ma, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 321, 42));
 
@@ -189,15 +188,7 @@ public class QuanLyThuocTinhSanPham extends javax.swing.JPanel {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 100, 40));
-
-        jButton4.setText("Xóa");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 250, 100, 40));
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 100, 40));
 
         jButton5.setText("Sửa");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -205,7 +196,7 @@ public class QuanLyThuocTinhSanPham extends javax.swing.JPanel {
                 jButton5ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 250, 100, 40));
+        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 250, 100, 40));
 
         jLabel1.setText("Mã");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, 40, -1));
@@ -314,38 +305,6 @@ public class QuanLyThuocTinhSanPham extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        index = tbl_bang.getSelectedRow();
-        String ma = tbl_bang.getValueAt(index, 0).toString();
-        if (rbo_Cl.isSelected()) {
-            int a = JOptionPane.showConfirmDialog(this, "ban that su muon xoa");
-            if (a == 0) {
-                if (mssv.delete_MS(ma) > 0) {
-                    JOptionPane.showMessageDialog(this, "thành công");
-                    fillTable_ChatLieu(chatlieusv.FILL_TO_CBO_ChatLieu());
-                }
-            }
-        }
-        if (rbo_th.isSelected()) {
-            int a = JOptionPane.showConfirmDialog(this, "ban that su muon xoa");
-            if (a == 0) {
-                if (thuonghieusv.delete_TH(ma) > 0) {
-                    JOptionPane.showMessageDialog(this, "thành công");
-                    fillTable_ThuongHieu(thuonghieusv.FILL_TO_CBO_ThuongHieu());
-                }
-            }
-        }
-        if (rbo_ms.isSelected()) {
-            int a = JOptionPane.showConfirmDialog(this, "ban that su muon xoa");
-            if (a == 0) {
-                if (mssv.delete_MS(ma) > 0) {
-                    JOptionPane.showMessageDialog(this, "thành công");
-                    fillTable_ChatLieu(chatlieusv.FILL_TO_CBO_ChatLieu());
-                }
-            }
-        }
-    }//GEN-LAST:event_jButton4ActionPerformed
-
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         index = tbl_bang.getSelectedRow();
         ChatLieu cl = read_CL();
@@ -423,7 +382,6 @@ public class QuanLyThuocTinhSanPham extends javax.swing.JPanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -74,12 +74,13 @@ public class NguoiDung_Service {
         }
     }
 
-    public int delete(String ma) {
-        sql = "Delete from Nguoi_dung where maNguoiDung =?";
+    public int Update_TrangThai(NguoiDung nd,String ma) {
+        sql = "update Nguoi_dung set trangthai =? where maNguoiDung =?";
         try {
             con = DBconnect.getConnection();
             ps = con.prepareStatement(sql);
-            ps.setObject(1, ma);
+            ps.setObject(1, nd.getTrangthai());
+            ps.setObject(2, ma);
             return ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,8 +89,8 @@ public class NguoiDung_Service {
     }
 
     public int Insert(NguoiDung nd) {
-        sql = "INSERT INTO Nguoi_dung(maNguoiDung,tenNguoi_dung, ngaysinh,matKhau, sdt, gioitinh, email,vaitro)\n"
-                + "VALUES (?,?,?,?,?,?,?,?)";
+        sql = "INSERT INTO Nguoi_dung(maNguoiDung,tenNguoi_dung, ngaysinh,matKhau, sdt, gioitinh, email,vaitro,trangthai)\n"
+                + "VALUES (?,?,?,?,?,?,?,?,?)";
         try {
             con = DBconnect.getConnection();
             ps = con.prepareStatement(sql);
@@ -101,6 +102,7 @@ public class NguoiDung_Service {
             ps.setObject(6, nd.getGioiTinh());
             ps.setObject(7, nd.getEmail());
             ps.setObject(8, nd.getVaiTro());
+            ps.setObject(9, nd.getTrangthai());
             return ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -137,7 +139,7 @@ public class NguoiDung_Service {
 
     public List<NguoiDung> SelectAll() {
         List<NguoiDung> list = new ArrayList<>();
-        sql = "SELECT     maNguoiDung, tenNguoi_dung, ngaysinh, matKhau, sdt, gioitinh, email, vaitro\n"
+        sql = "SELECT    maNguoiDung, tenNguoi_dung, ngaysinh, matKhau, sdt, gioitinh, email, vaitro, trangthai\n"
                 + "FROM         Nguoi_dung";
         try {
             con = DBconnect.getConnection();
@@ -152,7 +154,8 @@ public class NguoiDung_Service {
                         rs.getString("sdt"),
                         rs.getInt("gioitinh"),
                         rs.getString("email"),
-                        rs.getInt("vaitro"));
+                        rs.getInt("vaitro"),
+                        rs.getInt("trangthai"));
                 list.add(nd);
             }
             return list;
@@ -258,30 +261,22 @@ public class NguoiDung_Service {
         return 0;
     }
 
-    public NguoiDung Check_VaiTro(String manv) {
-        sql = "SELECT    vaitro \n"
-                + "FROM         Nguoi_dung   Nguoi_dung where maNguoiDung like ?";
+    public NguoiDung findByTenND(String tenND) {
+        sql = "SELECT * FROM  Nguoi_dung where tenNguoi_dung =?";
         try {
             con = DBconnect.getConnection();
             ps = con.prepareStatement(sql);
-            ps.setObject(1, manv);
+            ps.setObject(1, tenND);
             rs = ps.executeQuery();
             while (rs.next()) {
-                NguoiDung nd = new NguoiDung(
-                        null,
-                        null,
-                        null,
-                        null, // Change here
-                        null,
-                        0,
-                        null,
-                        rs.getInt("vaitro"));
+                NguoiDung nd = new NguoiDung(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9));
                 return nd;
             }
-
         } catch (Exception e) {
             e.printStackTrace();
+
         }
         return null;
     }
+
 }

@@ -51,7 +51,21 @@ public class mausac_service {
         }
         return null;
     }
-    public Mausac maMauSac(String ma){
+
+    public int insert(Mausac ms){
+         sql ="insert into mau_sac( maMauSac, tenMauSac) values (?,?) ";
+         try {
+             con = DBconnect.getConnection();
+            ps =  con.prepareStatement(sql);
+            ps.setObject(1, ms.getMaMauSac());
+            ps.setObject(2, ms.getTenMauSac());
+            return ps.executeUpdate();
+         } catch (Exception e) {
+             e.printStackTrace();
+             return 0;
+         }
+     }
+        public Mausac maMauSac(String ma){
         sql ="SELECT * FROM  mau_sac where maMauSac =?";
         try {
             con = DBconnect.getConnection();
@@ -68,19 +82,7 @@ public class mausac_service {
         }
         return null;
     }
-    public int insert(Mausac ms){
-         sql ="insert into mau_sac( maMauSac, tenMauSac) values (?,?) ";
-         try {
-             con = DBconnect.getConnection();
-            ps =  con.prepareStatement(sql);
-            ps.setObject(1, ms.getMaMauSac());
-            ps.setObject(2, ms.getTenMauSac());
-            return ps.executeUpdate();
-         } catch (Exception e) {
-             e.printStackTrace();
-             return 0;
-         }
-     }
+
     public int update_MS(Mausac ms,String ma) {
         sql = """
               Update mau_sac set tenMauSac = ? where maMauSac =?

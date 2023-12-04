@@ -131,18 +131,37 @@ public class Lich_Su_Hoa_Don extends javax.swing.JPanel {
 
         tbl_hdct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "null", "null", "null", "null", "null"
             }
-        ));
-        jScrollPane2.setViewportView(tbl_hdct);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
 
-        Jpanel_hoadonct.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 850, 220));
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tbl_hdct);
+        if (tbl_hdct.getColumnModel().getColumnCount() > 0) {
+            tbl_hdct.getColumnModel().getColumn(0).setResizable(false);
+            tbl_hdct.getColumnModel().getColumn(1).setResizable(false);
+            tbl_hdct.getColumnModel().getColumn(2).setResizable(false);
+            tbl_hdct.getColumnModel().getColumn(3).setResizable(false);
+            tbl_hdct.getColumnModel().getColumn(4).setResizable(false);
+            tbl_hdct.getColumnModel().getColumn(5).setResizable(false);
+            tbl_hdct.getColumnModel().getColumn(6).setResizable(false);
+            tbl_hdct.getColumnModel().getColumn(7).setResizable(false);
+            tbl_hdct.getColumnModel().getColumn(8).setResizable(false);
+        }
+
+        Jpanel_hoadonct.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 850, 180));
 
         jPanel1.add(Jpanel_hoadonct, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, 850, 220));
 
@@ -178,7 +197,7 @@ public class Lich_Su_Hoa_Don extends javax.swing.JPanel {
         });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, 100, -1));
 
-        color1.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 940, 620));
+        color1.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 960, 670));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -186,7 +205,8 @@ public class Lich_Su_Hoa_Don extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(color1, javax.swing.GroupLayout.DEFAULT_SIZE, 1073, Short.MAX_VALUE))
+                .addComponent(color1, javax.swing.GroupLayout.DEFAULT_SIZE, 1059, Short.MAX_VALUE)
+                .addGap(14, 14, 14))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

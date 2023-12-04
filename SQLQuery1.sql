@@ -74,6 +74,7 @@ CREATE TABLE Nguoi_dung (
   gioitinh  BIT  NOT NULL,
   email  VARCHAR(30)  NOT NULL,
   vaitro BIT NOT NULL,
+  trangthai BIT NOT NULL,
   PRIMARY KEY (idnguoi_dung),
 );
 
@@ -181,12 +182,12 @@ VALUES
   ('MA004', N'Voucher Freeship mừng khai trương', 300, '2023-3-31', 50000, N'Còn hạn');
 
   -- Bảng Nhân viên
-INSERT INTO Nguoi_dung(maNguoiDung,tenNguoi_dung, ngaysinh,matKhau, sdt, gioitinh, email,vaitro)
-VALUES (N'NV01',N'Nguyễn Văn A', '4-15-2005','000','0365796964', 1 ,'nguyena@gmail.com',1),
-       (N'NV02',N'Nguyễn Văn B', '7-7-1999','001' , '0348123364', 1 ,'nguyenb@gmail.com',0),
-       (N'NV03',N'Nguyễn Văn C', '4-4-2007','002' , '0335345964', 0 ,'nguyenc@gmail.com',1),
-       (N'NV04',N'Nguyễn Văn D', '8-4-1998','003' , '0348556496', 0 ,'nguyend@gmail.com',0),
-       (N'NV05',N'Nguyễn Văn E', '7-19-2003','009', '0348358657', 0 ,'nguyene@gmail.com',0);
+INSERT INTO Nguoi_dung(maNguoiDung,tenNguoi_dung, ngaysinh,matKhau, sdt, gioitinh, email,vaitro,trangthai)
+VALUES (N'NV01',N'Nguyễn Văn A', '4-15-2005','000','0365796964', 1 ,'nguyena@gmail.com',1,0),
+       (N'NV02',N'Nguyễn Văn B', '7-7-1999','001' , '0348123364', 1 ,'nguyenb@gmail.com',0,0),
+       (N'NV03',N'Nguyễn Văn C', '4-4-2007','002' , '0335345964', 0 ,'nguyenc@gmail.com',1,0),
+       (N'NV04',N'Nguyễn Văn D', '8-4-1998','003' , '0348556496', 0 ,'nguyend@gmail.com',0,0),
+       (N'NV05',N'Nguyễn Văn E', '7-19-2003','009', '0348358657', 0 ,'nguyene@gmail.com',0,1);
 
 -- Bảng Khách hàng
 INSERT INTO khach_hang(maKhachHang, tenKhachHang, diachi, sdt)
@@ -311,3 +312,23 @@ SELECT    san_pham.idsp, san_pham.idloai_sp, san_pham.idThuongHieu, san_pham_chi
                       san_pham_chi_tiet.moTa
 FROM         san_pham INNER JOIN
                       san_pham_chi_tiet ON san_pham.idsp = san_pham_chi_tiet.idsp
+ SELECT    san_pham.idsp, san_pham.masp, san_pham.tensp, loai_sp.tenloai_sp, thuong_hieu.tenThuongHieu
+FROM         san_pham INNER JOIN
+                      loai_sp ON san_pham.idloai_sp = loai_sp.idloai_sp INNER JOIN
+                      thuong_hieu ON san_pham.idThuongHieu = thuong_hieu.idThuongHieu
+SELECT    hoa_don.maHoaDon, san_pham.tensp, hoa_don_chi_tiet.soluong, hoa_don_chi_tiet.dongia
+             FROM         hoa_don INNER JOIN
+                                   hoa_don_chi_tiet ON hoa_don.idHoaDon = hoa_don_chi_tiet.idHoaDon INNER JOIN
+                                   san_pham_chi_tiet ON hoa_don_chi_tiet.id_sp_chi_tiet = san_pham_chi_tiet.id_sp_chi_tiet INNER JOIN
+                                   san_pham ON san_pham_chi_tiet.idsp = san_pham.idsp where hoa_don.idHoaDon = 2
+
+SELECT    loai_sp.tenloai_sp, san_pham.tensp, thuong_hieu.tenThuongHieu, mau_sac.tenMauSac, chat_lieu.tenChatLieu, san_pham_chi_tiet.doCan, hoa_don_chi_tiet.soluong, san_pham_chi_tiet.giaThanh, 
+                      san_pham_chi_tiet.moTa
+FROM         hoa_don_chi_tiet INNER JOIN
+                      hoa_don ON hoa_don_chi_tiet.idHoaDon = hoa_don.idHoaDon INNER JOIN
+                      san_pham_chi_tiet ON hoa_don_chi_tiet.id_sp_chi_tiet = san_pham_chi_tiet.id_sp_chi_tiet INNER JOIN
+                      chat_lieu ON san_pham_chi_tiet.idChatLieu = chat_lieu.idChatLieu INNER JOIN
+                      san_pham ON san_pham_chi_tiet.idsp = san_pham.idsp INNER JOIN
+                      thuong_hieu ON san_pham.idThuongHieu = thuong_hieu.idThuongHieu INNER JOIN
+                      mau_sac ON san_pham_chi_tiet.idMauSac = mau_sac.idMauSac INNER JOIN
+                      loai_sp ON san_pham.idloai_sp = loai_sp.idloai_sp where hoa_don.idHoaDon = 2

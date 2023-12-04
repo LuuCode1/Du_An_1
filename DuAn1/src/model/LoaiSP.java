@@ -28,6 +28,10 @@ public class LoaiSP {
         this.tenLoaiSP = tenLoaiSP;
     }
 
+    public LoaiSP(String tenLoaiSP) {
+        this.tenLoaiSP = tenLoaiSP;
+    }
+
     public int getIdLoaiSP() {
         return idLoaiSP;
     }

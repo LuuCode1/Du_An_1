@@ -31,10 +31,6 @@ public class Mausac {
         this.tenMauSac = tenMauSac;
     }
 
-    public Mausac(String tenMauSac) {
-        this.tenMauSac = tenMauSac;
-    }
-
     public int getIdMauSac() {
         return idMauSac;
     }

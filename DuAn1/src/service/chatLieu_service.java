@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import model.ChatLieu;
 import model.Mausac;
-import model.Thuonghieu;
 /**
  *
  * @author Asus
@@ -53,7 +52,20 @@ public class chatLieu_service {
         }
         return null;
     }
-          public ChatLieu machatLieu(String chatlieu){
+     public int insert(ChatLieu cl){
+         sql ="insert into chat_lieu( maChatLieu, tenChatLieu) values (?,?) ";
+         try {
+             con = DBconnect.getConnection();
+            ps =  con.prepareStatement(sql);
+            ps.setObject(1, cl.getMaChatLieu());
+            ps.setObject(2, cl.getTenChatLieu());
+            return ps.executeUpdate();
+         } catch (Exception e) {
+             e.printStackTrace();
+             return 0;
+         }
+     }
+            public ChatLieu machatLieu(String chatlieu){
         sql ="SELECT * FROM  chat_lieu where maChatLieu =?";
         try {
             con = DBconnect.getConnection();
@@ -70,19 +82,7 @@ public class chatLieu_service {
         }
         return null;
     }
-     public int insert(ChatLieu cl){
-         sql ="insert into chat_lieu( maChatLieu, tenChatLieu) values (?,?) ";
-         try {
-             con = DBconnect.getConnection();
-            ps =  con.prepareStatement(sql);
-            ps.setObject(1, cl.getMaChatLieu());
-            ps.setObject(2, cl.getTenChatLieu());
-            return ps.executeUpdate();
-         } catch (Exception e) {
-             e.printStackTrace();
-             return 0;
-         }
-     }
+
     public int update_CL(ChatLieu cl,String ma) {
         sql = """
               Update chat_lieu set tenChatLieu = ? where maChatLieu =?

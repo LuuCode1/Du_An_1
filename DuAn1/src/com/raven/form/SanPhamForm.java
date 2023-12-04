@@ -39,11 +39,11 @@ public class SanPhamForm extends javax.swing.JPanel {
     public static String id;
     public static String tenTheLoai;
     int index = -1;
-    Connection conn ;
+    Connection conn;
     PreparedStatement ps;
     String sql;
     ResultSet rs;
-    long count, soTrang ,trang = 1;
+    long count, soTrang, trang = 1;
 
     public SanPhamForm(MainForm main) {
         this.mainForm = main;
@@ -63,8 +63,6 @@ public class SanPhamForm extends javax.swing.JPanel {
         loadData(1);
     }
 
-    
-
     public void initTable_QL_TK() {
         tbl_Model = (DefaultTableModel) tbl_sp.getModel();
         String[] row = new String[]{
@@ -72,7 +70,7 @@ public class SanPhamForm extends javax.swing.JPanel {
         };
         tbl_Model.setColumnIdentifiers(row);
     }
-    
+
     public void CountDB() {
         try {
             String query = "Select count(*) from san_pham";
@@ -98,7 +96,7 @@ public class SanPhamForm extends javax.swing.JPanel {
                     + "from san_pham sp INNER JOIN\n"
                     + "loai_sp lsp ON lsp.idloai_sp = sp.idloai_sp INNER JOIN\n"
                     + "thuong_hieu th ON th.idThuongHieu = sp.idThuongHieu \n"
-                    + "where tensp not in (Select top "+(trang * 5 - 5)+" tensp from san_pham)";
+                    + "where tensp not in (Select top " + (trang * 5 - 5) + " tensp from san_pham)";
             conn = DBconnect.getConnection();
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(query);
@@ -520,12 +518,10 @@ public class SanPhamForm extends javax.swing.JPanel {
     }//GEN-LAST:event_txt_searchFocusLost
 
     private void tbl_spMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_spMouseClicked
-        int position = tbl_sp.getSelectedRow();
-        System.out.println(position);
-        if (position >= 0) {
-            setModel_SP(spSerVice.getAllSP().get(position));
-        }
-        txt_ma.enable(false);
+        index = tbl_sp.getSelectedRow();
+        int id = (int) tbl_sp.getValueAt(index, 0);
+        model.SanPham sp = spSerVice.selectByID(id);
+        setModel_SP(sp);
     }//GEN-LAST:event_tbl_spMouseClicked
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
@@ -534,6 +530,13 @@ public class SanPhamForm extends javax.swing.JPanel {
                 SanPham sp = getModel_SP();
                 if (spSerVice.addSP(sp) > 0) {
                     JOptionPane.showMessageDialog(this, "Thêm thành công");
+                    CountDB();
+                    if (count % 5 == 0) {
+                        soTrang = count / 5;
+                    } else {
+                        soTrang = count / 5 + 1;
+                    }
+                    lbl_soTrang.setText("1/" + soTrang);
                     loadData(1);
                     Reset();
                 }
@@ -548,6 +551,13 @@ public class SanPhamForm extends javax.swing.JPanel {
             SanPham sp = getModel_SP();
             if (spSerVice.updateSP(sp) > 0) {
                 JOptionPane.showMessageDialog(this, "Cap nhat thành công");
+                CountDB();
+                if (count % 5 == 0) {
+                    soTrang = count / 5;
+                } else {
+                    soTrang = count / 5 + 1;
+                }
+                lbl_soTrang.setText("1/" + soTrang);
                 loadData(1);
                 Reset();
             }
@@ -559,6 +569,13 @@ public class SanPhamForm extends javax.swing.JPanel {
         if (CheckValidate()) {
             spSerVice.DeleteSP(txt_ma.getText());
             JOptionPane.showMessageDialog(this, "Đã xóa thành công");
+            CountDB();
+            if (count % 5 == 0) {
+                soTrang = count / 5;
+            } else {
+                soTrang = count / 5 + 1;
+            }
+            lbl_soTrang.setText("1/" + soTrang);
             loadData(1);
             Reset();
         }
@@ -619,19 +636,19 @@ public class SanPhamForm extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        if(trang > 1){
+        if (trang > 1) {
             trang--;
             loadData(trang);
-            lbl_soTrang.setText(trang +"/"+soTrang);
+            lbl_soTrang.setText(trang + "/" + soTrang);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        if(trang < soTrang){
+        if (trang < soTrang) {
             trang++;
             loadData(trang);
-            lbl_soTrang.setText(trang +"/"+soTrang);
+            lbl_soTrang.setText(trang + "/" + soTrang);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 

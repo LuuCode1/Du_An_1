@@ -10,21 +10,29 @@ package model;
  */
 public class HoaDonChiTiet {
 
-    private int idHoaDonCHiTiet;
+    private int id_hdct;
     private int Soluong;
     private Double DonGia;
     private HoaDon hoaDon;
     private SanPhamChiTiet sanPham;
-    private double thanhtien;
 
     public HoaDonChiTiet() {
     }
 
-    public HoaDonChiTiet(int Soluong, Double DonGia, HoaDon hoaDon, SanPhamChiTiet sanPham) {
+    public HoaDonChiTiet(int id_hdct, int Soluong, Double DonGia, HoaDon hoaDon, SanPhamChiTiet sanPham) {
+        this.id_hdct = id_hdct;
         this.Soluong = Soluong;
         this.DonGia = DonGia;
         this.hoaDon = hoaDon;
         this.sanPham = sanPham;
+    }
+
+    public HoaDonChiTiet(Integer idHoaDon, Integer idCTSP, int Soluong, Double DonGia, HoaDon hoaDon, SanPhamChiTiet sanPham) {
+        this.Soluong = Soluong;
+        this.DonGia = DonGia;
+        this.hoaDon = hoaDon;
+        this.sanPham = sanPham;
+
     }
 
     public HoaDonChiTiet(int Soluong, Double DonGia, SanPhamChiTiet sanPham) {
@@ -33,20 +41,25 @@ public class HoaDonChiTiet {
         this.sanPham = sanPham;
     }
 
-    public double getThanhtien() {
-        return thanhtien;
+    public HoaDonChiTiet(int Soluong, Double DonGia, HoaDon haDon, SanPhamChiTiet sanPham) {
+        this.Soluong = Soluong;
+        this.DonGia = DonGia;
+        this.hoaDon = hoaDon;
+        this.sanPham = sanPham;
+
     }
 
-    public void setThanhtien(double thanhtien) {
-        this.thanhtien = thanhtien;
+    public HoaDonChiTiet(int Soluong, SanPhamChiTiet sanPham) {
+        this.Soluong = Soluong;
+        this.sanPham = sanPham;
     }
 
-    public int getIdHoaDonCHiTiet() {
-        return idHoaDonCHiTiet;
+    public int getId_hdct() {
+        return id_hdct;
     }
 
-    public void setIdHoaDonCHiTiet(int idHoaDonCHiTiet) {
-        this.idHoaDonCHiTiet = idHoaDonCHiTiet;
+    public void setId_hdct(int id_hdct) {
+        this.id_hdct = id_hdct;
     }
 
     public int getSoluong() {
@@ -81,28 +94,16 @@ public class HoaDonChiTiet {
         this.sanPham = sanPham;
     }
 
-    public HoaDonChiTiet(int Soluong, Double DonGia, SanPhamChiTiet sanPham, double thanhtien) {
-        this.Soluong = Soluong;
-        this.DonGia = DonGia;
-        this.sanPham = sanPham;
-        this.thanhtien = thanhtien;
-    }
-
-  
-
     public Object[] todata_hdct() {
-        return new Object[]{this.hoaDon.getMahD(), this.sanPham.getSp().getTenSP(), this.Soluong, this.DonGia};
-    }
-
-    public Object[] todata_giohang() {
-        return new Object[]{
-            this.sanPham.getSp().getMaSP(),
+        return new Object[]{this.sanPham.getSp().getLoaisp().getTenLoaiSP(),
             this.sanPham.getSp().getTenSP(),
-            this.sanPham.getMaterial().getTenChatLieu(),
-            this.sanPham.getColor().getTenMauSac(),
             this.sanPham.getSp().getBrand().getTenThuongHieu(),
+            this.sanPham.getColor().getTenMauSac(),
+            this.sanPham.getMaterial().getTenChatLieu(),
+            this.sanPham.getDoCan(),
             this.Soluong,
-            this.DonGia
-        };
+            this.sanPham.getGiathanh(),
+            this.sanPham.getMota()
+            };
     }
 }

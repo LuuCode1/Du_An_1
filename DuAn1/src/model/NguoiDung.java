@@ -20,7 +20,7 @@ public class NguoiDung {
     private int GioiTinh;
     private String email;
     private int vaiTro;
-
+private int trangthai;
     public NguoiDung() {
     }
 
@@ -45,6 +45,26 @@ public class NguoiDung {
         this.GioiTinh = GioiTinh;
         this.email = email;
         this.vaiTro = vaiTro;
+    }
+
+    public NguoiDung(String maND, String tenND, Date ngaySinh, String matKhau, String SDT, int GioiTinh, String email, int vaiTro, int trangthai) {
+        this.maND = maND;
+        this.tenND = tenND;
+        this.ngaySinh = ngaySinh;
+        this.matKhau = matKhau;
+        this.SDT = SDT;
+        this.GioiTinh = GioiTinh;
+        this.email = email;
+        this.vaiTro = vaiTro;
+        this.trangthai = trangthai;
+    }
+
+    public int getTrangthai() {
+        return trangthai;
+    }
+
+    public void setTrangthai(int trangthai) {
+        this.trangthai = trangthai;
     }
 
     public int getIdND() {
@@ -135,7 +155,23 @@ public class NguoiDung {
             return "Nhân Viên";
         }
     }
+    public String getTT(){
+        if (trangthai==0) {
+            return "Đang Làm";
+        }else{
+            return "Đã Nghỉ";
+        }
+    }
      public Object[] todata_NguoiDung(){
-         return new Object[]{this.maND,this.tenND,this.ngaySinh,this.matKhau,this.SDT,this.getGT(),this.email,this.getVT()};
+         return new Object[]{this.maND,
+             this.tenND,
+             this.ngaySinh,
+             this.matKhau,
+             this.SDT,
+             this.getGT(),
+             this.email,
+             this.getVT(),
+             this.getTT()
+         };
      }
 }

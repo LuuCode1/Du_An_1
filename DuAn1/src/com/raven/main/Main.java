@@ -2,16 +2,11 @@ package com.raven.main;
 
 import com.raven.component.Header;
 import com.raven.component.Menu;
-import com.raven.dialog.Message;
 import com.raven.event.EventMenuSelected;
 import com.raven.event.EventShowPopupMenu;
-import com.raven.form.BanHang;
 import com.raven.form.BanHangForm;
 
 import com.raven.form.Form_Home;
-import com.raven.form.Form_Home_login;
-
-import com.raven.form.MainForm;
 
 import com.raven.form.KhachHangForm;
 import com.raven.form.Lich_Su_Hoa_Don;
@@ -25,9 +20,7 @@ import com.raven.swing.MenuItem;
 import com.raven.swing.PopupMenu;
 import com.raven.swing.icon.GoogleMaterialDesignIcons;
 import com.raven.swing.icon.IconFontSwing;
-import com.sun.mail.handlers.message_rfc822;
 import java.awt.Component;
-import java.awt.JobAttributes;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
@@ -37,27 +30,25 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
-import service.NguoiDung_Service;
 
 public class Main extends javax.swing.JFrame {
 
-    NguoiDung_Service ndsv = new NguoiDung_Service();
     NguoiDung nd = new NguoiDung();
     private MigLayout layout;
     private Menu menu;
     private Header header;
     private MainForm main;
     private Animator animator;
-    String checkUserLogin = null;
-    int vaitro = -1;
+    String Manv = null;
+    int checkUserLogin = -1;
 
     public Main() {
         initComponents();
         init();
-        checkUserLogin = Check_user_login.mand;
-        vaitro = Check_user_login.vaitro;
+        checkUserLogin = Check_user_login.vt;
+        Manv = Check_user_login.mand;
         System.out.println(checkUserLogin);
-        System.out.println(vaitro);
+        System.out.println(Manv);
 
     }
 
@@ -77,67 +68,72 @@ public class Main extends javax.swing.JFrame {
                 System.out.println("Menu Index : " + menuIndex + " SubMenu Index " + subMenuIndex);
                 if (menuIndex == 0) {
                     if (subMenuIndex == -1) {
-                        DangNhap dangnhap = new DangNhap();
-                        dangnhap.setVisible(true);
+                        DangNhap dn = new DangNhap();
+                        dn.setVisible(true);
                         dis();
 
                     }
                 }
                 if (menuIndex == 1) {
                     if (subMenuIndex == 0) {
-                        if (vaitro == 0) {
+                        if (checkUserLogin == 0) {
                             main.showForm(new SanPhamForm(main));
                         } else {
-                            JOptionPane.showMessageDialog(main, "không đủ quyền sử dụng");
+                            JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
                         }
-                    } else if (subMenuIndex == 1) {
-                        if (vaitro == 0) {
+
+                    }else if (subMenuIndex==1) {
+                        if (checkUserLogin == -1) {
                             main.showForm(new QuanLyThuocTinhSanPham());
                         } else {
-                            JOptionPane.showMessageDialog(main, "không đủ quyền sử dụng");
+                            JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
                         }
-
-                    }
-                }
-                if (menuIndex == 5) {
-                    if (subMenuIndex == -1) {
-
-                        main.showForm(new BanHang());
-
                     }
                 }
                 if (menuIndex == 3) {
                     if (subMenuIndex == -1) {
-
-                        main.showForm(new NhanVienForm());
-
-                    }
-                }
-                if (menuIndex == 4) {
-                    if (subMenuIndex == -1) {
-
-                        main.showForm(new KhachHangForm());
-
-                    }
-                }
-                if (menuIndex == 6) {
-                    if (subMenuIndex == -1) {
-
-                        main.showForm(new Lich_Su_Hoa_Don());
-
-                    }
-                }
-                if (menuIndex == 6) {
-                    if (subMenuIndex == -1) {
-
-                        if (checkUserLogin ==-1) {
-                            main.showForm(new Lich_Su_Hoa_Don());
+                        if (checkUserLogin == -1) {
+                            main.showForm(new NhanVienForm());
                         } else {
                             JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
                         }
 
                     }
                 }
+                if (menuIndex == 5) {
+                    if (subMenuIndex == -1) {
+                        if (checkUserLogin == 0  || checkUserLogin==1) {
+                            BanHangForm bh = new BanHangForm();
+                            bh.setVisible(true);
+                        } else {
+                            JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
+                        }
+
+                    }
+                }
+                if (menuIndex == 4) {
+                    if (subMenuIndex == -1) {
+
+                        if (checkUserLogin == 0 || checkUserLogin==1) {
+                            main.showForm(new KhachHangForm());
+                        } else {
+                            JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
+                        }
+
+                    }
+                }
+                if (menuIndex == 6) {
+                    if (subMenuIndex == -1) {
+
+//                        if (checkUserLogin == 0 || checkUserLogin ==1) {
+                            main.showForm(new Lich_Su_Hoa_Don());
+//                        } else {
+//                            JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
+//                        }
+
+                    }
+                }
+
             }
         });
         menu.addEventShowPopup(new EventShowPopupMenu() {

@@ -4,10 +4,13 @@
  */
 package com.raven.form;
 
+import com.toedter.calendar.JDateChooser;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Pattern;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -38,6 +41,14 @@ public class NhanVienForm extends javax.swing.JPanel {
         initComponents();
         fillTable(ndsv.SelectAll());
         txtTimKiem.setText("Tìm Kiếm");
+        Nametag();
+    }
+
+    void Nametag() {
+        String[] table2 = {"Mã Nhân Viên", "Tên Nhân Viên", "Ngày Sinh", "Số Điện Thoại", "Mật Khẩu", "Giới Tính", "Email", "Vai Trò", "Trạng Thái"};
+        for (int i = 0; i < table2.length; i++) {
+            tblNhanVien.getColumnModel().getColumn(i).setHeaderValue(table2[i]);
+        }
     }
 
     void fillTable(List<NguoiDung> list) {
@@ -85,40 +96,129 @@ public class NhanVienForm extends javax.swing.JPanel {
         } else {
             nd.setVaiTro(1);
         }
+        nd.setTrangthai(0);
         return nd;
 
     }
 
-//    boolean check() {
-//        if (txtMaNV.getText().trim().isEmpty()) {
-//            checkma.setText("Vui lòng nhập số lượng");
-//            checkma.setForeground(java.awt.Color.red);
-//
-//        } else {
-//            checkma.setText(null);
-//        }
-//        if (txtTenNV.getText().trim().isEmpty()) {
-//            checkten.setText("Vui lòng nhập số lượng");
-//            checkten.setForeground(java.awt.Color.red);
-//
-//        } else {
-//            checkten.setText(null);
-//        }
-//        if (txtMaNV.getText().trim().isEmpty()) {
-//            checkma.setText("Vui lòng nhập số lượng");
-//            checkma.setForeground(java.awt.Color.red);
-//
-//        } else {
-//            checkma.setText(null);
-//        }
-//        if (txtMaNV.getText().trim().isEmpty()) {
-//            checkma.setText("Vui lòng nhập số lượng");
-//            checkma.setForeground(java.awt.Color.red);
-//
-//        } else {
-//            checkma.setText(null);
-//        }
-//    }
+    NguoiDung change_trangThai() {
+        nd.setMaND(txtMaNV.getText());
+        if (nd.getTrangthai() == 0) {
+            nd.setTrangthai(1);
+        } else if (nd.getTrangthai() == 1) {
+            nd.setTrangthai(0);
+        }
+        return nd;
+    }
+
+    void reset() {
+        txtEmail.setText(null);
+        txtMaNV.setText(null);
+        txtMatKhau.setText(null);
+        txtSoDT.setText(null);
+        txtTenNV.setText(null);
+        Date_ngaysinh.setDate(null);
+        rbo_Nam.setSelected(true);
+        rbo_master.setSelected(true);
+        txtMaNV.setEnabled(true);
+        checkdate.setText(null);
+        checkemail.setText(null);
+        checkma.setText(null);
+        checkpass.setText(null);
+        checkphone.setText(null);
+        checkten.setText(null);
+    }
+
+    boolean check() {
+        boolean isValid = true;
+
+        if (txtMaNV.getText().trim().isEmpty()) {
+            checkma.setText("Vui lòng nhập mã nhân viên");
+            checkma.setForeground(java.awt.Color.RED);
+            isValid = false;
+        } else {
+            checkma.setText(null);
+        }
+
+        if (txtTenNV.getText().trim().isEmpty()) {
+            checkten.setText("Vui lòng nhập tên nhân viên");
+            checkten.setForeground(java.awt.Color.RED);
+            isValid = false;
+        } else {
+            checkten.setText(null);
+        }
+
+        Date ngaythang = Date_ngaysinh.getDate();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        sdf.setLenient(false);
+
+        if (ngaythang == null) {
+            checkdate.setText("Vui lòng chọn ngày sinh");
+            checkdate.setForeground(java.awt.Color.RED);
+            isValid = false;
+        } else {
+            if (sdf.format(ngaythang).isEmpty()) {
+                checkdate.setText("Vui lòng chọn ngày sinh");
+                checkdate.setForeground(java.awt.Color.RED);
+                isValid = false;
+            } else {
+                checkdate.setText(null);
+            }
+        }
+        if (txtSoDT.getText().trim().isEmpty()) {
+            checkphone.setText("Vui lòng nhập số điện thoại");
+            checkphone.setForeground(java.awt.Color.RED);
+            isValid = false;
+        } else {
+            if (!Pattern.matches("^09[0-9]{8}$|^03[0-9]{8}$", txtSoDT.getText())) {
+                checkphone.setText("Số điện thoại phải bắt đầu bằng 09 hoặc 03");
+                checkphone.setForeground(java.awt.Color.RED);
+                isValid = false;
+            } else {
+                if (!Pattern.matches("[0-9]{10}", txtSoDT.getText())) {
+                    checkphone.setText("Số điện thoại không hợp lệ");
+                    checkphone.setForeground(java.awt.Color.RED);
+                    isValid = false;
+                } else {
+                    checkphone.setText(null);
+                }
+            }
+        }
+        if (txtMatKhau.getText().trim().isEmpty()) {
+            checkpass.setText("Vui lòng nhập mật khẩu");
+            checkpass.setForeground(java.awt.Color.RED);
+            isValid = false;
+        } else {
+            if (txtMatKhau.getText().length() < 6) {
+                checkpass.setText("Mật khẩu phải có ít nhất 6 ký tự");
+                checkpass.setForeground(java.awt.Color.RED);
+                isValid = false;
+            } else {
+                if (!txtMatKhau.getText().matches("^[a-zA-Z0-9]+$")) {
+                    checkpass.setText("Mật khẩu chỉ được chứa chữ, chữ hoa và số");
+                    checkpass.setForeground(java.awt.Color.RED);
+                    isValid = false;
+                } else {
+                    checkpass.setText(null);
+                }
+            }
+        }
+        if (txtEmail.getText().trim().isEmpty()) {
+            checkemail.setText("Vui lòng nhập email");
+            checkemail.setForeground(java.awt.Color.RED);
+            isValid = false;
+        } else {
+            if (!Pattern.matches("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z]{2,}$", txtEmail.getText())) {
+                checkemail.setText("Email không hợp lệ");
+                checkemail.setForeground(java.awt.Color.RED);
+                isValid = false;
+            } else {
+                checkemail.setText(null);
+            }
+        }
+        return isValid;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -166,7 +266,7 @@ public class NhanVienForm extends javax.swing.JPanel {
         checkphone = new javax.swing.JLabel();
         btnLuu = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
-        btnXoa = new javax.swing.JButton();
+        btnDTT = new javax.swing.JButton();
         btnReset = new javax.swing.JButton();
         txtTimKiem = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
@@ -240,13 +340,15 @@ public class NhanVienForm extends javax.swing.JPanel {
 
         jLabel9.setText("Mã số");
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
+
+        Date_ngaysinh.setDateFormatString("dd/MM/yyyy");
         jPanel2.add(Date_ngaysinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 340, -1));
         jPanel2.add(checkemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 160, 300, 20));
         jPanel2.add(checkma, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 300, 20));
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 300, 20));
         jPanel2.add(checkten, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 300, 20));
-        jPanel2.add(checkdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 300, 20));
-        jPanel2.add(checkpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 300, 20));
+        jPanel2.add(checkdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 320, 30));
+        jPanel2.add(checkpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 300, 30));
         jPanel2.add(checkphone, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 80, 300, 20));
 
         btnLuu.setText("Lưu");
@@ -263,10 +365,10 @@ public class NhanVienForm extends javax.swing.JPanel {
             }
         });
 
-        btnXoa.setText("Xóa");
-        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+        btnDTT.setText("Đổi trạng thái");
+        btnDTT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXoaActionPerformed(evt);
+                btnDTTActionPerformed(evt);
             }
         });
 
@@ -297,17 +399,17 @@ public class NhanVienForm extends javax.swing.JPanel {
 
         tblNhanVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "null", "null", "null", "null"
+                "Title 1", "Title 2", "Title 3", "Title 4", "null", "null", "null", "null", "null"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -373,7 +475,7 @@ public class NhanVienForm extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDTT)
                         .addGap(18, 18, 18)
                         .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -395,7 +497,7 @@ public class NhanVienForm extends javax.swing.JPanel {
                         .addGap(0, 11, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnReset)
-                            .addComponent(btnXoa)
+                            .addComponent(btnDTT)
                             .addComponent(btnSua)
                             .addComponent(btnLuu)))
                     .addComponent(txtTimKiem))
@@ -427,83 +529,95 @@ public class NhanVienForm extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-        NguoiDung nd = Read();
-        if (ndsv.Check_MaNV(nd.getMaND()) != null) {
-            JOptionPane.showMessageDialog(this, "Mã Nhân Viên Đã Tồn Tại");
-        } else {
-            if (ndsv.Insert(nd) > 0) {
-                JOptionPane.showMessageDialog(this, "Thành công");
-                fillTable(ndsv.SelectAll());
+        if (check()) {
+            NguoiDung nd = Read();
+            if (ndsv.Check_MaNV(nd.getMaND()) != null) {
+                JOptionPane.showMessageDialog(this, "Mã Nhân Viên Đã Tồn Tại");
+            } else {
+                if (ndsv.Insert(nd) > 0) {
+                    JOptionPane.showMessageDialog(this, "Thành công");
+                    fillTable(ndsv.SelectAll());
 
-                final String username = "bheos72@gmail.com";
-                final String password = "wpyw xlbb jaiv cvlc";
+                    final String username = "bheos72@gmail.com";
+                    final String password = "wpyw xlbb jaiv cvlc";
 
-                Properties prop = new Properties();
-                prop.put("mail.smtp.host", "smtp.gmail.com");
-                prop.put("mail.smtp.port", "587");
-                prop.put("mail.smtp.auth", "true");
-                prop.put("mail.smtp.starttls.enable", "true"); //TLS
+                    Properties prop = new Properties();
+                    prop.put("mail.smtp.host", "smtp.gmail.com");
+                    prop.put("mail.smtp.port", "587");
+                    prop.put("mail.smtp.auth", "true");
+                    prop.put("mail.smtp.starttls.enable", "true"); //TLS
 
-                Session session = Session.getInstance(prop,
-                        new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
+                    Session session = Session.getInstance(prop,
+                            new javax.mail.Authenticator() {
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(username, password);
+                        }
+                    });
+
+                    try {
+
+                        Message message = new MimeMessage(session);
+                        message.setFrom(new InternetAddress("bheos72@gmail.com"));
+                        message.setRecipients(
+                                Message.RecipientType.TO,
+                                InternetAddress.parse(txtEmail.getText())
+                        );
+                        message.setSubject("Chào mừng " + txtTenNV.getText() + " tham gia hệ thống");
+                        message.setText("Kính chào " + txtTenNV.getText() + ",\n\n"
+                                + "Chúng tôi xin gửi tới bạn thông tin tài khoản để truy cập hệ thống:\n"
+                                + "- Tên đăng nhập: " + txtEmail.getText() + "\n"
+                                + "- Mật khẩu: " + txtMatKhau.getText() + "\n\n"
+                                + "Nếu cần hỗ trợ gì thêm, vui lòng liên hệ với bộ phận hỗ trợ.\n\n"
+                                + "Trân trọng,\n"
+                                + "Ban quản trị hệ thống");
+
+                        Transport.send(message);
+
+                        System.out.println("Done");
+
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
                     }
-                });
-
-                try {
-
-                    Message message = new MimeMessage(session);
-                    message.setFrom(new InternetAddress("bheos72@gmail.com"));
-                    message.setRecipients(
-                            Message.RecipientType.TO,
-                            InternetAddress.parse(txtEmail.getText())
-                    );
-                    message.setSubject("Chào mừng " + txtTenNV.getText() + " tham gia hệ thống");
-                    message.setText("Kính chào " + txtTenNV.getText() + ",\n\n"
-                            + "Chúng tôi xin gửi tới bạn thông tin tài khoản để truy cập hệ thống:\n"
-                            + "- Tên đăng nhập: " + txtEmail.getText() + "\n"
-                            + "- Mật khẩu: " + txtMatKhau.getText() + "\n\n"
-                            + "Nếu cần hỗ trợ gì thêm, vui lòng liên hệ với bộ phận hỗ trợ.\n\n"
-                            + "Trân trọng,\n"
-                            + "Ban quản trị hệ thống");
-
-                    Transport.send(message);
-
-                    System.out.println("Done");
-
-                } catch (MessagingException e) {
-                    e.printStackTrace();
                 }
             }
         }
 
+
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        NguoiDung nd = Read();
-        if (ndsv.update(nd, nd.getMaND()) > 0) {
-            fillTable(ndsv.SelectAll());
-            JOptionPane.showMessageDialog(this, "Thành công");
+        if (check()) {
+            txtMaNV.setEnabled(true);
+            NguoiDung nd = Read();
+            if (ndsv.update(nd, nd.getMaND()) > 0) {
+                fillTable(ndsv.SelectAll());
+                reset();
+                JOptionPane.showMessageDialog(this, "Thành công");
+            }
         }
     }//GEN-LAST:event_btnSuaActionPerformed
 
-    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        NguoiDung nd = Read();
-        if (ndsv.delete(nd.getMaND()) > 0) {
-            fillTable(ndsv.SelectAll());
-            JOptionPane.showMessageDialog(this, "Thành công");
+    private void btnDTTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDTTActionPerformed
+        try {
+            NguoiDung nd = change_trangThai();
+            if (ndsv.Update_TrangThai(nd, nd.getMaND()) > 0) {
+                fillTable(ndsv.SelectAll());
+                reset();
+                JOptionPane.showMessageDialog(this, "Thành công");
+            }
 
+        } catch (Exception e) {
+            System.out.println(e);
         }
-    }//GEN-LAST:event_btnXoaActionPerformed
+    }//GEN-LAST:event_btnDTTActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-        btnSua.setEnabled(false);
-        btnXoa.setEnabled(false);
-        btnLuu.setEnabled(true);
-        txtTenNV.setEnabled(true);
-        Date_ngaysinh.setDate(null);
-//        Reset();
+//        btnSua.setEnabled(false);
+//        btnDTT.setEnabled(false);
+//        btnLuu.setEnabled(true);
+//        txtTenNV.setEnabled(true);
+//        Date_ngaysinh.setDate(null);
+        reset();
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void txtTimKiemFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTimKiemFocusLost
@@ -528,6 +642,8 @@ public class NhanVienForm extends javax.swing.JPanel {
     }//GEN-LAST:event_txtTimKiemKeyReleased
 
     private void tblNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhanVienMouseClicked
+        reset();
+        txtMaNV.setEnabled(false);
         index = tblNhanVien.getSelectedRow();
         String manv = tblNhanVien.getValueAt(index, 0).toString();
         NguoiDung nd2 = ndsv.Check_MaNV(manv);
@@ -541,10 +657,10 @@ public class NhanVienForm extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser Date_ngaysinh;
+    private javax.swing.JButton btnDTT;
     private javax.swing.JButton btnLuu;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnSua;
-    private javax.swing.JButton btnXoa;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;

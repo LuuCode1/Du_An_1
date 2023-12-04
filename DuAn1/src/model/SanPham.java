@@ -9,7 +9,7 @@ package model;
  * @author leduc
  */
 public class SanPham {
-   
+    
     private int idSP;
     private String maSP;
     private String tenSP;
@@ -24,9 +24,22 @@ public class SanPham {
         this.tenSP = tenSP;
     }
 
-    public SanPham(String tenSP) {
+    public SanPham(String tenSP, LoaiSP loaisp, Thuonghieu brand) {
         this.tenSP = tenSP;
+        this.loaisp = loaisp;
+        this.brand = brand;
     }
+
+   
+
+    public SanPham(String maSP, String tenSP, Thuonghieu brand) {
+        this.maSP = maSP;
+        this.tenSP = tenSP;
+        this.brand = brand;
+    }
+    
+    
+
     public SanPham(int idSP, String maSP, String tenSP, LoaiSP loaisp, Thuonghieu brand) {
         this.idSP = idSP;
         this.maSP = maSP;
@@ -41,13 +54,6 @@ public class SanPham {
         this.loaisp = loaisp;
         this.brand = brand;
     }
-
-    public SanPham(String maSP, String tenSP, Thuonghieu brand) {
-        this.maSP = maSP;
-        this.tenSP = tenSP;
-        this.brand = brand;
-    }
-    
 
     public int getIdSP() {
         return idSP;

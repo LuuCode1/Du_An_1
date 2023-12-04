@@ -162,4 +162,33 @@ public class SP_Service {
             return null;
         }
     }
+    Connection con = null;
+    PreparedStatement ps = null;
+    String sql = null;
+    ResultSet rs = null;
+    
+    public SanPham selectByID(int id) {
+        sql = " SELECT    san_pham.idsp, san_pham.masp, san_pham.tensp, loai_sp.tenloai_sp, thuong_hieu.tenThuongHieu\n" +
+"FROM         san_pham INNER JOIN\n" +
+"                      loai_sp ON san_pham.idloai_sp = loai_sp.idloai_sp INNER JOIN\n" +
+"                      thuong_hieu ON san_pham.idThuongHieu = thuong_hieu.idThuongHieu where san_pham.idsp = ?";
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                LoaiSP lsp = new LoaiSP(null, rs.getString(4));
+                Thuonghieu th = new Thuonghieu(null, rs.getString(5));
+                SanPham sp = new SanPham(rs.getInt(1), rs.getString(2), rs.getString(3), lsp, th);
+                
+                return sp;
+                
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return null;
+    }
 }

@@ -17,36 +17,57 @@ public class HoaDon {
     private KhachHang KH;
     private NguoiDung NG;
     private Date ngayban;
-    private Voucher voucher;
     private double tongtien;
     private int TrangThai;
+    private Vouchers vouchers;
 
     public HoaDon() {
+    }
+
+    public HoaDon(int idHD) {
+        this.idHD = idHD;
     }
 
     public HoaDon(String mahD) {
         this.mahD = mahD;
     }
 
-    public HoaDon(int idHD, String mahD, KhachHang KH, NguoiDung NG, Date ngayban, Voucher voucher, double tongtien, int TrangThai) {
+    public HoaDon(int idHD, String mahD, KhachHang KH, NguoiDung NG, Date ngayban, double tongtien, int TrangThai) {
         this.idHD = idHD;
         this.mahD = mahD;
         this.KH = KH;
         this.NG = NG;
         this.ngayban = ngayban;
-        this.voucher = voucher;
         this.tongtien = tongtien;
         this.TrangThai = TrangThai;
     }
 
-    public HoaDon(String mahD, KhachHang KH, NguoiDung NG, Date ngayban, Voucher voucher, double tongtien, int TrangThai) {
+    public HoaDon(String mahD, KhachHang KH, NguoiDung NG, Date ngayban, double tongtien, int TrangThai) {
         this.mahD = mahD;
         this.KH = KH;
         this.NG = NG;
         this.ngayban = ngayban;
-        this.voucher = voucher;
         this.tongtien = tongtien;
         this.TrangThai = TrangThai;
+    }
+
+    public HoaDon(int idHD, String mahD, KhachHang KH, NguoiDung NG, Date ngayban, double tongtien, int TrangThai, Vouchers vouchers) {
+        this.idHD = idHD;
+        this.mahD = mahD;
+        this.KH = KH;
+        this.NG = NG;
+        this.ngayban = ngayban;
+        this.tongtien = tongtien;
+        this.TrangThai = TrangThai;
+        this.vouchers = vouchers;
+    }
+
+    public Vouchers getVouchers() {
+        return vouchers;
+    }
+
+    public void setVouchers(Vouchers vouchers) {
+        this.vouchers = vouchers;
     }
 
     public int getIdHD() {
@@ -89,14 +110,6 @@ public class HoaDon {
         this.ngayban = ngayban;
     }
 
-    public Voucher getVoucher() {
-        return voucher;
-    }
-
-    public void setVoucher(Voucher voucher) {
-        this.voucher = voucher;
-    }
-
     public double getTongtien() {
         return tongtien;
     }
@@ -113,6 +126,10 @@ public class HoaDon {
         this.TrangThai = TrangThai;
     }
 
+    public Object[] todata_HD() {
+        return new Object[]{this.mahD, this.NG.getTenND(), this.ngayban, this.KH.getTenKH()};
+    }
+
     public String TrangThaiHoadon() {
         if (TrangThai == 0) {
             return "Chờ thanh toán";
@@ -123,28 +140,7 @@ public class HoaDon {
         }
     }
 
-    public HoaDon(int idHD, String mahD, KhachHang KH, NguoiDung NG, Date ngayban, double tongtien, int TrangThai) {
-        this.idHD = idHD;
-        this.mahD = mahD;
-        this.KH = KH;
-        this.NG = NG;
-        this.ngayban = ngayban;
-        this.tongtien = tongtien;
-        this.TrangThai = TrangThai;
-    }
-
     public Object[] todata_lshd() {
         return new Object[]{this.idHD, this.mahD, this.getNG().getTenND(), this.getKH().getTenKH(), this.ngayban, this.tongtien, this.TrangThaiHoadon()};
-    }
-
-    public HoaDon(String mahD, KhachHang KH, NguoiDung NG, Date ngayban) {
-        this.mahD = mahD;
-        this.KH = KH;
-        this.NG = NG;
-        this.ngayban = ngayban;
-    }
-
-    public Object[] todata_HD() {
-        return new Object[]{this.mahD, this.NG.getTenND(), this.ngayban, this.KH.getTenKH()};
     }
 }

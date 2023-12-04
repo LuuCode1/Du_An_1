@@ -58,7 +58,21 @@ public class thuonghieu_service {
         return null;
     }
 
-    public Thuonghieu maThuongHieu(String th) {
+    public int insert(Thuonghieu th) {
+        sql = "INSERT INTO thuong_hieu(maThuongHieu, tenThuongHieu)\n"
+                + "VALUES (?, ?)";
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, th.getMaThuongHieu());
+            ps.setObject(2, th.getTenThuongHieu());
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+        public Thuonghieu maThuongHieu(String th) {
         sql = "SELECT * FROM  thuong_hieu where maThuongHieu =?";
         try {
             con = DBconnect.getConnection();
@@ -76,20 +90,6 @@ public class thuonghieu_service {
         return null;
     }
 
-    public int insert(Thuonghieu th) {
-        sql = "INSERT INTO thuong_hieu(maThuongHieu, tenThuongHieu)\n"
-                + "VALUES (?, ?)";
-        try {
-            con = DBconnect.getConnection();
-            ps = con.prepareStatement(sql);
-            ps.setObject(1, th.getMaThuongHieu());
-            ps.setObject(2, th.getTenThuongHieu());
-            return ps.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
-        }
-    }
     public int update_TH(Thuonghieu th,String ma) {
         sql = """
               Update thuong_hieu set tenThuongHieu = ? where maThuongHieu =?
