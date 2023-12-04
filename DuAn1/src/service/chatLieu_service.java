@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.ChatLieu;
 import model.Mausac;
+import model.Thuonghieu;
 /**
  *
  * @author Asus
@@ -52,6 +53,23 @@ public class chatLieu_service {
         }
         return null;
     }
+          public ChatLieu machatLieu(String chatlieu){
+        sql ="SELECT * FROM  chat_lieu where maChatLieu =?";
+        try {
+            con = DBconnect.getConnection();
+            ps =  con.prepareStatement(sql);
+            ps.setObject(1, chatlieu);
+            rs = ps.executeQuery();
+            while (rs.next()) {                
+                ChatLieu ms = new ChatLieu(rs.getInt(1), rs.getString(2),rs.getString(3));
+                return ms;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            
+        }
+        return null;
+    }
      public int insert(ChatLieu cl){
          sql ="insert into chat_lieu( maChatLieu, tenChatLieu) values (?,?) ";
          try {
@@ -65,5 +83,33 @@ public class chatLieu_service {
              return 0;
          }
      }
-    
+    public int update_CL(ChatLieu cl,String ma) {
+        sql = """
+              Update chat_lieu set tenChatLieu = ? where maChatLieu =?
+              """;
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, cl.getTenChatLieu());
+            ps.setObject(2, ma);
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    public int delete_CL(String ma) {
+        sql = """
+              Delete from chat_lieu where maChatLieu =?
+              """;
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);  
+            ps.setObject(1, ma);
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }

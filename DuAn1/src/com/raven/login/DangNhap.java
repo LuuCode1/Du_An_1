@@ -17,7 +17,7 @@ import service.NguoiDung_Service;
  * @author Asus
  */
 public class DangNhap extends javax.swing.JFrame {
-
+    
     NguoiDung_Service ndsv = new NguoiDung_Service();
 
     /**
@@ -29,33 +29,35 @@ public class DangNhap extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         txt_email.setText(null);
         txt_pass.setText(null);
-
+        
     }
-
+    
     void dangnhap() {
-
+        Main main = new Main();
         String email = txt_email.getText().trim();
         String matKhau = txt_pass.getText().trim();
         try {
-
+            
             if (ndsv.dangNhap_email(email) != null) {
                 if (ndsv.dangNhap(email, matKhau) != null) {
                     JOptionPane.showMessageDialog(this, "Thanh cong ");
                     NguoiDung nd = ndsv.dangNhap_email(email);
-                    Check_user_login.mand = nd.getVaiTro();
-                    System.out.println(Check_user_login.mand);
+                    Check_user_login.mand = nd.getMaND();
+                    Check_user_login.vaitro = nd.getVaiTro();
                     this.dispose();
-
+                    
+                    main.setVisible(true);
+                    
                 } else {
                     JOptionPane.showMessageDialog(this, "mat khau khong dung");
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Tai khoan khong ton tai");
             }
-
+            
         } catch (Exception e) {
         }
-
+        
     }
 
     /**
@@ -199,8 +201,9 @@ public class DangNhap extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel8MouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-
+        Main main = new Main();
         this.dispose();
+        main.setVisible(true);
 
     }//GEN-LAST:event_jLabel4MouseClicked
 

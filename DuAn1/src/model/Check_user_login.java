@@ -10,5 +10,6 @@ package model;
  */
 public class Check_user_login {
 
-    public static int mand =-1;
+    public static int vaitro =-1;
+    public static String mand ;
 }

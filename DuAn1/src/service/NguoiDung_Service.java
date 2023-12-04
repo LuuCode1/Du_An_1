@@ -216,6 +216,7 @@ public class NguoiDung_Service {
         }
         return null;
     }
+
     public NguoiDung Check_ma(int ma) {
         sql = "SELECT     maNguoiDung, tenNguoi_dung, ngaysinh, matKhau, sdt, gioitinh, email, vaitro \n"
                 + "FROM         Nguoi_dung   Nguoi_dung where idnguoi_dung = ?";
@@ -242,8 +243,9 @@ public class NguoiDung_Service {
         }
         return null;
     }
-    public int update_matKhau(NguoiDung nd ,String email){
-        sql ="Update Nguoi_dung set matKhau =? where email =?";
+
+    public int update_matKhau(NguoiDung nd, String email) {
+        sql = "Update Nguoi_dung set matKhau =? where email =?";
         try {
             con = DBconnect.getConnection();
             ps = con.prepareStatement(sql);
@@ -256,4 +258,30 @@ public class NguoiDung_Service {
         return 0;
     }
 
+    public NguoiDung Check_VaiTro(String manv) {
+        sql = "SELECT    vaitro \n"
+                + "FROM         Nguoi_dung   Nguoi_dung where maNguoiDung like ?";
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, manv);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                NguoiDung nd = new NguoiDung(
+                        null,
+                        null,
+                        null,
+                        null, // Change here
+                        null,
+                        0,
+                        null,
+                        rs.getInt("vaitro"));
+                return nd;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

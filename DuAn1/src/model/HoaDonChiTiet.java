@@ -9,7 +9,8 @@ package model;
  * @author Lenovo
  */
 public class HoaDonChiTiet {
- private int idHoaDonCHiTiet;
+
+    private int idHoaDonCHiTiet;
     private int Soluong;
     private Double DonGia;
     private HoaDon hoaDon;
