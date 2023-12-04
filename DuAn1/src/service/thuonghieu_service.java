@@ -58,6 +58,24 @@ public class thuonghieu_service {
         return null;
     }
 
+    public Thuonghieu maThuongHieu(String th) {
+        sql = "SELECT * FROM  thuong_hieu where maThuongHieu =?";
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, th);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Thuonghieu ms = new Thuonghieu(rs.getInt(1), rs.getString(2), rs.getString(3));
+                return ms;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return null;
+    }
+
     public int insert(Thuonghieu th) {
         sql = "INSERT INTO thuong_hieu(maThuongHieu, tenThuongHieu)\n"
                 + "VALUES (?, ?)";
@@ -66,6 +84,35 @@ public class thuonghieu_service {
             ps = con.prepareStatement(sql);
             ps.setObject(1, th.getMaThuongHieu());
             ps.setObject(2, th.getTenThuongHieu());
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    public int update_TH(Thuonghieu th,String ma) {
+        sql = """
+              Update thuong_hieu set tenThuongHieu = ? where maThuongHieu =?
+              """;
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, th.getTenThuongHieu());
+            ps.setObject(2, ma);
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    public int delete_TH(String ma) {
+        sql = """
+              Delete from thuong_hieu where maThuongHieu =?
+              """;
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);  
+            ps.setObject(1, ma);
             return ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

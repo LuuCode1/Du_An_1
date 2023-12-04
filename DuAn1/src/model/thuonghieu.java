@@ -31,6 +31,10 @@ public class Thuonghieu {
         this.tenThuongHieu = tenThuongHieu;
     }
 
+    public Thuonghieu(String tenThuongHieu) {
+        this.tenThuongHieu = tenThuongHieu;
+    }
+
     public int getIdThuongHieu() {
         return idThuongHieu;
     }
@@ -54,5 +58,7 @@ public class Thuonghieu {
     public void setTenThuongHieu(String tenThuongHieu) {
         this.tenThuongHieu = tenThuongHieu;
     }
-    
+    public Object[] todata(){
+        return new Object[]{this.maThuongHieu,this.tenThuongHieu};
+    }
 }

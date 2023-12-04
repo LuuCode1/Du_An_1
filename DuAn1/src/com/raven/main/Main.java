@@ -5,6 +5,7 @@ import com.raven.component.Menu;
 import com.raven.dialog.Message;
 import com.raven.event.EventMenuSelected;
 import com.raven.event.EventShowPopupMenu;
+import com.raven.form.BanHang;
 import com.raven.form.BanHangForm;
 
 import com.raven.form.Form_Home;
@@ -16,6 +17,7 @@ import com.raven.form.KhachHangForm;
 import com.raven.form.Lich_Su_Hoa_Don;
 import com.raven.form.MainForm;
 import com.raven.form.NhanVienForm;
+import com.raven.form.QuanLyThuocTinhSanPham;
 
 import com.raven.form.SanPhamForm;
 import com.raven.login.DangNhap;
@@ -35,23 +37,32 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
+import service.NguoiDung_Service;
 
 public class Main extends javax.swing.JFrame {
 
+    NguoiDung_Service ndsv = new NguoiDung_Service();
     NguoiDung nd = new NguoiDung();
     private MigLayout layout;
     private Menu menu;
     private Header header;
     private MainForm main;
     private Animator animator;
-    int checkUserLogin = -1;
+    String checkUserLogin = null;
+    int vaitro = -1;
 
     public Main() {
         initComponents();
         init();
         checkUserLogin = Check_user_login.mand;
+        vaitro = Check_user_login.vaitro;
         System.out.println(checkUserLogin);
+        System.out.println(vaitro);
 
+    }
+
+    void dis() {
+        this.setVisible(false);
     }
 
     private void init() {
@@ -66,37 +77,53 @@ public class Main extends javax.swing.JFrame {
                 System.out.println("Menu Index : " + menuIndex + " SubMenu Index " + subMenuIndex);
                 if (menuIndex == 0) {
                     if (subMenuIndex == -1) {
-                        main.showForm(new Form_Home_login());
+                        DangNhap dangnhap = new DangNhap();
+                        dangnhap.setVisible(true);
+                        dis();
+
                     }
                 }
                 if (menuIndex == 1) {
                     if (subMenuIndex == 0) {
-                        if (checkUserLogin == -1) {
+                        if (vaitro == 0) {
                             main.showForm(new SanPhamForm(main));
                         } else {
-                            JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
+                            JOptionPane.showMessageDialog(main, "không đủ quyền sử dụng");
                         }
+                    } else if (subMenuIndex == 1) {
+                        if (vaitro == 0) {
+                            main.showForm(new QuanLyThuocTinhSanPham());
+                        } else {
+                            JOptionPane.showMessageDialog(main, "không đủ quyền sử dụng");
+                        }
+
+                    }
+                }
+                if (menuIndex == 5) {
+                    if (subMenuIndex == -1) {
+
+                        main.showForm(new BanHang());
 
                     }
                 }
                 if (menuIndex == 3) {
                     if (subMenuIndex == -1) {
-                        if (checkUserLogin == -1) {
-                            main.showForm(new NhanVienForm());
-                        } else {
-                            JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
-                        }
+
+                        main.showForm(new NhanVienForm());
 
                     }
                 }
                 if (menuIndex == 4) {
                     if (subMenuIndex == -1) {
 
-                        if (checkUserLogin ==-1) {
-                            main.showForm(new KhachHangForm());
-                        } else {
-                            JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
-                        }
+                        main.showForm(new KhachHangForm());
+
+                    }
+                }
+                if (menuIndex == 6) {
+                    if (subMenuIndex == -1) {
+
+                        main.showForm(new Lich_Su_Hoa_Don());
 
                     }
                 }

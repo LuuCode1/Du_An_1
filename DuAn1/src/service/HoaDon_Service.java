@@ -4,6 +4,7 @@
  */
 package service;
 
+import java.util.Date;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +33,10 @@ public class HoaDon_Service {
 
     public List<HoaDon> Select(int trangthai) {
         List<HoaDon> list = new ArrayList<>();
-        sql = "SELECT    hoa_don.maHoaDon, Nguoi_dung.tenNguoi_dung, khach_hang.tenKhachHang, hoa_don.ngayban\n"
-                + "FROM         hoa_don LEFT JOIN\n"
-                + "                      Nguoi_dung ON hoa_don.idnguoi_dung = Nguoi_dung.idnguoi_dung LEFT JOIN\n"
-                + "                      khach_hang ON hoa_don.idKhachHang = khach_hang.idKhachHang where hoa_don.trangthai=?";
+        sql = "SELECT    hoa_don.maHoaDon, Nguoi_dung.tenNguoi_dung, khach_hang.tenKhachHang, hoa_don.ngayban\n" +
+"FROM         hoa_don LEFT JOIN\n" +
+"                      Nguoi_dung ON hoa_don.idnguoi_dung = Nguoi_dung.idnguoi_dung LEFT JOIN\n" +
+"                      khach_hang ON hoa_don.idKhachHang = khach_hang.idKhachHang where hoa_don.trangthai=?";
         try {
             con = DBconnect.getConnection();
             ps = con.prepareStatement(sql);
@@ -68,38 +69,38 @@ public class HoaDon_Service {
         return 0;
     }
 
-//    public List<HoaDonChiTiet> getListHoaDonChiTiet(String MaHD) {
-//        List<HoaDonChiTiet> getList = new ArrayList<>();
-//        try {
-//            String sql = "select sp.masp, sp.tensp, m.tenMauSac, c.tenChatLieu, t.tenThuongHieu, hdct.dongia, hdct.soluong\n"
-//                    + "from hoa_don hd left join hoa_don_chi_tiet hdct on hd.idHoaDon = hdct.idHoaDon\n"
-//                    + "left join san_pham_chi_tiet spct on hdct.id_sp_chi_tiet = spct.id_sp_chi_tiet\n"
-//                    + "left join san_pham sp on sp.idsp = spct.idsp\n"
-//                    + "left join mau_sac m on spct.idMauSac = m.idMauSac\n"
-//                    + "left join chat_lieu c on spct.idChatLieu = c.idChatLieu\n"
-//                    + "left join thuong_hieu t on sp.idThuongHieu = t.idThuongHieu"
-//                    + "  WHERE hd.maHoaDon = ?";
-//            Connection conn = DBconnect.getConnection();
-//            PreparedStatement pr = conn.prepareStatement(sql);
-//            pr.setString(1, MaHD);
-//            ResultSet rs = pr.executeQuery();
-//            while (rs.next()) {
-//                HoaDonChiTiet hdct = new HoaDonChiTiet(rs.getInt(3), rs.getDouble(4), hd, cpct);
-//                SanPhamChiTiet spct = new SanPhamChiTiet();
-//                spct.setSp(new SanPham(rs.getString(1), rs.getString(2), null, new Thuonghieu(null, rs.getString(5))));
-////                spct.setDoCan(rs.getDouble(7));
-//                spct.setColor(new Mausac(null, rs.getString(3)));
-//                spct.setMaterial(new ChatLieu(null, rs.getString(4)));
-//                hdct.setSanPham(spct);
-//                hdct.setDonGia(rs.getDouble(6));
-//                hdct.setSoluong(rs.getInt(7));
-//                getList.add(hdct);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return getList;
-//    }
+    public List<HoaDonChiTiet> getListHoaDonChiTiet(String MaHD) {
+        List<HoaDonChiTiet> getList = new ArrayList<>();
+        try {
+            String sql = "select sp.masp, sp.tensp, m.tenMauSac, c.tenChatLieu, t.tenThuongHieu, hdct.dongia, hdct.soluong\n"
+                    + "from hoa_don hd left join hoa_don_chi_tiet hdct on hd.idHoaDon = hdct.idHoaDon\n"
+                    + "left join san_pham_chi_tiet spct on hdct.id_sp_chi_tiet = spct.id_sp_chi_tiet\n"
+                    + "left join san_pham sp on sp.idsp = spct.idsp\n"
+                    + "left join mau_sac m on spct.idMauSac = m.idMauSac\n"
+                    + "left join chat_lieu c on spct.idChatLieu = c.idChatLieu\n"
+                    + "left join thuong_hieu t on sp.idThuongHieu = t.idThuongHieu"
+                    + "  WHERE hd.maHoaDon = ?";
+            Connection conn = DBconnect.getConnection();
+            PreparedStatement pr = conn.prepareStatement(sql);
+            pr.setString(1, MaHD);
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()) {
+                HoaDonChiTiet hdct = new HoaDonChiTiet();
+                SanPhamChiTiet spct = new SanPhamChiTiet();
+                spct.setSp(new SanPham(rs.getString(1), rs.getString(2), null, new Thuonghieu(null, rs.getString(5))));
+//                spct.setDoCan(rs.getDouble(7));
+                spct.setColor(new Mausac(null, rs.getString(3)));
+                spct.setMaterial(new ChatLieu(null, rs.getString(4)));
+                hdct.setSanPham(spct);
+                hdct.setDonGia(rs.getDouble(6));
+                hdct.setSoluong(rs.getInt(7));
+                getList.add(hdct);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getList;
+    }
 
     public List<HoaDon> LichSuHoaDon(int a, int b) {
         List<HoaDon> listhd = new ArrayList<>();
@@ -133,7 +134,7 @@ public class HoaDon_Service {
         return null;
     }
 
-    public List<HoaDon> LichSuHoaDon_ngaythang(int a, int b, java.util.Date n, java.util.Date m) {
+    public List<HoaDon> LichSuHoaDon_ngaythang(int a, int b, Date n, Date m) {
         List<HoaDon> listhd = new ArrayList<>();
         sql = """
              SELECT hoa_don.idHoaDon, hoa_don.maHoaDon, Nguoi_dung.tenNguoi_dung, khach_hang.tenKhachHang, hoa_don.ngayban, hoa_don.trangthai

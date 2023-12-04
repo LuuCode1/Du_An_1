@@ -51,7 +51,23 @@ public class mausac_service {
         }
         return null;
     }
-
+    public Mausac maMauSac(String ma){
+        sql ="SELECT * FROM  mau_sac where maMauSac =?";
+        try {
+            con = DBconnect.getConnection();
+            ps =  con.prepareStatement(sql);
+            ps.setObject(1, ma);
+            rs = ps.executeQuery();
+            while (rs.next()) {                
+                Mausac ms = new Mausac(rs.getInt(1), rs.getString(2),rs.getString(3));
+                return ms;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            
+        }
+        return null;
+    }
     public int insert(Mausac ms){
          sql ="insert into mau_sac( maMauSac, tenMauSac) values (?,?) ";
          try {
@@ -65,5 +81,33 @@ public class mausac_service {
              return 0;
          }
      }
-    
+    public int update_MS(Mausac ms,String ma) {
+        sql = """
+              Update mau_sac set tenMauSac = ? where maMauSac =?
+              """;
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, ms.getTenMauSac());
+            ps.setObject(2, ma);
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    public int delete_MS(String ma) {
+        sql = """
+              Delete from mau_sac where maMauSac =?
+              """;
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);  
+            ps.setObject(1, ma);
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }
