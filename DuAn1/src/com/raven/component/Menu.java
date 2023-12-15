@@ -54,14 +54,14 @@ public class Menu extends javax.swing.JPanel {
     }
 
     public void initMenuItem() {
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/1.png")), "Đăng Nhập"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/2.png")), "Quản Lý Sản Phẩm","Sản Phẩm","Thuộc Tính Sản Phẩm"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/6.png")), "Sản Phẩm"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/3.png")), "Quản Lý Nhân Viên"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/4.png")), "Khách Hàng"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/5.png")), "Bán Hàng"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/6.png")), "Hóa Đơn"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/7.png")), "Thoát"));
+//        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/1.png")), "Đăng Nhập"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("")), "Quản Lý Sản Phẩm", "Sản Phẩm", "Thuộc Tính Sản Phẩm","Vouchers"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("")), "Sản Phẩm"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("")), "Quản Lý Nhân Viên"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("")), "Khách Hàng"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("")), "Bán Hàng"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("")), "Danh Sách Hóa Đơn"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("")), "Thoát"));
 //        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/8.png")), "Holiday", "Menu 001", "Menu 002", "Menu 003"));
 //        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/9.png")), "Calendar", "Menu 001", "Menu 002", "Menu 003"));
 //        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/10.png")), "Chat App", "Menu 001", "Menu 002", "Menu 003"));

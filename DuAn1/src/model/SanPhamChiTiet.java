@@ -105,6 +105,17 @@ public class SanPhamChiTiet {
         this.mota = mota;
     }
 
+    public SanPhamChiTiet(SanPham sp, Mausac color, ChatLieu material, double doCan, double giathanh, Integer soluong, String hinhanh, String mota) {
+        this.sp = sp;
+        this.color = color;
+        this.material = material;
+        this.doCan = doCan;
+        this.giathanh = giathanh;
+        this.soluong = soluong;
+        this.hinhanh = hinhanh;
+        this.mota = mota;
+    }
+
     public double getGiaNhap() {
         return giaNhap;
     }
@@ -204,7 +215,14 @@ public class SanPhamChiTiet {
         return new Object[]{this.idSPChiTiet,
             this.material.getTenChatLieu(), this.color.getTenMauSac(), this.doCan,this.giaNhap, this.giathanh, this.soluong, this.hinhanh, this.mota, this.trangthai};
     }
-
+    
+    public Object[] todata2() {
+        return new Object[]{this.idSPChiTiet,this.sp.getLoaisp().getTenLoaiSP(),this.sp.getMaSP(),this.sp.getTenSP(),
+            this.material.getTenChatLieu(), this.color.getTenMauSac(),this.sp.getBrand().getTenThuongHieu(),
+            this.doCan, this.giathanh, this.soluong, this.mota};
+    }
+    
+    
     public Object[] todata_SPB() {
         return new Object[]{
             this.sp.getLoaisp().getTenLoaiSP(),
@@ -215,6 +233,20 @@ public class SanPhamChiTiet {
             this.sp.getBrand().getTenThuongHieu(),
             this.giathanh,
             this.soluong,
+            this.mota
+        };
+    }
+    public Object[] todata_Show() {
+        return new Object[]{
+            this.sp.getLoaisp().getTenLoaiSP(),
+            this.sp.getTenSP(),
+            this.color.getTenMauSac(),
+            this.material.getTenChatLieu(),
+            this.sp.getBrand().getTenThuongHieu(),
+            this.doCan,
+            this.giathanh,
+            this.soluong,
+            this.hinhanh,
             this.mota
         };
     }

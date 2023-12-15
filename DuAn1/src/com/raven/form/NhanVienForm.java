@@ -42,10 +42,11 @@ public class NhanVienForm extends javax.swing.JPanel {
         fillTable(ndsv.SelectAll());
         txtTimKiem.setText("Tìm Kiếm");
         Nametag();
+
     }
 
     void Nametag() {
-        String[] table2 = {"Mã Nhân Viên", "Tên Nhân Viên", "Ngày Sinh", "Số Điện Thoại", "Mật Khẩu", "Giới Tính", "Email", "Vai Trò", "Trạng Thái"};
+        String[] table2 = {"Mã Nhân Viên", "Tên Nhân Viên", "Ngày Sinh", "Số Điện Thoại", "Mật Khẩu", "Giới Tính", "Email", "Vai Trò"};
         for (int i = 0; i < table2.length; i++) {
             tblNhanVien.getColumnModel().getColumn(i).setHeaderValue(table2[i]);
         }
@@ -131,17 +132,28 @@ public class NhanVienForm extends javax.swing.JPanel {
 
     boolean check() {
         boolean isValid = true;
-
+        String ma = txtMaNV.getText();
+        boolean macheck = ma.matches("^[a-zA-Z0-9]+$");
         if (txtMaNV.getText().trim().isEmpty()) {
             checkma.setText("Vui lòng nhập mã nhân viên");
+            checkma.setForeground(java.awt.Color.RED);
+            isValid = false;
+        } else if (!macheck) {
+            checkma.setText("Mã Nhân viên không hợp lệ");
             checkma.setForeground(java.awt.Color.RED);
             isValid = false;
         } else {
             checkma.setText(null);
         }
+        String input = txtTenNV.getText();
+        boolean isJavaClassName = input.matches("^[0-9\\-.,@!#$%^&*()<>?*-~`+Ee\\s]+$");
 
         if (txtTenNV.getText().trim().isEmpty()) {
             checkten.setText("Vui lòng nhập tên nhân viên");
+            checkten.setForeground(java.awt.Color.RED);
+            isValid = false;
+        } else if (isJavaClassName) {
+            checkten.setText("Tên Không hợp lệ");
             checkten.setForeground(java.awt.Color.RED);
             isValid = false;
         } else {
@@ -266,7 +278,6 @@ public class NhanVienForm extends javax.swing.JPanel {
         checkphone = new javax.swing.JLabel();
         btnLuu = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
-        btnDTT = new javax.swing.JButton();
         btnReset = new javax.swing.JButton();
         txtTimKiem = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
@@ -315,6 +326,7 @@ public class NhanVienForm extends javax.swing.JPanel {
         jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 60, 20));
 
         buttonGroup1.add(rbo_Nam);
+        rbo_Nam.setSelected(true);
         rbo_Nam.setText("Nam");
         rbo_Nam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -332,6 +344,7 @@ public class NhanVienForm extends javax.swing.JPanel {
         jPanel4.add(rbo_master, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, -1, -1));
 
         buttonGroup2.add(rbo_newbie);
+        rbo_newbie.setSelected(true);
         rbo_newbie.setText("Nhân Viên");
         jPanel4.add(rbo_newbie, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 50, -1, -1));
 
@@ -365,13 +378,6 @@ public class NhanVienForm extends javax.swing.JPanel {
             }
         });
 
-        btnDTT.setText("Đổi trạng thái");
-        btnDTT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDTTActionPerformed(evt);
-            }
-        });
-
         btnReset.setText("Mới");
         btnReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -399,17 +405,17 @@ public class NhanVienForm extends javax.swing.JPanel {
 
         tblNhanVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "null", "null", "null", "null", "null"
+                "Title 1", "Title 2", "Title 3", "Title 4", "null", "null", "null", "null"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -472,11 +478,9 @@ public class NhanVienForm extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(btnDTT)
                         .addGap(18, 18, 18)
+                        .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
                         .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -493,14 +497,10 @@ public class NhanVienForm extends javax.swing.JPanel {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 11, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnReset)
-                            .addComponent(btnDTT)
-                            .addComponent(btnSua)
-                            .addComponent(btnLuu)))
-                    .addComponent(txtTimKiem))
+                    .addComponent(txtTimKiem)
+                    .addComponent(btnReset, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addComponent(btnSua, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLuu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -538,78 +538,69 @@ public class NhanVienForm extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "Thành công");
                     fillTable(ndsv.SelectAll());
 
-                    final String username = "bheos72@gmail.com";
-                    final String password = "wpyw xlbb jaiv cvlc";
-
-                    Properties prop = new Properties();
-                    prop.put("mail.smtp.host", "smtp.gmail.com");
-                    prop.put("mail.smtp.port", "587");
-                    prop.put("mail.smtp.auth", "true");
-                    prop.put("mail.smtp.starttls.enable", "true"); //TLS
-
-                    Session session = Session.getInstance(prop,
-                            new javax.mail.Authenticator() {
-                        protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication(username, password);
-                        }
-                    });
-
-                    try {
-
-                        Message message = new MimeMessage(session);
-                        message.setFrom(new InternetAddress("bheos72@gmail.com"));
-                        message.setRecipients(
-                                Message.RecipientType.TO,
-                                InternetAddress.parse(txtEmail.getText())
-                        );
-                        message.setSubject("Chào mừng " + txtTenNV.getText() + " tham gia hệ thống");
-                        message.setText("Kính chào " + txtTenNV.getText() + ",\n\n"
-                                + "Chúng tôi xin gửi tới bạn thông tin tài khoản để truy cập hệ thống:\n"
-                                + "- Tên đăng nhập: " + txtEmail.getText() + "\n"
-                                + "- Mật khẩu: " + txtMatKhau.getText() + "\n\n"
-                                + "Nếu cần hỗ trợ gì thêm, vui lòng liên hệ với bộ phận hỗ trợ.\n\n"
-                                + "Trân trọng,\n"
-                                + "Ban quản trị hệ thống");
-
-                        Transport.send(message);
-
-                        System.out.println("Done");
-
-                    } catch (MessagingException e) {
-                        e.printStackTrace();
-                    }
+//                    final String username = "hall3baycup@gmail.com";
+//                    final String password = "nobita123z";
+//
+//                    Properties prop = new Properties();
+//                    prop.put("mail.smtp.host", "smtp.gmail.com");
+//                    prop.put("mail.smtp.port", "587");
+//                    prop.put("mail.smtp.auth", "true");
+//                    prop.put("mail.smtp.starttls.enable", "true"); //TLS
+//
+//                    Session session = Session.getInstance(prop,
+//                            new javax.mail.Authenticator() {
+//                        protected PasswordAuthentication getPasswordAuthentication() {
+//                            return new PasswordAuthentication(username, password);
+//                        }
+//                    });
+//
+//                    try {
+//
+//                        Message message = new MimeMessage(session);
+//                        message.setFrom(new InternetAddress("bheos72@gmail.com"));
+//                        message.setRecipients(
+//                                Message.RecipientType.TO,
+//                                InternetAddress.parse(txtEmail.getText())
+//                        );
+//                        message.setSubject("Chào mừng " + txtTenNV.getText() + " tham gia hệ thống");
+//                        message.setText("Kính chào " + txtTenNV.getText() + ",\n\n"
+//                                + "Chúng tôi xin gửi tới bạn thông tin tài khoản để truy cập hệ thống:\n"
+//                                + "- Tên đăng nhập: " + txtEmail.getText() + "\n"
+//                                + "- Mật khẩu: " + txtMatKhau.getText() + "\n\n"
+//                                + "Nếu cần hỗ trợ gì thêm, vui lòng liên hệ với bộ phận hỗ trợ.\n\n"
+//                                + "Trân trọng,\n"
+//                                + "Ban quản trị hệ thống");
+//
+//                        Transport.send(message);
+//
+//                        System.out.println("Done");
+//
+//                    } catch (MessagingException e) {
+//                        e.printStackTrace();
+//                    }
                 }
             }
         }
-
 
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         if (check()) {
-            txtMaNV.setEnabled(true);
-            NguoiDung nd = Read();
-            if (ndsv.update(nd, nd.getMaND()) > 0) {
-                fillTable(ndsv.SelectAll());
-                reset();
-                JOptionPane.showMessageDialog(this, "Thành công");
+            int test = JOptionPane.showConfirmDialog(this, "Bạn muốn thay đổi thông tin ");
+            if (test == 0) {
+
+                txtMaNV.setEnabled(true);
+                NguoiDung nd = Read();
+                if (ndsv.update(nd, nd.getMaND()) > 0) {
+                    fillTable(ndsv.SelectAll());
+                    reset();
+                    JOptionPane.showMessageDialog(this, "Thành công");
+                }
+            } else {
+                return;
             }
         }
     }//GEN-LAST:event_btnSuaActionPerformed
-
-    private void btnDTTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDTTActionPerformed
-        try {
-            NguoiDung nd = change_trangThai();
-            if (ndsv.Update_TrangThai(nd, nd.getMaND()) > 0) {
-                fillTable(ndsv.SelectAll());
-                reset();
-                JOptionPane.showMessageDialog(this, "Thành công");
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }//GEN-LAST:event_btnDTTActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
 //        btnSua.setEnabled(false);
@@ -657,7 +648,6 @@ public class NhanVienForm extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser Date_ngaysinh;
-    private javax.swing.JButton btnDTT;
     private javax.swing.JButton btnLuu;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnSua;

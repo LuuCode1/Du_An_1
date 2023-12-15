@@ -16,7 +16,8 @@ import model.NguoiDung;
 import model.SanPham;
 import model.SanPhamChiTiet;
 import model.Thuonghieu;
-import model.Vouchers;
+import model.Voucher;
+
 
 /**
  *
@@ -63,7 +64,7 @@ public class HoaDon_Service {
             ps.setObject(1, id);
             rs = ps.executeQuery();
             while (rs.next()) {
-                Vouchers vc = new Vouchers(0, rs.getString(3), null, 0, null, null, null, null);
+                Voucher vc = new Voucher(0, rs.getString(3), null, 0, null, null, 0, 0, null);
                 KhachHang kh = new KhachHang(0, null, rs.getString(4), null, null);
                 NguoiDung nd = new NguoiDung(0, null, rs.getString(5), null, null, null, 0, null, 0);
                 HoaDon hd = new HoaDon(rs.getInt(1), rs.getString(2), kh, nd, rs.getDate(6), rs.getDouble(7), rs.getInt(8), vc);
@@ -92,7 +93,7 @@ public class HoaDon_Service {
         }
     }
     
-    public int update_TrangThai_HD(HoaDon hd, int idhd) {
+    public int update_TrangThai_HD1(HoaDon hd, int idhd) {
         sql = "update hoa_don set idnguoi_dung = ?,idKhachHang = ? ,tongtien = ?,trangthai = ? where idHoaDon = ? ";
         try {
             con = DBconnect.getConnection();
@@ -102,6 +103,20 @@ public class HoaDon_Service {
             ps.setObject(3, hd.getTongtien());
             ps.setObject(4, 1);
             ps.setObject(5, idhd);
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    
+    public int update_TrangThai_HD2(HoaDon hd, int idhd) {
+        sql = "update hoa_don set trangthai = ? where idHoaDon = ? ";
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, 2);
+            ps.setObject(2, idhd);
             return ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -134,20 +149,22 @@ public class HoaDon_Service {
 //    }
 //    
     public int Insert(HoaDon hd) {
-        sql = "INSERT INTO hoa_don(maHoaDon,trangthai)\n"
-                + "VALUES ( ?,?)";
+        sql = "INSERT INTO hoa_don(maHoaDon,trangthai,idnguoi_dung,idKhachHang)\n"
+                + "VALUES ( ?,?,?,?)";
         try {
             con = DBconnect.getConnection();
             ps = con.prepareStatement(sql);
             ps.setObject(1, hd.getMahD());
             ps.setObject(2, hd.getTrangThai());
+            ps.setObject(3, hd.getNG().getIdND());
+            ps.setObject(4, 1);
             return ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
     }
-//    
+    
 //    public List<HoaDonChiTiet> getListHoaDonChiTiet(String MaHD) {
 //        List<HoaDonChiTiet> getList = new ArrayList<>();
 //        try {
@@ -289,7 +306,7 @@ public class HoaDon_Service {
     public List<HoaDon> LichSuHoaDon_ngaythang(int a, int b, java.util.Date n, java.util.Date m) {
         List<HoaDon> listhd = new ArrayList<>();
         sql = """
-             SELECT hoa_don.idHoaDon, hoa_don.maHoaDon, Nguoi_dung.tenNguoi_dung, khach_hang.tenKhachHang, hoa_don.ngayban, hoa_don.trangthai
+             SELECT hoa_don.idHoaDon, hoa_don.maHoaDon, Nguoi_dung.tenNguoi_dung, khach_hang.tenKhachHang, hoa_don.ngayban,hoa_don.tongtien, hoa_don.trangthai
                                    FROM hoa_don
                                    LEFT JOIN Nguoi_dung ON hoa_don.idnguoi_dung = Nguoi_dung.idnguoi_dung
                                    LEFT JOIN khach_hang ON hoa_don.idKhachHang = khach_hang.idKhachHang

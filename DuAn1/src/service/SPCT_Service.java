@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.SanPhamChiTiet;
 import model.ChatLieu;
+import model.LoaiSP;
 import model.Mausac;
 import model.SanPham;
 import model.Thuonghieu;
@@ -273,4 +274,36 @@ public class SPCT_Service {
         return null;
     }
 
+    public List<SanPhamChiTiet> ShowSP(String trangthai) {
+        List<SanPhamChiTiet> list = new ArrayList<>();
+        sql = """
+              SELECT    loai_sp.tenloai_sp, san_pham.tensp, thuong_hieu.tenThuongHieu, mau_sac.tenMauSac, chat_lieu.tenChatLieu, san_pham_chi_tiet.doCan, san_pham_chi_tiet.giaThanh, san_pham_chi_tiet.soLuong, 
+                                                    san_pham_chi_tiet.hinhanh, san_pham_chi_tiet.moTa
+                              FROM         san_pham INNER JOIN
+                                                    san_pham_chi_tiet ON san_pham.idsp = san_pham_chi_tiet.idsp INNER JOIN
+                                                    mau_sac ON san_pham_chi_tiet.idMauSac = mau_sac.idMauSac INNER JOIN
+                                                    loai_sp ON san_pham.idloai_sp = loai_sp.idloai_sp INNER JOIN
+                                                    chat_lieu ON san_pham_chi_tiet.idChatLieu = chat_lieu.idChatLieu INNER JOIN
+                                                    thuong_hieu ON san_pham.idThuongHieu = thuong_hieu.idThuongHieu where san_pham_chi_tiet.trangThai =  ?
+              """;
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, trangthai);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Thuonghieu th = new Thuonghieu(rs.getString(3));
+                Mausac ms = new Mausac(rs.getString(4));
+                ChatLieu cl = new ChatLieu(rs.getString(5));
+                LoaiSP lsp = new LoaiSP(rs.getString(1));
+                SanPham sp = new SanPham(rs.getString(2), lsp, th);
+                SanPhamChiTiet spct = new SanPhamChiTiet(sp, ms, cl, rs.getDouble(6), rs.getDouble(8), rs.getInt(7), rs.getString(9), rs.getString(10));
+                list.add(spct);
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

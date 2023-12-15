@@ -19,7 +19,7 @@ public class HoaDon {
     private Date ngayban;
     private double tongtien;
     private int TrangThai;
-    private Vouchers vouchers;
+    private Voucher vouchers;
 
     public HoaDon() {
     }
@@ -51,7 +51,7 @@ public class HoaDon {
         this.TrangThai = TrangThai;
     }
 
-    public HoaDon(int idHD, String mahD, KhachHang KH, NguoiDung NG, Date ngayban, double tongtien, int TrangThai, Vouchers vouchers) {
+    public HoaDon(int idHD, String mahD, KhachHang KH, NguoiDung NG, Date ngayban, double tongtien, int TrangThai, Voucher vouchers) {
         this.idHD = idHD;
         this.mahD = mahD;
         this.KH = KH;
@@ -62,11 +62,11 @@ public class HoaDon {
         this.vouchers = vouchers;
     }
 
-    public Vouchers getVouchers() {
+    public Voucher getVouchers() {
         return vouchers;
     }
 
-    public void setVouchers(Vouchers vouchers) {
+    public void setVouchers(Voucher vouchers) {
         this.vouchers = vouchers;
     }
 

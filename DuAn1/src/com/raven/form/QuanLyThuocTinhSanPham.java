@@ -5,6 +5,7 @@
 package com.raven.form;
 
 import java.util.List;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.ChatLieu;
@@ -34,6 +35,7 @@ public class QuanLyThuocTinhSanPham extends javax.swing.JPanel {
      */
     public QuanLyThuocTinhSanPham() {
         initComponents();
+        fillTable_mauSac(mssv.FILL_TO_CBO_MauSac());
     }
 
     void fillTable_mauSac(List<Mausac> list) {
@@ -101,6 +103,37 @@ public class QuanLyThuocTinhSanPham extends javax.swing.JPanel {
         return chatLieu;
     }
 
+    boolean check() {
+        String ma = txt_ma.getText();
+        boolean isJavaClassName = ma.matches("^[a-zA-Z0-9]+$");
+        boolean isvali = true;
+        if (txt_ma.getText().isEmpty()) {
+            checkma.setText("Không được để trống");
+            checkma.setForeground(java.awt.Color.red);
+            isvali = false;
+        } else if (!isJavaClassName) {
+            checkma.setText("ma khong hợp lệ");
+            checkma.setForeground(java.awt.Color.red);
+            isvali = false;
+        } else {
+            checkma.setText(null);
+        }
+        String input = txt_ten.getText();
+        boolean ten = input.matches("[\\p{Punct}&&[^a-zA-Z]]");
+        if (txt_ten.getText().isEmpty()) {
+            checkten.setText("Không được để trống");
+            checkten.setForeground(java.awt.Color.red);
+            isvali = false;
+        } else if (ten) {
+            checkten.setText("Tên Không hợp lệ");
+            checkten.setForeground(java.awt.Color.red);
+            isvali = false;
+        } else {
+            checkten.setText(null);
+        }
+        return isvali;
+    }
+
     /**
      * â
      * This method is called from within the constructor to initialize the form.
@@ -127,10 +160,14 @@ public class QuanLyThuocTinhSanPham extends javax.swing.JPanel {
         jButton5 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        checkten = new javax.swing.JLabel();
+        checkma = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_bang = new javax.swing.JTable();
 
         jButton1.setText("jButton1");
+
+        color1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Quản Lý Chung"));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -139,6 +176,7 @@ public class QuanLyThuocTinhSanPham extends javax.swing.JPanel {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         buttonGroup1.add(rbo_ms);
+        rbo_ms.setSelected(true);
         rbo_ms.setText("Màu Sắc");
         rbo_ms.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -203,6 +241,10 @@ public class QuanLyThuocTinhSanPham extends javax.swing.JPanel {
 
         jLabel2.setText("Tên");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, -1, -1));
+        jPanel1.add(checkten, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 320, 40));
+        jPanel1.add(checkma, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 320, 40));
+
+        color1.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 57, 695, 331));
 
         tbl_bang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -234,26 +276,7 @@ public class QuanLyThuocTinhSanPham extends javax.swing.JPanel {
             tbl_bang.getColumnModel().getColumn(1).setResizable(false);
         }
 
-        javax.swing.GroupLayout color1Layout = new javax.swing.GroupLayout(color1);
-        color1.setLayout(color1Layout);
-        color1Layout.setHorizontalGroup(
-            color1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(color1Layout.createSequentialGroup()
-                .addGap(196, 196, 196)
-                .addGroup(color1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 695, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(929, Short.MAX_VALUE))
-        );
-        color1Layout.setVerticalGroup(
-            color1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, color1Layout.createSequentialGroup()
-                .addContainerGap(57, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
-        );
+        color1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, 980, 260));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -268,37 +291,40 @@ public class QuanLyThuocTinhSanPham extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        index = tbl_bang.getSelectedRow();
-        Thuonghieu th1 = read_TH();
-        Mausac ms1 = read_MS();
-        ChatLieu chatlieu1 = read_CL();
-        if (rbo_th.isSelected()) {
-            if (thuonghieusv.maThuongHieu(th1.getMaThuongHieu()) != null) {
-                JOptionPane.showMessageDialog(this, "Trùng mã Thương hiệu");
-            } else {
-                if (thuonghieusv.insert(th1) > 0) {
-                    JOptionPane.showMessageDialog(this, "thành công");
-                    fillTable_ThuongHieu(thuonghieusv.FILL_TO_CBO_ThuongHieu());
+        if (check()) {
+
+            index = tbl_bang.getSelectedRow();
+            Thuonghieu th1 = read_TH();
+            Mausac ms1 = read_MS();
+            ChatLieu chatlieu1 = read_CL();
+            if (rbo_th.isSelected()) {
+                if (thuonghieusv.maThuongHieu(th1.getMaThuongHieu()) != null) {
+                    JOptionPane.showMessageDialog(this, "Trùng mã Thương hiệu");
+                } else {
+                    if (thuonghieusv.insert(th1) > 0) {
+                        JOptionPane.showMessageDialog(this, "thành công");
+                        fillTable_ThuongHieu(thuonghieusv.FILL_TO_CBO_ThuongHieu());
+                    }
                 }
             }
-        }
-        if (rbo_ms.isSelected()) {
-            if (mssv.maMauSac(ms1.getMaMauSac()) != null) {
-                JOptionPane.showMessageDialog(this, "Trùng mã màu sắc");
-            } else {
-                if (mssv.insert(ms1) > 0) {
-                    JOptionPane.showMessageDialog(this, "thành công");
-                    fillTable_mauSac(mssv.FILL_TO_CBO_MauSac());
+            if (rbo_ms.isSelected()) {
+                if (mssv.maMauSac(ms1.getMaMauSac()) != null) {
+                    JOptionPane.showMessageDialog(this, "Trùng mã màu sắc");
+                } else {
+                    if (mssv.insert(ms1) > 0) {
+                        JOptionPane.showMessageDialog(this, "thành công");
+                        fillTable_mauSac(mssv.FILL_TO_CBO_MauSac());
+                    }
                 }
             }
-        }
-        if (rbo_Cl.isSelected()) {
-            if (chatlieusv.machatLieu(chatlieu1.getMaChatLieu()) != null) {
-                JOptionPane.showMessageDialog(this, "Trùng mã Chất Liệu");
-            } else {
-                if (chatlieusv.insert(chatlieu1) > 0) {
-                    JOptionPane.showMessageDialog(this, "thành công");
-                    fillTable_ChatLieu(chatlieusv.FILL_TO_CBO_ChatLieu());
+            if (rbo_Cl.isSelected()) {
+                if (chatlieusv.machatLieu(chatlieu1.getMaChatLieu()) != null) {
+                    JOptionPane.showMessageDialog(this, "Trùng mã Chất Liệu");
+                } else {
+                    if (chatlieusv.insert(chatlieu1) > 0) {
+                        JOptionPane.showMessageDialog(this, "thành công");
+                        fillTable_ChatLieu(chatlieusv.FILL_TO_CBO_ChatLieu());
+                    }
                 }
             }
         }
@@ -306,27 +332,35 @@ public class QuanLyThuocTinhSanPham extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        index = tbl_bang.getSelectedRow();
-        ChatLieu cl = read_CL();
-        Mausac mausac = read_MS();
-        Thuonghieu th = read_TH();
-        String ma = tbl_bang.getValueAt(index, 0).toString();
-        if (rbo_Cl.isSelected()) {
-            if (chatlieusv.update_CL(cl, ma) > 0) {
-                JOptionPane.showMessageDialog(this, "thành công");
-                fillTable_ChatLieu(chatlieusv.FILL_TO_CBO_ChatLieu());
-            }
-        }
-        if (rbo_ms.isSelected()) {
-            if (mssv.update_MS(mausac, ma) > 0) {
-                JOptionPane.showMessageDialog(this, "thành công");
-                fillTable_mauSac(mssv.FILL_TO_CBO_MauSac());
-            }
-        }
-        if (rbo_th.isSelected()) {
-            if (thuonghieusv.update_TH(th, ma) > 0) {
-                JOptionPane.showMessageDialog(this, "thành công");
-                fillTable_ThuongHieu(thuonghieusv.FILL_TO_CBO_ThuongHieu());
+        if (check()) {
+            int a = JOptionPane.showConfirmDialog(this, "Bạn muốn sửa thông tin ");
+            if (a == 0) {
+
+                index = tbl_bang.getSelectedRow();
+                ChatLieu cl = read_CL();
+                Mausac mausac = read_MS();
+                Thuonghieu th = read_TH();
+                String ma = tbl_bang.getValueAt(index, 0).toString();
+                if (rbo_Cl.isSelected()) {
+                    if (chatlieusv.update_CL(cl, ma) > 0) {
+                        JOptionPane.showMessageDialog(this, "thành công");
+                        fillTable_ChatLieu(chatlieusv.FILL_TO_CBO_ChatLieu());
+                    }
+                }
+                if (rbo_ms.isSelected()) {
+                    if (mssv.update_MS(mausac, ma) > 0) {
+                        JOptionPane.showMessageDialog(this, "thành công");
+                        fillTable_mauSac(mssv.FILL_TO_CBO_MauSac());
+                    }
+                }
+                if (rbo_th.isSelected()) {
+                    if (thuonghieusv.update_TH(th, ma) > 0) {
+                        JOptionPane.showMessageDialog(this, "thành công");
+                        fillTable_ThuongHieu(thuonghieusv.FILL_TO_CBO_ThuongHieu());
+                    }
+                }
+            } else {
+                return;
             }
         }
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -378,6 +412,8 @@ public class QuanLyThuocTinhSanPham extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JLabel checkma;
+    private javax.swing.JLabel checkten;
     private com.raven.form.Color color1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

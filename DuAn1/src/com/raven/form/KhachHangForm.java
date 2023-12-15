@@ -6,6 +6,7 @@ package com.raven.form;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.KhachHang;
@@ -16,8 +17,10 @@ import service.KhachHangService;
  * @author Dat
  */
 public class KhachHangForm extends javax.swing.JPanel {
+
     private final KhachHangService khs = new KhachHangService();
     DefaultTableModel tblModel = new DefaultTableModel();
+
     /**
      * Creates new form KhachHangForm
      */
@@ -240,15 +243,30 @@ public class KhachHangForm extends javax.swing.JPanel {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
         try {
+            model.KhachHang kh = getKhachHangFormInput();
+            String idkh = kh.getMaKH();
             if (txtMaKH.getText().equals("") || txtTenKH.getText().equals("")
-                || txtDiaChi.getText().equals("") || txtSDT.getText().equals("")) {
+                    || txtDiaChi.getText().equals("") || txtSDT.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ");
                 return;
             }
-            if (checkTrungMaKH(txtMaKH.getText())) {
+            String input = txtTenKH.getText();
+            boolean isJavaClassName = input.matches("^[0-9\\-.,@!#$%^&*()<>?*-~`+Ee\\s]+$");
+
+            if (isJavaClassName) {
+                JOptionPane.showMessageDialog(this, "Tên không hợp lệ.");
+                return;// Trả về false nếu không phải là tên lớp Java hợp lệ// Trả về true nếu là tên lớp Java hợp lệ
+            }
+            String ma = txtMaKH.getText();
+            boolean checkma = ma.matches("^[a-zA-Z0-9]+$");
+            if (!checkma) {
+                JOptionPane.showMessageDialog(this, "Ma Không hợp lệ");
+            }
+            if (khs.Check_maKH(idkh) != null) {
                 JOptionPane.showMessageDialog(this, "Mã khách hành đã tồn tại");
                 return;
             }
+
             try {
                 int sdt = Integer.parseInt(txtSDT.getText());
                 if (txtSDT.getText().length() > 10 || txtSDT.getText().length() < 10) {
@@ -259,7 +277,16 @@ public class KhachHangForm extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Số điện thoại phải là số");
             }
 
-            KhachHang kh = getKhachHangFormInput();
+            if (!Pattern.matches("^09[0-9]{8}$|^03[0-9]{8}$", txtSDT.getText())) {
+                JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ");
+                return;
+            } else {
+                if (!Pattern.matches("[0-9]{10}", txtSDT.getText())) {
+                    JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ");
+                    return;
+                }
+
+            }
             if (khs.addKhachHang(kh) != null) {
                 JOptionPane.showMessageDialog(this, "Thêm thành công");
                 loadDataToTable(khs.getAllKhachHang());
@@ -275,32 +302,47 @@ public class KhachHangForm extends javax.swing.JPanel {
         // TODO add your handling code here:
         try {
             if (txtMaKH.getText().equals("") || txtTenKH.getText().equals("")
-                || txtDiaChi.getText().equals("") || txtSDT.getText().equals("")) {
+                    || txtDiaChi.getText().equals("") || txtSDT.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ");
                 return;
             }
             //            if (checkTrungMaKH(txtMaKH.getText())) {
-                //                JOptionPane.showMessageDialog(this, "Mã khách hành đã tồn tại");
-                //                return;
-                //            }
-            try {
-                int sdt = Integer.parseInt(txtSDT.getText());
-                if (txtSDT.getText().length() > 10 || txtSDT.getText().length() < 10) {
-                    JOptionPane.showMessageDialog(this, "Số điện thoại gồm 10 số");
+            //                JOptionPane.showMessageDialog(this, "Mã khách hành đã tồn tại");
+            //                return;
+            //            }
+            String input = txtTenKH.getText();
+            boolean isJavaClassName = input.matches("^[0-9\\-.,@!#$%^&*()<>?*-~`+Ee\\s]+$");
+
+            if (isJavaClassName) {
+                JOptionPane.showMessageDialog(this, "Tên Không hợp lệ.");
+                return;// Trả về false nếu không phải là tên lớp Java hợp lệ// Trả về true nếu là tên lớp Java hợp lệ
+            }
+            if (!Pattern.matches("^09[0-9]{8}$|^03[0-9]{8}$", txtSDT.getText())) {
+                JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ");
+                return;
+            } else {
+                if (!Pattern.matches("[0-9]{10}", txtSDT.getText())) {
+                    JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ");
                     return;
                 }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Số điện thoại phải là số");
-            }
+                try {
+                    int sdt = Integer.parseInt(txtSDT.getText());
+                    if (txtSDT.getText().length() > 10 || txtSDT.getText().length() < 10) {
+                        JOptionPane.showMessageDialog(this, "Số điện thoại gồm 10 số");
+                        return;
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Số điện thoại phải là số");
+                }
 
-            KhachHang kh = getKhachHangFormInput();
-            if (khs.updateKhachHang(kh) != null) {
-                JOptionPane.showMessageDialog(this, "Update thành công");
-                loadDataToTable(khs.getAllKhachHang());
-            } else {
-                JOptionPane.showMessageDialog(this, "Không update được");
+                KhachHang kh = getKhachHangFormInput();
+                if (khs.updateKhachHang(kh) != null) {
+                    JOptionPane.showMessageDialog(this, "Update thành công");
+                    loadDataToTable(khs.getAllKhachHang());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Không update được");
+                }
             }
-
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
@@ -311,7 +353,7 @@ public class KhachHangForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void tblKhachHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKhachHangMouseClicked
-        // TODO add your handling code here:
+        txtMaKH.setEnabled(false);
         try {
             showDetail();
         } catch (Exception e) {
@@ -326,9 +368,9 @@ public class KhachHangForm extends javax.swing.JPanel {
         // TODO add your handling code here:
         try {
             String text = "%" + txtTimKiem.getText() + "%";
-            if(txtTimKiem.getText().isEmpty()){
+            if (txtTimKiem.getText().isEmpty()) {
                 loadDataToTable(khs.getAllKhachHang());
-            }else {
+            } else {
                 ArrayList<KhachHang> list = khs.SearchKhachHang(text);
                 loadDataToTable(list);
             }
@@ -344,7 +386,7 @@ public class KhachHangForm extends javax.swing.JPanel {
 
     private void txtTimKiemFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTimKiemFocusLost
         // TODO add your handling code here:
-        if(txtTimKiem.getText().isEmpty()){
+        if (txtTimKiem.getText().isEmpty()) {
             txtTimKiem.setText("Tìm kiếm");
             loadDataToTable(khs.getAllKhachHang());
         }
@@ -370,8 +412,7 @@ public class KhachHangForm extends javax.swing.JPanel {
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 
-
-private void loadDataToTable(ArrayList<KhachHang> list) {
+    private void loadDataToTable(ArrayList<KhachHang> list) {
         //ArrayList<KhachHang> list = khs.getAllKhachHang();
         tblModel.setRowCount(0);
         for (KhachHang kh : list) {
@@ -409,11 +450,12 @@ private void loadDataToTable(ArrayList<KhachHang> list) {
         }
         return false;
     }
-    
-    private void New(){
+
+    private void New() {
         txtMaKH.setText("");
         txtTenKH.setText("");
         txtDiaChi.setText("");
         txtSDT.setText("");
+        txtMaKH.setEnabled(true);
     }
 }

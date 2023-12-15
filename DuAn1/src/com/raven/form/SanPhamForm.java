@@ -21,6 +21,7 @@ import service.thuonghieu_service;
 import view.ThuongHieuForm;
 import java.sql.*;
 import java.util.Vector;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -96,7 +97,7 @@ public class SanPhamForm extends javax.swing.JPanel {
                     + "from san_pham sp INNER JOIN\n"
                     + "loai_sp lsp ON lsp.idloai_sp = sp.idloai_sp INNER JOIN\n"
                     + "thuong_hieu th ON th.idThuongHieu = sp.idThuongHieu \n"
-                    + "where tensp not in (Select top " + (trang * 5 - 5) + " tensp from san_pham)";
+                    + "where idsp not in (Select top " + (trang * 5 - 5) + " idsp from san_pham)";
             conn = DBconnect.getConnection();
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(query);
@@ -180,13 +181,26 @@ public class SanPhamForm extends javax.swing.JPanel {
     }
 
     public boolean CheckValidate() {
+        String ma = txt_ma.getText();
+        boolean checkma = ma.matches("^[a-zA-Z0-9]+$");
         if (txt_ma.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Mã san pham còn trống");
             return false;
+        }else if (!checkma) {
+            JOptionPane.showMessageDialog(this, "Mã san pham Không đúng");
+            return false;
         }
+
         if (txt_ten.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Tên san pham còn trống");
             return false;
+        }
+        String input = txt_ten.getText();
+        boolean isJavaClassName = input.matches("[\\p{Punct}&&[^a-zA-Z]]");
+
+        if (isJavaClassName) {
+            JOptionPane.showMessageDialog(this, "Tên Không hợp lệ.");
+            return false;// Trả về false nếu không phải là tên lớp Java hợp lệ// Trả về true nếu là tên lớp Java hợp lệ
         }
         return true;
     }
@@ -204,7 +218,6 @@ public class SanPhamForm extends javax.swing.JPanel {
         txt_ten = new javax.swing.JTextField();
         txt_ma = new javax.swing.JTextField();
         lbl_id = new javax.swing.JLabel();
-        btnXoa = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         btnLuu = new javax.swing.JButton();
         btnSPChiTiet = new javax.swing.JButton();
@@ -236,13 +249,6 @@ public class SanPhamForm extends javax.swing.JPanel {
         jLabel3.setText("Tên sản phẩm:");
 
         jLabel4.setText("Mã sản phẩm:");
-
-        btnXoa.setText("Xóa");
-        btnXoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXoaActionPerformed(evt);
-            }
-        });
 
         btnSua.setText("Sửa");
         btnSua.addActionListener(new java.awt.event.ActionListener() {
@@ -330,7 +336,6 @@ public class SanPhamForm extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSPChiTiet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnLuu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(80, 80, 80))
@@ -355,26 +360,22 @@ public class SanPhamForm extends javax.swing.JPanel {
                         .addComponent(btnSua)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(btnXoa)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSPChiTiet))
+                        .addComponent(btnSPChiTiet)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                        .addComponent(jButton1))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(txt_ten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(cbo_loaiSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbo_thuonghieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6))))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(txt_ten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbo_loaiSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbo_thuonghieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
@@ -528,8 +529,37 @@ public class SanPhamForm extends javax.swing.JPanel {
         if (CheckValidate()) {
             try {
                 SanPham sp = getModel_SP();
-                if (spSerVice.addSP(sp) > 0) {
-                    JOptionPane.showMessageDialog(this, "Thêm thành công");
+                if (spSerVice.selectByMa(sp.getMaSP()) != null) {
+                    JOptionPane.showMessageDialog(this, "Sản phẩm đã tồn tại");
+                } else {
+                    if (spSerVice.addSP(sp) > 0) {
+                        JOptionPane.showMessageDialog(this, "Thêm thành công");
+                        CountDB();
+                        if (count % 5 == 0) {
+                            soTrang = count / 5;
+                        } else {
+                            soTrang = count / 5 + 1;
+                        }
+                        lbl_soTrang.setText("1/" + soTrang);
+                        loadData(1);
+                        Reset();
+                    }
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Bạn chưa nhập đúng hoặc chưa đầy đủ thông tin");
+            }
+        }
+    }//GEN-LAST:event_btnLuuActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        if (CheckValidate()) {
+            int a = JOptionPane.showConfirmDialog(this, "Bạn muốn cập nhật sản phẩm này");
+
+            if (a == 0) {
+
+                SanPham sp = getModel_SP();
+                if (spSerVice.updateSP(sp) > 0) {
+                    JOptionPane.showMessageDialog(this, "Cap nhat thành công");
                     CountDB();
                     if (count % 5 == 0) {
                         soTrang = count / 5;
@@ -540,47 +570,9 @@ public class SanPhamForm extends javax.swing.JPanel {
                     loadData(1);
                     Reset();
                 }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Bạn chưa nhập đúng hoặc chưa đầy đủ thông tin");
-            }
-        }
-    }//GEN-LAST:event_btnLuuActionPerformed
-
-    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        if (CheckValidate()) {
-            SanPham sp = getModel_SP();
-            if (spSerVice.updateSP(sp) > 0) {
-                JOptionPane.showMessageDialog(this, "Cap nhat thành công");
-                CountDB();
-                if (count % 5 == 0) {
-                    soTrang = count / 5;
-                } else {
-                    soTrang = count / 5 + 1;
-                }
-                lbl_soTrang.setText("1/" + soTrang);
-                loadData(1);
-                Reset();
             }
         }
     }//GEN-LAST:event_btnSuaActionPerformed
-
-    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-
-        if (CheckValidate()) {
-            spSerVice.DeleteSP(txt_ma.getText());
-            JOptionPane.showMessageDialog(this, "Đã xóa thành công");
-            CountDB();
-            if (count % 5 == 0) {
-                soTrang = count / 5;
-            } else {
-                soTrang = count / 5 + 1;
-            }
-            lbl_soTrang.setText("1/" + soTrang);
-            loadData(1);
-            Reset();
-        }
-
-    }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnSPChiTietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSPChiTietActionPerformed
         if (CheckValidate()) {
@@ -613,16 +605,17 @@ public class SanPhamForm extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        Add_thuonghieu dialog = new Add_thuonghieu(new javax.swing.JFrame(), true);
+        dialog.setVisible(true);
+        CBo_ThuongHieu();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void cbo_thuonghieuItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbo_thuonghieuItemStateChanged
         // TODO add your handling code here:
-
     }//GEN-LAST:event_cbo_thuonghieuItemStateChanged
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
         // TODO add your handling code here:
-        CBo_ThuongHieu();
     }//GEN-LAST:event_jButton1MousePressed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -657,7 +650,6 @@ public class SanPhamForm extends javax.swing.JPanel {
     private javax.swing.JButton btnLuu;
     private javax.swing.JButton btnSPChiTiet;
     private javax.swing.JButton btnSua;
-    private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cbo_loaiSP;
     private javax.swing.JComboBox<String> cbo_thuonghieu;
     private javax.swing.JButton jButton1;

@@ -89,8 +89,8 @@ public class NguoiDung_Service {
     }
 
     public int Insert(NguoiDung nd) {
-        sql = "INSERT INTO Nguoi_dung(maNguoiDung,tenNguoi_dung, ngaysinh,matKhau, sdt, gioitinh, email,vaitro,trangthai)\n"
-                + "VALUES (?,?,?,?,?,?,?,?,?)";
+        sql = "INSERT INTO Nguoi_dung(maNguoiDung,tenNguoi_dung, ngaysinh,matKhau, sdt, gioitinh, email,vaitro)\n"
+                + "VALUES (?,?,?,?,?,?,?,?)";
         try {
             con = DBconnect.getConnection();
             ps = con.prepareStatement(sql);
@@ -102,7 +102,6 @@ public class NguoiDung_Service {
             ps.setObject(6, nd.getGioiTinh());
             ps.setObject(7, nd.getEmail());
             ps.setObject(8, nd.getVaiTro());
-            ps.setObject(9, nd.getTrangthai());
             return ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -136,10 +135,37 @@ public class NguoiDung_Service {
         }
         return null;
     }
+    
+    public NguoiDung findBy_MaNV(String manv) {
+        sql = "SELECT    idnguoi_dung,maNguoiDung, tenNguoi_dung, ngaysinh, matKhau, sdt, gioitinh, email, vaitro \n"
+                + "FROM         Nguoi_dung   Nguoi_dung where maNguoiDung like ?";
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, manv);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                NguoiDung nd = new NguoiDung(rs.getInt("idnguoi_dung"),
+                        rs.getString("maNguoiDung"),
+                        rs.getString("tenNguoi_dung"),
+                        rs.getDate("ngaysinh"),
+                        rs.getString("matKhau"), // Change here
+                        rs.getString("sdt"),
+                        rs.getInt("gioitinh"),
+                        rs.getString("email"),
+                        rs.getInt("vaitro"));
+                return nd;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public List<NguoiDung> SelectAll() {
         List<NguoiDung> list = new ArrayList<>();
-        sql = "SELECT    maNguoiDung, tenNguoi_dung, ngaysinh, matKhau, sdt, gioitinh, email, vaitro, trangthai\n"
+        sql = "SELECT     maNguoiDung, tenNguoi_dung, ngaysinh, matKhau, sdt, gioitinh, email, vaitro\n"
                 + "FROM         Nguoi_dung";
         try {
             con = DBconnect.getConnection();
@@ -154,8 +180,7 @@ public class NguoiDung_Service {
                         rs.getString("sdt"),
                         rs.getInt("gioitinh"),
                         rs.getString("email"),
-                        rs.getInt("vaitro"),
-                        rs.getInt("trangthai"));
+                        rs.getInt("vaitro"));
                 list.add(nd);
             }
             return list;

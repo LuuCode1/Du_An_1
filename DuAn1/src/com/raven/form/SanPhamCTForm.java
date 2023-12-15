@@ -102,7 +102,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
     void name() {
         model = (DefaultTableModel) lblbang.getModel();
         String[] row = new String[]{
-            "ID", "Chất Liệu", "Màu Sắc", "Giá Bán","Giá Nhập", "Số Lượng", "Hình Ảnh", "Mô Tả", "Trạng thái"
+            "ID", "Chất Liệu", "Màu Sắc", "Giá Bán", "Giá Nhập", "Số Lượng", "Hình Ảnh", "Mô Tả", "Trạng thái"
         };
         model.setColumnIdentifiers(row);
     }
@@ -117,7 +117,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
                     + "chat_lieu cl ON cl.idChatLieu = spct.idChatLieu INNER JOIN\n"
                     + "mau_sac ms ON ms.idMauSac = spct.idMauSac\n"
                     + "where spct.id_sp_chi_tiet not in "
-                    + "(Select top "+(trang * 5 - 5)+" id_sp_chi_tiet from san_pham_chi_tiet where idsp = "+id+") AND idsp = "+id+"";
+                    + "(Select top " + (trang * 5 - 5) + " id_sp_chi_tiet from san_pham_chi_tiet where idsp = " + id + ") AND idsp = " + id + "";
             conn = DBconnect.getConnection();
             Statement st = conn.createStatement();
             //ps.setObject(1, id);
@@ -343,7 +343,6 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         TxtGiaNhap = new javax.swing.JTextField();
         lblCheckGiaNhap = new javax.swing.JLabel();
-        btn_Delete = new javax.swing.JButton();
         btn_reset = new javax.swing.JButton();
         CBO_CL_check = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
@@ -400,7 +399,7 @@ public class SanPhamCTForm extends javax.swing.JPanel {
                 btn_updateActionPerformed(evt);
             }
         });
-        color3.add(btn_update, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 420, 83, 40));
+        color3.add(btn_update, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 420, 83, 40));
 
         form2.setBackground(java.awt.Color.white);
         form2.setBorder(javax.swing.BorderFactory.createTitledBorder("Quản Lý Sản Phẩm"));
@@ -533,6 +532,11 @@ public class SanPhamCTForm extends javax.swing.JPanel {
                 jButton2MouseClicked(evt);
             }
         });
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         form2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 250, 30, 30));
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Microsoft-Fluentui-Emoji-Mono-Plus.24.png"))); // NOI18N
@@ -541,6 +545,11 @@ public class SanPhamCTForm extends javax.swing.JPanel {
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton3MouseClicked(evt);
+            }
+        });
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
         form2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 200, 30, 30));
@@ -558,21 +567,13 @@ public class SanPhamCTForm extends javax.swing.JPanel {
 
         color3.add(form2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 85, 1058, 300));
 
-        btn_Delete.setText("Xóa");
-        btn_Delete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_DeleteActionPerformed(evt);
-            }
-        });
-        color3.add(btn_Delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 420, 83, 41));
-
         btn_reset.setText("Làm Mới");
         btn_reset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_resetActionPerformed(evt);
             }
         });
-        color3.add(btn_reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 420, 83, 40));
+        color3.add(btn_reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 420, 83, 40));
 
         CBO_CL_check.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         CBO_CL_check.addItemListener(new java.awt.event.ItemListener() {
@@ -768,13 +769,19 @@ public class SanPhamCTForm extends javax.swing.JPanel {
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
         if (check()) {
-            model.SanPhamChiTiet sp = this.read();
-            int b = (int) lblbang.getValueAt(index, 0);
-            if (spctService.update(sp, b) > 0) {
-                JOptionPane.showMessageDialog(this, "Sua thanh cong");
-                loadData(id, 1);
-                reset();
+            int test = JOptionPane.showConfirmDialog(this, "Bạn muốn thay đổi thông tin sản phẩm này");
+            if (test == 0) {
+
+                model.SanPhamChiTiet sp = this.read();
+                int b = (int) lblbang.getValueAt(index, 0);
+                if (spctService.update(sp, b) > 0) {
+                    JOptionPane.showMessageDialog(this, "Sua thanh cong");
+                    loadData(id, 1);
+                    reset();
+                }
             }
+        } else {
+            return;
         }
 
     }//GEN-LAST:event_btn_updateActionPerformed
@@ -818,24 +825,6 @@ public class SanPhamCTForm extends javax.swing.JPanel {
     private void cbomausacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbomausacActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbomausacActionPerformed
-
-    private void btn_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DeleteActionPerformed
-        if (check()) {
-            int a = (int) lblbang.getValueAt(index, 0);
-            if (spctService.delete(a) > 0) {
-                JOptionPane.showMessageDialog(this, "Xoa thành công");
-                CountDB(id);
-                if (count % 5 == 0) {
-                    soTrang = count / 5;
-                } else {
-                    soTrang = count / 5 + 1;
-                }
-                lbl_soTrang.setText("1/" + soTrang);
-                reset();
-            }
-        }
-
-    }//GEN-LAST:event_btn_DeleteActionPerformed
 
     private void btn_resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resetActionPerformed
         reset();
@@ -938,13 +927,25 @@ public class SanPhamCTForm extends javax.swing.JPanel {
 
     private void cbomausacFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbomausacFocusGained
         // TODO add your handling code here:
-        CBo_MauSac();
     }//GEN-LAST:event_cbomausacFocusGained
 
     private void cbochatlieuFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbochatlieuFocusGained
-        // TODO add your handling code here:
-        CBo_ChatLieu();
+        // TODO add your handling code here:      
     }//GEN-LAST:event_cbochatlieuFocusGained
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        Add_mausac dialog = new Add_mausac(new javax.swing.JFrame(), true);
+        dialog.setVisible(true);
+        CBo_MauSac();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        Add_chatlieu dialog = new Add_chatlieu(new javax.swing.JFrame(), true);
+        dialog.setVisible(true);
+        CBo_ChatLieu();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -952,7 +953,6 @@ public class SanPhamCTForm extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> CBO_MS_check;
     private javax.swing.JTextField TxtGiaNhap;
     private javax.swing.JTextField TxtSoLuong;
-    private javax.swing.JButton btn_Delete;
     private javax.swing.JButton btn_add;
     private javax.swing.JButton btn_addAnh1;
     private javax.swing.JButton btn_deleteAnh1;

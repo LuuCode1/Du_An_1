@@ -13,9 +13,11 @@ import java.util.List;
 import model.ChatLieu;
 import model.HoaDon;
 import model.HoaDonChiTiet;
+import model.LoaiSP;
 import model.Mausac;
 import model.SanPham;
 import model.SanPhamChiTiet;
+import model.Thuonghieu;
 
 /**
  *
@@ -230,7 +232,7 @@ sql = "SELECT spct.id_sp_chi_tiet,cl.tenChatLieu,ms.tenMauSac,spct.doCan,spct.gi
         List<SanPhamChiTiet> list = new ArrayList<>();
 
         sql = "SELECT spct.id_sp_chi_tiet,cl.tenChatLieu,ms.tenMauSac,spct.doCan,spct.giaThanh,spct.giaNhap,spct.soLuong,spct.hinhanh,spct.moTa,spct.trangThai\n"
-+ "from san_pham_chi_tiet spct INNER JOIN\n"
+                + "from san_pham_chi_tiet spct INNER JOIN\n"
                 + "san_pham sp ON sp.idsp = spct.idsp INNER JOIN\n"
                 + "chat_lieu cl ON cl.idChatLieu = spct.idChatLieu INNER JOIN\n"
                 + "mau_sac ms ON ms.idMauSac = spct.idMauSac\n"
@@ -259,6 +261,45 @@ sql = "SELECT spct.id_sp_chi_tiet,cl.tenChatLieu,ms.tenMauSac,spct.doCan,spct.gi
             return null;
         }
     }
+    
+    public List<SanPhamChiTiet> seach1(String a) {
+        List<SanPhamChiTiet> list = new ArrayList<>();
+        sql = "SELECT  spct.id_sp_chi_tiet,lsp.tenloai_sp,sp.masp,sp.tensp,cl.tenChatLieu,ms.tenMauSac,\n"
+                + "    th.tenThuongHieu,spct.doCan,spct.giaThanh,spct.soLuong,spct.moTa\n"
+                + "    from san_pham_chi_tiet spct LEFT JOIN\n"
+                + "    san_pham sp ON sp.idsp = spct.idsp LEFT JOIN\n"
+                + "    thuong_hieu th ON th.idThuongHieu = sp.idThuongHieu LEFT JOIN\n"
+                + "    loai_sp lsp ON lsp.idloai_sp = sp.idloai_sp LEFT JOIN\n"
+                + "    chat_lieu cl ON cl.idChatLieu = spct.idChatLieu LEFT JOIN\n"
+                + "    mau_sac ms ON ms.idMauSac = spct.idMauSac\n"
+                + "    where cl.tenChatLieu like ? or ms.tenMauSac like ?";
+        try {
+            con = DBconnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, a);
+            ps.setObject(2, a);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                LoaiSP lsp = new LoaiSP(rs.getString(2));
+                Thuonghieu th = new Thuonghieu(rs.getString(7));
+                SanPham sp = new SanPham(rs.getString(3), rs.getString(4), lsp, th);
+                ChatLieu cl = new ChatLieu(null, rs.getString(5));
+                Mausac ms = new Mausac(null, rs.getString(6));
+                SanPhamChiTiet spct = new SanPhamChiTiet(sp, rs.getInt(1),
+                        ms, cl, rs.getDouble(8), rs.getDouble(9),
+                        0.0, rs.getInt(10), null,
+                        rs.getString(11), null);
+
+                list.add(spct);
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    
 
     public SanPhamChiTiet findByID(int id, int idcl, int idms, Double doCan) {
         Connection conn = null;

@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.HoaDon;
 import model.HoaDonChiTiet;
@@ -45,6 +46,24 @@ public class Lich_Su_Hoa_Don extends javax.swing.JPanel {
         Jpanel_hoadonct.setVisible(false);
         btn_ct.setVisible(false);
         btn_new.setVisible(false);
+        name();
+        name1();
+    }
+
+    void name() {
+        model = (DefaultTableModel) tbl_bang.getModel();
+        String[] row = new String[]{
+            "ID", "ma hoa don", "ten nguoi ban", "ten nguoi mua", "ngay ban", "tong tien", "trang thai"
+        };
+        model.setColumnIdentifiers(row);
+    }
+
+    void name1() {
+        model = (DefaultTableModel) tbl_hdct.getModel();
+        String[] row = new String[]{
+            "lOAI SP", "TEN SP", "THUONG HIEU ", "MAU SAC", "CHAT LIEU", "DO CAN", "GIA", "SO LUONG", "MO TA"
+        };
+        model.setColumnIdentifiers(row);
     }
 
     void fillTable(List<HoaDon> list) {
@@ -54,6 +73,34 @@ public class Lich_Su_Hoa_Don extends javax.swing.JPanel {
         for (HoaDon hoaDon : list) {
             model.addRow(hoaDon.todata_lshd());
         }
+    }
+
+    boolean check() {
+        boolean isValid = true;
+        Date ngaythang = date_1.getDate();
+         Date ngaythang1 = Date_2.getDate();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        sdf.setLenient(false);
+
+        if (ngaythang == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn ngày bắt đầu");
+            isValid = false;
+        } else {
+            if (sdf.format(ngaythang).isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn ngày bắt đầu");
+                isValid = false;
+            }
+        }
+        if (ngaythang1 == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn ngày kết thúc");
+            isValid = false;
+        } else {
+            if (sdf.format(ngaythang1).isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn ngày kết thúc");
+                isValid = false;
+            }
+        }
+        return isValid;
     }
 
     /**
@@ -121,7 +168,11 @@ public class Lich_Su_Hoa_Don extends javax.swing.JPanel {
         }
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 847, 170));
+
+        date_1.setDateFormatString("dd/MM/yyyy");
         jPanel1.add(date_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 250, 40));
+
+        Date_2.setDateFormatString("dd/MM/yyyy\n");
         jPanel1.add(Date_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 50, 260, 40));
 
         jLabel1.setText("Đến");
@@ -259,7 +310,10 @@ public class Lich_Su_Hoa_Don extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             XSSFWorkbook workbook = new XSSFWorkbook();
-            XSSFSheet spreadsheet = workbook.createSheet("Lịch Sử Hóa Đơn");
+            Date ngayhientai = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+            XSSFSheet spreadsheet = workbook.createSheet("Danh Sách Hóa Đơn " + sdf.format(ngayhientai));
 
             XSSFRow row = null;
             Cell cell = null;
@@ -267,7 +321,7 @@ public class Lich_Su_Hoa_Don extends javax.swing.JPanel {
             row = spreadsheet.createRow((short) 2);
             row.setHeight((short) 500);
             cell = row.createCell(0, CellType.STRING);
-            cell.setCellValue("Lịch Sử Hóa Đơn");
+            cell.setCellValue("Danh Sách Hóa Đơn");
 
             row = spreadsheet.createRow((short) 3);
             row.setHeight((short) 500);
@@ -306,6 +360,7 @@ public class Lich_Su_Hoa_Don extends javax.swing.JPanel {
             FileOutputStream out = new FileOutputStream(new File("D:\\game\\Sổ làm việc1.xlsx"));
             workbook.write(out);
             out.close();
+            JOptionPane.showMessageDialog(this, "thành công");
         } catch (Exception e) {
             e.printStackTrace();
         }

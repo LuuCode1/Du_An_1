@@ -33,6 +33,10 @@ public class KhachHang {
         this.sdt = sdt;
     }
 
+    public KhachHang(int idKH) {
+        this.idKH = idKH;
+    }
+
     public int getIdKH() {
         return idKH;
     }

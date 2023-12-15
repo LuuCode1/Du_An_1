@@ -4,17 +4,70 @@
  */
 package com.raven.form;
 
+import java.awt.Image;
+import java.io.File;
+import java.util.List;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
+import model.SanPhamChiTiet;
+import service.SPCT_Service;
+
 /**
  *
  * @author Asus
  */
 public class ShowSanPham extends javax.swing.JPanel {
 
+    SPCT_Service spctsv = new SPCT_Service();
+    SanPhamChiTiet spct = new SanPhamChiTiet();
+    DefaultTableModel model;
+    int index = -1;
+    String trangthai = "Đang bán";
+
     /**
      * Creates new form ShowSanPham
      */
     public ShowSanPham() {
         initComponents();
+        filltable(spctsv.ShowSP(trangthai));
+        bang.setVisible(false);
+        String[] table4 = {"Loại hàng", "Mã SP", "Tên SP", "Chất liệu", "Màu sắc", "Thương hiệu", "Độ cận", "Giá thành", "Số Lượng", "Mô tả"};
+        for (int i = 0; i < table4.length; i++) {
+            tbl_bang.getColumnModel().getColumn(i).setHeaderValue(table4[i]);
+        }
+    }
+
+    void filltable(List<SanPhamChiTiet> list) {
+        model = (DefaultTableModel) tbl_bang.getModel();
+        model.setRowCount(0);
+        list = spctsv.ShowSP(trangthai);
+        for (SanPhamChiTiet sanPhamChiTiet : list) {
+            model.addRow(sanPhamChiTiet.todata_Show());
+        }
+    }
+
+    void show(int index) {
+        SanPhamChiTiet sp = spctsv.ShowSP(trangthai).get(index);
+        txtten.setText(sp.getSp().getTenSP());
+        txtcl.setText(sp.getMaterial().getTenChatLieu());
+        txtdocan.setText(String.valueOf(sp.getDoCan()));
+        txtgiaban.setText(String.valueOf(sp.getGiathanh()));
+        txtmau.setText(sp.getColor().getTenMauSac());
+        txtsl.setText(String.valueOf(sp.getSoluong()));
+        txttheloai.setText(sp.getSp().getLoaisp().getTenLoaiSP());
+        txtthuonghieu.setText(sp.getSp().getBrand().getTenThuongHieu());
+        mota.setText(sp.getMota());
+        lblanh.setIcon(null);
+        try {
+            File file = new File(sp.getHinhanh());
+            Image img = ImageIO.read(file);
+            int width = lblanh.getWidth();
+            int height = lblanh.getHeight();
+            Image resizedImage = img.getScaledInstance(width, height, 0);
+            lblanh.setIcon(new ImageIcon(resizedImage));
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -26,19 +79,120 @@ public class ShowSanPham extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        color1 = new com.raven.form.Color();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl_bang = new javax.swing.JTable();
+        bang = new javax.swing.JPanel();
+        lblanh = new javax.swing.JLabel();
+        txttheloai = new javax.swing.JTextField();
+        txtten = new javax.swing.JTextField();
+        txtmau = new javax.swing.JTextField();
+        txtcl = new javax.swing.JTextField();
+        txtthuonghieu = new javax.swing.JTextField();
+        txtsl = new javax.swing.JTextField();
+        txtgiaban = new javax.swing.JTextField();
+        txtdocan = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        mota = new javax.swing.JTextArea();
+
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        color1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tbl_bang.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9", "null"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbl_bang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_bangMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbl_bang);
+
+        color1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 930, 260));
+
+        bang.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bang.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblanh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblanh.setEnabled(false);
+        bang.add(lblanh, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 30, 230, 300));
+
+        txttheloai.setEditable(false);
+        bang.add(txttheloai, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 230, 30));
+
+        txtten.setEditable(false);
+        bang.add(txtten, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 230, 30));
+
+        txtmau.setEditable(false);
+        bang.add(txtmau, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 230, 30));
+
+        txtcl.setEditable(false);
+        txtcl.setText(" ");
+        bang.add(txtcl, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 230, 30));
+
+        txtthuonghieu.setEditable(false);
+        bang.add(txtthuonghieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 230, 30));
+
+        txtsl.setEditable(false);
+        bang.add(txtsl, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 50, 230, 30));
+
+        txtgiaban.setEditable(false);
+        bang.add(txtgiaban, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 110, 230, 30));
+
+        txtdocan.setEditable(false);
+        bang.add(txtdocan, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, 230, 30));
+
+        mota.setColumns(20);
+        mota.setRows(5);
+        mota.setEnabled(false);
+        jScrollPane2.setViewportView(mota);
+
+        bang.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 230, -1));
+
+        color1.add(bang, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 330, 940, 350));
+
+        add(color1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1059, 794));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tbl_bangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_bangMouseClicked
+        index = tbl_bang.getSelectedRow();
+        show(index);
+        bang.setVisible(true);
+    }//GEN-LAST:event_tbl_bangMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel bang;
+    private com.raven.form.Color color1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblanh;
+    private javax.swing.JTextArea mota;
+    private javax.swing.JTable tbl_bang;
+    private javax.swing.JTextField txtcl;
+    private javax.swing.JTextField txtdocan;
+    private javax.swing.JTextField txtgiaban;
+    private javax.swing.JTextField txtmau;
+    private javax.swing.JTextField txtsl;
+    private javax.swing.JTextField txtten;
+    private javax.swing.JTextField txttheloai;
+    private javax.swing.JTextField txtthuonghieu;
     // End of variables declaration//GEN-END:variables
 }

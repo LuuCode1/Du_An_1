@@ -4,17 +4,17 @@ import com.raven.component.Header;
 import com.raven.component.Menu;
 import com.raven.event.EventMenuSelected;
 import com.raven.event.EventShowPopupMenu;
-import com.raven.form.BanHangForm;
+import com.raven.form.BanHang;
 
 import com.raven.form.Form_Home;
-
 import com.raven.form.KhachHangForm;
 import com.raven.form.Lich_Su_Hoa_Don;
 import com.raven.form.MainForm;
 import com.raven.form.NhanVienForm;
 import com.raven.form.QuanLyThuocTinhSanPham;
-
 import com.raven.form.SanPhamForm;
+import com.raven.form.ShowSanPham;
+import com.raven.form.Vouchers;
 import com.raven.login.DangNhap;
 import com.raven.swing.MenuItem;
 import com.raven.swing.PopupMenu;
@@ -30,6 +30,7 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
+
 
 public class Main extends javax.swing.JFrame {
 
@@ -49,7 +50,6 @@ public class Main extends javax.swing.JFrame {
         Manv = Check_user_login.mand;
         System.out.println(checkUserLogin);
         System.out.println(Manv);
-
     }
 
     void dis() {
@@ -66,15 +66,15 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void menuSelected(int menuIndex, int subMenuIndex) {
                 System.out.println("Menu Index : " + menuIndex + " SubMenu Index " + subMenuIndex);
-                if (menuIndex == 0) {
-                    if (subMenuIndex == -1) {
-                        DangNhap dn = new DangNhap();
-                        dn.setVisible(true);
-                        dis();
+//                if (menuIndex == 0) {
+//                    if (subMenuIndex == -1) {
+//                        DangNhap dn = new DangNhap();
+//                        dn.setVisible(true);
+//                        dis();
 
-                    }
-                }
-                if (menuIndex == 1) {
+//                    }
+//                }
+                if (menuIndex == 0) {
                     if (subMenuIndex == 0) {
                         if (checkUserLogin == 0) {
                             main.showForm(new SanPhamForm(main));
@@ -82,18 +82,24 @@ public class Main extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
                         }
 
-                    }else if (subMenuIndex==1) {
-                        if (checkUserLogin == -1) {
+                    } else if (subMenuIndex == 1) {
+                        if (checkUserLogin == 0) {
                             main.showForm(new QuanLyThuocTinhSanPham());
+                        } else {
+                            JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
+                        }
+                    } else if (subMenuIndex == 2) {
+                        if (checkUserLogin == 0) {
+                            main.showForm(new Vouchers());
                         } else {
                             JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
                         }
                     }
                 }
-                if (menuIndex == 3) {
+                if (menuIndex == 1) {
                     if (subMenuIndex == -1) {
-                        if (checkUserLogin == -1) {
-                            main.showForm(new NhanVienForm());
+                        if (checkUserLogin == 1 || checkUserLogin == 0) {
+                            main.showForm(new ShowSanPham());
                         } else {
                             JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
                         }
@@ -102,9 +108,30 @@ public class Main extends javax.swing.JFrame {
                 }
                 if (menuIndex == 5) {
                     if (subMenuIndex == -1) {
-                        if (checkUserLogin == 0  || checkUserLogin==1) {
-                            BanHangForm bh = new BanHangForm();
-                            bh.setVisible(true);
+                        if (checkUserLogin == 0 || checkUserLogin==1) {
+                            main.showForm(new Lich_Su_Hoa_Don());
+                        } else {
+                            JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
+                        }
+
+                    }
+                }
+                if (menuIndex == 3) {
+                    if (subMenuIndex == -1) {
+                        if (checkUserLogin == 0 ) {
+                            main.showForm(new KhachHangForm());
+
+                        } else {
+                            JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
+                        }
+
+                    }
+                }
+                if (menuIndex == 2) {
+                    if (subMenuIndex == -1) {
+
+                        if (checkUserLogin == 0 ) {
+                            main.showForm(new NhanVienForm());
                         } else {
                             JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
                         }
@@ -114,8 +141,8 @@ public class Main extends javax.swing.JFrame {
                 if (menuIndex == 4) {
                     if (subMenuIndex == -1) {
 
-                        if (checkUserLogin == 0 || checkUserLogin==1) {
-                            main.showForm(new KhachHangForm());
+                        if (checkUserLogin == 0 || checkUserLogin == 1) {
+                            main.showForm(new BanHang());
                         } else {
                             JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
                         }
@@ -124,13 +151,11 @@ public class Main extends javax.swing.JFrame {
                 }
                 if (menuIndex == 6) {
                     if (subMenuIndex == -1) {
-
-//                        if (checkUserLogin == 0 || checkUserLogin ==1) {
-                            main.showForm(new Lich_Su_Hoa_Don());
-//                        } else {
-//                            JOptionPane.showMessageDialog(main, "Quyền hạn không đủ truy cập");
-//                        }
-
+                        checkUserLogin = -1;
+                        Manv = null;
+                        dis();
+                       DangNhap dn = new DangNhap();
+                        dn.setVisible(true);
                     }
                 }
 

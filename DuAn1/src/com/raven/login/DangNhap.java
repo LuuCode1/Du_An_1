@@ -17,7 +17,7 @@ import service.NguoiDung_Service;
  * @author Asus
  */
 public class DangNhap extends javax.swing.JFrame {
-    
+
     NguoiDung_Service ndsv = new NguoiDung_Service();
 
     /**
@@ -29,34 +29,38 @@ public class DangNhap extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         txt_email.setText(null);
         txt_pass.setText(null);
-        
+
     }
-    
+
     void dangnhap() {
-        
+
         String email = txt_email.getText().trim();
         String matKhau = txt_pass.getText().trim();
-        try {
-            
-            if (ndsv.dangNhap_email(email) != null) {
-                if (ndsv.dangNhap(email, matKhau) != null) {
-                    JOptionPane.showMessageDialog(this, "Thanh cong ");
-                    NguoiDung nd = ndsv.dangNhap_email(email);
-                    Check_user_login.mand = nd.getMaND();
-                    Check_user_login.vt = nd.getVaiTro();
-                    this.dispose();
-                    Main main = new Main();
-                    main.setVisible(true);
+        if (email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui Đăng nhập tài khoản");
+            return;
+        } else {
+            try {
+                if (ndsv.dangNhap_email(email) != null) {
+                    if (ndsv.dangNhap(email, matKhau) != null) {
+                        JOptionPane.showMessageDialog(this, "Thanh cong ");
+                        NguoiDung nd = ndsv.dangNhap_email(email);
+                        Check_user_login.mand = nd.getMaND();
+                        Check_user_login.vt = nd.getVaiTro();
+                        this.dispose();
+                        Main main = new Main();
+                        main.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "mat khau khong dung");
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(this, "mat khau khong dung");
+                    JOptionPane.showMessageDialog(this, "Tai khoan khong ton tai");
                 }
-            } else {
-                JOptionPane.showMessageDialog(this, "Tai khoan khong ton tai");
+
+            } catch (Exception e) {
             }
-            
-        } catch (Exception e) {
+
         }
-        
     }
 
     /**
@@ -200,10 +204,9 @@ public class DangNhap extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel8MouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        
+
         this.dispose();
-        Main main = new Main();
-        main.setVisible(true);
+
     }//GEN-LAST:event_jLabel4MouseClicked
 
     /**
